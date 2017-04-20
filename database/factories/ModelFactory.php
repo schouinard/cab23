@@ -22,3 +22,22 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Benevole::class, function (Faker\Generator $faker) {
+
+    return [
+        'nom' => $faker->lastName,
+        'prenom' => $faker->firstName,
+        'telephone' => $faker->phoneNumber,
+        'telephone2' => $faker->phoneNumber,
+        'addresse' => $faker->address,
+        'ville' => $faker->city,
+        'province' => $faker->country,
+        'codePostal' => $faker->postcode,
+        'email' => $faker->unique()->safeEmail,
+        'naissance' => $faker->dateTime,
+        'contactUrgenceNom' => $faker->name,
+        'contactUrgenceTel' => $faker->phoneNumber,
+    ];
+});
