@@ -10,6 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BenevoleTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     function it_has_a_prenom()
     {
@@ -17,6 +19,7 @@ class BenevoleTest extends TestCase
 
         $this->assertEquals('Stephane', $benevole->prenom);
     }
+
     /** @test */
     function it_has_a_nom()
     {
@@ -49,4 +52,13 @@ class BenevoleTest extends TestCase
         $this->assertEquals('140 rue du pic', $benevole->adresse);
     }
 
+    /** @test */
+    function a_user_can_see_benevoles()
+    {
+        $benevole = factory('App\Benevole')->create();
+
+        $response = $this->get('/benevoles');
+
+        $response->assertSee($benevole->nom);
+    }
 }
