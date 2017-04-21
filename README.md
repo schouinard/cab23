@@ -1,4 +1,4 @@
-# cab23
+#CAB Aide23
 
 ## Requirements
  * Git
@@ -50,3 +50,6 @@ $ npm install
 Et c'est ça qui est ça.
   
   
+## Pour utiliser Dusk dans vagrant
+
+http://www.jesusamieiro.com/using-laravel-dusk-with-vagrant-homestead/
