@@ -9,7 +9,7 @@ gulp.task('test', function () {
         .pipe(phpunit('', {notify: true}));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch(['tests/**/*.php', 'app/**/*.php'], ['test']);
 });
 
