@@ -322,6 +322,30 @@
             "autoload": {
                 "psr-4": {
                     "Laravel\\Dusk\\": "src/"
+            "name": "jeroennoten/laravel-adminlte",
+            "version": "v1.19.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroennoten/Laravel-AdminLTE.git",
+                "reference": "14c89386a2861086ce6006745a7389a90a6916e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/14c89386a2861086ce6006745a7389a90a6916e8",
+                "reference": "14c89386a2861086ce6006745a7389a90a6916e8",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.1.12|~5.2.0|~5.3.0|~5.4.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenNoten\\LaravelAdminLte\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -329,7 +353,6 @@
                 "MIT"
             ],
             "authors": [
-                {
                     "name": "Taylor Otwell",
                     "email": "taylor@laravel.com"
                 }
@@ -341,6 +364,18 @@
                 "webdriver"
             ],
             "time": "2017-04-07T21:47:06+00:00"
+                    "name": "Jeroen Noten",
+                    "email": "jeroennoten@me.com"
+                }
+            ],
+            "description": "Easy AdminLTE integration with Laravel",
+            "keywords": [
+                "AdminLTE",
+                "admin",
+                "administrator",
+                "laravel"
+            ],
+            "time": "2017-03-30T11:46:56+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2123,12 +2158,12 @@
             "version": "0.9.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/mockery.git",
+                "url": "https://github.com/mockery/mockery.git",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
                 "shasum": ""
             },
