@@ -25,4 +25,9 @@ class Benevole extends Model
     {
         return '/benevoles/'.$this->id;
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }
