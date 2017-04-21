@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/benevoles', 'BenevoleController@index');
+Route::get('/benevoles/{benevole}', 'BenevoleController@show');
