@@ -61,4 +61,14 @@ class BenevoleTest extends TestCase
 
         $response->assertSee($benevole->nom);
     }
+
+    /** @test */
+    function a_user_can_see_a_specific_benevole()
+    {
+        $benevole = factory('App\Benevole')->create();
+
+        $response = $this->get($benevole->path());
+
+        $response->assertSee($benevole->nom);
+    }
 }

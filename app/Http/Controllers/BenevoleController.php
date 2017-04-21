@@ -15,7 +15,8 @@ class BenevoleController extends Controller
     public function index()
     {
         $benevoles = Benevole::all();
-        return view('benevole.index', ['benevoles' => $benevoles]);
+
+        return view('benevole.index', compact('benevoles'));
     }
 
     /**
@@ -31,7 +32,7 @@ class BenevoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,21 +43,21 @@ class BenevoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Benevole  $benevole
+     * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function show(Controller $benevole)
+    public function show(Benevole $benevole)
     {
-        //
+        return view('benevole.show', compact('benevole'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Benevole  $benevole
+     * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function edit(Controller $benevole)
+    public function edit(Benevole $benevole)
     {
         //
     }
@@ -64,11 +65,11 @@ class BenevoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Benevole  $benevole
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Controller $benevole)
+    public function update(Request $request, Benevole $benevole)
     {
         //
     }
@@ -76,10 +77,10 @@ class BenevoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Benevole  $benevole
+     * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Controller $benevole)
+    public function destroy(Benevole $benevole)
     {
         //
     }

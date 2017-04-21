@@ -18,5 +18,11 @@ class Benevole extends Model
         'naissance',
         'email',
         'contactUrgenceNom',
-        'contactUrgenceTel'];
+        'contactUrgenceTel',
+    ];
+
+    public function path()
+    {
+        return '/benevoles/'.$this->id;
+    }
 }

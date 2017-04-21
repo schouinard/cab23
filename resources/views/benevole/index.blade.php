@@ -9,7 +9,7 @@
 @section('content')
     @foreach($benevoles as $benevole)
         <article>
-            {{ $benevole->prenom }} &nbsp; {{ $benevole->nom }}
+            <a href="{{ $benevole->path() }}">{{ $benevole->prenom }} &nbsp; {{ $benevole->nom }}</a>
         </article>
     @endforeach
 @stop
