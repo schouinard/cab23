@@ -1,0 +1,44 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/dist\/css\/AdminLTE.min.css - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630418740
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/bootstrap\/css\/bootstrap.min.css - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630418753
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/plugins\/jQuery\/jquery-2.2.3.min.js - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630418926
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/dist\/css\/skins\/skin-blue.min.css - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630419076
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/bootstrap\/js\/bootstrap.min.js - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630419200
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/dist\/img\/user2-160x160.jpg - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630419372
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/cab23.app\/dist\/js\/app.min.js - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1492630419399
+    }
+]
