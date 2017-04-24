@@ -37,7 +37,8 @@ class BenevoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $benevole = Benevole::create($request->toArray());
+        redirect($benevole->path());
     }
 
     /**
