@@ -36,6 +36,13 @@
         </div><!-- /.box-header -->
         <div class="box-body">
             <table>
+                <thead>
+                <tr>
+                    <td>Type</td>
+                    <td>Bénéficiaire</td>
+                    <td>Rendu le</td>
+                </tr>
+                </thead>
                 <tbody>
                 @foreach ($benevole->services as $service)
                     <tr>
@@ -43,10 +50,27 @@
                             {{ $service->type_id }}
                         </td>
                         <td>
+                            <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}</a>
+                        </td>
+                        <td>
                             {{ $service->rendu_le }}
                         </td>
                     </tr>
                 @endforeach
+                <form method="POST" action="{{ $benevole->path() . '/services' }}">
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Type"/></td>
+                        <td><input type="text" class="form-control" placeholder="Type"/></td>
+                        <td>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="datepicker">
+                            </div>
+                        </td>
+                    </tr>
+                </form>
                 </tbody>
             </table>
         </div><!-- /.box-body -->

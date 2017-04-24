@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    Route::get('/benevoles', 'BenevoleController@index');
+    Route::get('/benevoles/{benevole}', 'BenevoleController@show');
+    Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
+});
 
-Route::get('/benevoles', 'BenevoleController@index');
-Route::get('/benevoles/{benevole}', 'BenevoleController@show');

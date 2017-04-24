@@ -9,11 +9,25 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ServiceTest extends TestCase
 {
     use DatabaseMigrations;
+
+    protected $service;
+
+    function setUp()
+    {
+        parent::setUp();
+        $this->service = factory('App\Service')->create();
+    }
+
     /** @test */
     function it_has_a_benevole()
     {
-        $service = factory('App\Service')->create();
+        $this->assertInstanceOf('App\Benevole', $this->service->benevole);
+    }
 
-        $this->assertInstanceOf('App\Benevole', $service->benevole);
+    /** @test */
+    function it_has_a_beneficiaire()
+    {
+        $this->assertInstanceOf('App\Beneficiaire', $this->service->beneficiaire);
     }
 }
+

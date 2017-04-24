@@ -6,20 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Benevole extends Model
 {
-    protected $fillable = [
-        'prenom',
-        'nom',
-        'telephone',
-        'telephone2',
-        'adresse',
-        'ville',
-        'codePostal',
-        'province',
-        'naissance',
-        'email',
-        'contactUrgenceNom',
-        'contactUrgenceTel',
-    ];
+    protected $guarded = [];
 
     public function path()
     {
@@ -29,5 +16,10 @@ class Benevole extends Model
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function addService($service)
+    {
+        $this->services()->create($service);
     }
 }
