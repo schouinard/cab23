@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Beneficiaire;
+use App\Benevole;
 use Illuminate\Http\Request;
 
 class BeneficiaireController extends Controller
@@ -14,7 +15,9 @@ class BeneficiaireController extends Controller
      */
     public function index()
     {
-        //
+        $beneficiaires = Beneficiaire::all();
+
+        return view('beneficiaire.index', compact('beneficiaires'));
     }
 
     /**
@@ -30,7 +33,7 @@ class BeneficiaireController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,18 +44,18 @@ class BeneficiaireController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Beneficiaire  $beneficiaire
+     * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
     public function show(Beneficiaire $beneficiaire)
     {
-        //
+        return view('beneficiaire.show', compact('beneficiaire'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Beneficiaire  $beneficiaire
+     * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
     public function edit(Beneficiaire $beneficiaire)
@@ -63,8 +66,8 @@ class BeneficiaireController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Beneficiaire  $beneficiaire
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Beneficiaire $beneficiaire)
@@ -75,7 +78,7 @@ class BeneficiaireController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Beneficiaire  $beneficiaire
+     * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
     public function destroy(Beneficiaire $beneficiaire)

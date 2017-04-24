@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Bénévoles</h1>
+    <h1>Bénéficiaires</h1>
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-body table-responsive">
-                    <table class="datatable table table-bordered table-hover">
+                    <table class="datatable table table-hover table-bordered">
                         <thead>
                         <tr>
                             <th>Nom</th>
@@ -20,11 +20,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($benevoles as $benevole)
+                        @foreach($beneficiaires as $beneficiaire)
                             <tr>
-                                <td><a href="{{ $benevole->path() }}">{{ $benevole->nom }}</a></td>
-                                <td>{{ $benevole->prenom }}</td>
-                                <td>{{ $benevole->email }}</td>
+                                <td><a href="{{ $beneficiaire->path() }}">{{ $beneficiaire->nom }}</a></td>
+                                <td>{{ $beneficiaire->prenom }}</td>
+                                <td>{{ $beneficiaire->email }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -35,3 +35,4 @@
         </div>
     </div>
 @stop
+

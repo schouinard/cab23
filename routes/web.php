@@ -20,5 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/benevoles', 'BenevoleController@index');
     Route::get('/benevoles/{benevole}', 'BenevoleController@show');
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
+    Route::get('/beneficiaires', 'BeneficiaireController@index');
+    Route::get('/beneficiaires/{beneficiaire}', 'BeneficiaireController@show');
+    Route::post('/beneficiaires/{beneficiaire}/services', 'ServiceController@store');
 });
 

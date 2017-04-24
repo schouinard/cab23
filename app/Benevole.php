@@ -22,4 +22,9 @@ class Benevole extends Model
     {
         $this->services()->create($service);
     }
+
+    public function getNomCompletAttribute()
+    {
+        return $this->prenom . ' ' . $this->nom;
+    }
 }

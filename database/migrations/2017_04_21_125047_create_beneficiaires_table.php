@@ -17,16 +17,23 @@ class CreateBeneficiairesTable extends Migration
             $table->increments('id');
             $table->string('prenom');
             $table->string('nom');
-            $table->string('telephone');
-            $table->string('telephone2');
             $table->string('addresse');
             $table->string('ville');
-            $table->string('codePostal');
             $table->string('province');
+            $table->string('codePostal');
+            $table->string('quartier');
+            $table->string('conjoint');
+            $table->string('telephone');
+            $table->string('telephone2');
             $table->date('naissance');
             $table->string('email');
-            $table->string('contactUrgenceNom');
-            $table->string('contactUrgenceTel');
+            $table->text('remarque');
+            $table->string('resource_nom');
+            $table->string('resource_tel_maison');
+            $table->string('resource_tel_bureau');
+            $table->string('resource_tel_cel');
+            $table->string('resource_tel_pager');
+            $table->string('resource_email');
             $table->timestamps();
         });
     }

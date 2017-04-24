@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Fiche bénévole - {{ $benevole->prenom }} &nbsp; {{ $benevole->nom }}</h1>
+    <h1>Fiche bénéficiaire - {{ $beneficiaire->prenom }} &nbsp; {{ $beneficiaire->nom }}</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
             </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            {{ $benevole->telephone }}
+            {{ $beneficiaire->telephone }}
         </div><!-- /.box-body -->
         <div class="box-footer">
 
@@ -39,47 +39,35 @@
                 <thead>
                 <tr>
                     <td>Type</td>
-                    <td>Bénéficiaire</td>
+                    <td>Bénévole</td>
                     <td>Rendu le</td>
-                    <td>Don</td>
-                    <td></td>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($benevole->services as $service)
+                @foreach ($beneficiaire->services as $service)
                     <tr>
                         <td>
                             {{ $service->service_type_id }}
                         </td>
                         <td>
-                            <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom_complet }}</a>
+                            <a href="{{ $service->benevole->path() }}">{{ $service->benevole->nom_complet }}</a>
                         </td>
                         <td>
                             {{ $service->rendu_le }}
                         </td>
-                        <td>{{ $service->don }}</td>
-                        <td></td>
                     </tr>
                 @endforeach
-                <form method="POST" action="{{ $benevole->path() . '/services' }}">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="benevole_id" id="benevole_id" value="{{ $benevole->id }}" />
+                <form method="POST" action="{{ $beneficiaire->path() . '/services' }}">
                     <tr>
-                        <td><input name="service_type_id" id="service_type_id" type="text" class="form-control" placeholder="Type"/></td>
-                        <td><input name="beneficiaire_id" id="beneficiaire_id" type="text" class="form-control" placeholder="Bénéficiaire"/></td>
+                        <td><input type="text" class="form-control" placeholder="Type"/></td>
+                        <td><input type="text" class="form-control" placeholder="Type"/></td>
                         <td>
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="rendu_le" type="text" class="form-control pull-right" />
+                                <input type="text" class="form-control pull-right" >
                             </div>
-                        </td>
-                        <td>
-                            <input name="don" type="text" class="form-control"/>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
                         </td>
                     </tr>
                 </form>
@@ -91,3 +79,4 @@
         </div><!-- box-footer -->
     </div><!-- /.box -->
 @stop
+

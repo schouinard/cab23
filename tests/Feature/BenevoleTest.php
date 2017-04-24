@@ -42,11 +42,10 @@ class BenevoleTest extends TestCase
     /** @test */
     function a_user_can_add_a_service()
     {
-        $service = factory('App\Service')->make();
+        $service = factory('App\Service')->make(['benevole_id' => $this->benevole->id]);
         $this->post($this->benevole->path().'/services', $service->toArray());
 
         //the service should be visible on the page
-        $this->get($this->benevole->path())
-            ->assertSee($service->rendu_le);
+        $this->get($this->benevole->path())->assertSee($service->rendu_le);
     }
 }
