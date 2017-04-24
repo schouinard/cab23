@@ -13,8 +13,8 @@ class CreateBeneficiaireTest extends TestCase
     /** @test */
     function an_authenticated_user_can_create_new_beneficiaire()
     {
-        $this->actingAs(factory('App\User')->create());
-        $beneficiaire = factory('App\Beneficiaire')->make();
+        $this->signIn();
+        $beneficiaire = make('App\Beneficiaire');
 
         $this->post('/beneficiaires', $beneficiaire->toArray());
 

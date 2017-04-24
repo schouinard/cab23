@@ -14,8 +14,8 @@ class BeneficiaireTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->beneficiaire = factory('App\Beneficiaire')->create();
-        $this->be(factory('App\User')->create());
+        $this->beneficiaire = create('App\Beneficiaire');
+        $this->signIn();
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class BeneficiaireTest extends TestCase
     /** @test */
     function a_user_can_see_services_given_to_beneficiaire()
     {
-        $service = factory('App\Service')->create(['beneficiaire_id' => $this->beneficiaire->id]);
+        $service = create('App\Service', ['beneficiaire_id' => $this->beneficiaire->id]);
 
         $this->get($this->beneficiaire->path())->assertSee($service->rendu_le);
     }
@@ -41,7 +41,7 @@ class BeneficiaireTest extends TestCase
     /** @test */
     function a_user_can_add_a_service()
     {
-        $service = factory('App\Service')->make(['beneficiaire_id' => $this->beneficiaire->id]);
+        $service = make('App\Service', ['beneficiaire_id' => $this->beneficiaire->id]);
         $this->post($this->beneficiaire->path().'/services', $service->toArray());
 
         //the service should be visible on the page

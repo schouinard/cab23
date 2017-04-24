@@ -32,11 +32,11 @@ class BeneficiaireTest extends TestCase
     /** @test */
     function it_can_add_a_service()
     {
-        $beneficiaire = factory('App\Beneficiaire')->create();
+        $beneficiaire = create('App\Beneficiaire');
         $beneficiaire->addService([
             'service_type_id' => 1,
             'don' => 0,
-            'benevole_id' => factory('App\Benevole')->create()->id,
+            'benevole_id' => create('App\Benevole')->id,
             'rendu_le' => Carbon::now()->toDateTimeString(),
         ]);
 

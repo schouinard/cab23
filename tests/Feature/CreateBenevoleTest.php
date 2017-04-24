@@ -13,8 +13,8 @@ class CreateBenevoleTest extends TestCase
     /** @test */
     function an_authenticated_user_can_create_new_benevole()
     {
-        $this->actingAs(factory('App\User')->create());
-        $benevole = factory('App\Benevole')->make();
+        $this->signIn();
+        $benevole = make('App\Benevole');
 
         $this->post('/benevoles', $benevole->toArray());
 
