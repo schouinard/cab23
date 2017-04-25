@@ -32,10 +32,6 @@
                     <label for="adresse">Adresse:</label>
                     <input type="text" class="form-control" name="adresse">
                 </div>
-                <div class="form-group">
-                	<label for="ville">Ville:</label>
-                	<input type="text" class="form-control" name="ville" />
-                </div>
                 <!--- ville form input ---->
                 <div class="form-group">
                 	<label for="ville">Ville:</label>
