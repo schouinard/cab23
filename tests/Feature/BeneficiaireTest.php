@@ -47,4 +47,24 @@ class BeneficiaireTest extends TestCase
         //the service should be visible on the page
         $this->get($this->beneficiaire->path())->assertSee($service->rendu_le);
     }
+
+    ///** @test */
+    //function it_requires_a_valid_service_type()
+    //{
+    //    $this->publishService(['service_type_id' => null])
+    //        ->assertSessionHasErrors('service_type_id');
+    //
+    //    $this->publishService(['service_type_id' => 999])
+    //        ->assertSessionHasErrors('service_type_id');
+    //}
+    //
+    //public function publishService($overrides = [])
+    //{
+    //    $this->withExceptionHandling()->signIn();
+    //
+    //    $overrides = array_merge($overrides, ['beneficiaire_id' => $this->beneficiaire->id]);
+    //    $service = make('App\Service', $overrides);
+    //
+    //    return $this->post($this->beneficiaire->path().'/services', $service->toArray());
+    //}
 }

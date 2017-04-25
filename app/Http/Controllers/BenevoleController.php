@@ -37,7 +37,17 @@ class BenevoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'prenom' => 'required',
+            'nom' => 'required',
+            'adresse' => 'required',
+            'ville' => 'required',
+            'province' => 'required',
+            'code_postal' => 'required',
+        ]);
+
         $benevole = Benevole::create($request->toArray());
+
         return redirect($benevole->path());
     }
 

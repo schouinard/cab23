@@ -38,7 +38,17 @@ class BeneficiaireController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'prenom' => 'required',
+            'nom' => 'required',
+            'adresse' => 'required',
+            'ville' => 'required',
+            'province' => 'required',
+            'code_postal' => 'required',
+        ]);
+
         $beneficiaire = Beneficiaire::create($request->toArray());
+
         return redirect($beneficiaire->path());
     }
 
