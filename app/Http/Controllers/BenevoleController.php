@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Benevole;
+use App\Http\Requests\StorePerson;
 use Illuminate\Http\Request;
 
 class BenevoleController extends Controller
@@ -35,17 +36,8 @@ class BenevoleController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePerson $request)
     {
-        $this->validate($request, [
-            'prenom' => 'required',
-            'nom' => 'required',
-            'adresse' => 'required',
-            'ville' => 'required',
-            'province' => 'required',
-            'code_postal' => 'required',
-        ]);
-
         $benevole = Benevole::create($request->toArray());
 
         return redirect($benevole->path());

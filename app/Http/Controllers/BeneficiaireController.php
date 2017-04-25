@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Beneficiaire;
 use App\Benevole;
+use App\Http\Requests\StorePerson;
 use Illuminate\Http\Request;
 
 class BeneficiaireController extends Controller
@@ -36,17 +37,8 @@ class BeneficiaireController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePerson $request)
     {
-        $this->validate($request, [
-            'prenom' => 'required',
-            'nom' => 'required',
-            'adresse' => 'required',
-            'ville' => 'required',
-            'province' => 'required',
-            'code_postal' => 'required',
-        ]);
-
         $beneficiaire = Beneficiaire::create($request->toArray());
 
         return redirect($beneficiaire->path());
