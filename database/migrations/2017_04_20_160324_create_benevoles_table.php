@@ -17,18 +17,18 @@ class CreateBenevolesTable extends Migration
             $table->increments('id');
             $table->string('prenom');
             $table->string('nom');
-            $table->string('addresse');
+            $table->string('adresse');
             $table->string('ville');
             $table->string('province');
-            $table->string('codePostal');
-            $table->string('quartier');
-            $table->string('telephone');
-            $table->string('telephone2');
-            $table->date('naissance');
-            $table->date('inscription');
-            $table->date('accepte_ca');
-            $table->text('remarque');
-            $table->string('email');
+            $table->string('code_postal');
+            $table->string('quartier')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('telephone2')->nullable();
+            $table->date('naissance')->nullable();
+            $table->date('inscription')->nullable();
+            $table->date('accepte_ca')->nullable();
+            $table->text('remarque')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

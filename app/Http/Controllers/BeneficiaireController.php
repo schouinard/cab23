@@ -39,7 +39,7 @@ class BeneficiaireController extends Controller
     public function store(Request $request)
     {
         $beneficiaire = Beneficiaire::create($request->toArray());
-        redirect($beneficiaire->path());
+        return redirect($beneficiaire->path());
     }
 
     /**
