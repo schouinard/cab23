@@ -80,7 +80,9 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         'beneficiaire_id' => function () {
             return factory('App\Beneficiaire')->create()->id;
         },
-        'service_type_id' => $faker->numberBetween(1, 10),
+        'service_type_id' => function() {
+            return App\ServiceType::inRandomOrder()->first();
+        },
         'rendu_le' => $faker->date(),
         'don' => $faker->randomFloat(2,0,1000),
 

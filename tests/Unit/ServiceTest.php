@@ -37,5 +37,11 @@ class ServiceTest extends TestCase
         factory('App\Service', 100)->create();
         $this->assertCount(50, Service::latest());
     }
+
+    /** @test */
+    function it_has_a_servicetype()
+    {
+        $this->assertInstanceOf('App\ServiceType', $this->service->type);
+    }
 }
 

@@ -26,7 +26,7 @@ class StoreService extends FormRequest
         return [
             'service_type_id' => 'bail|required|exists:service_types,id',
             'beneficiaire_id' => 'bail|required|exists:beneficiaires,id',
-            'rendu_le' => 'nullable|date',
+            'rendu_le' => 'date',
             'benevole_id' => 'bail|required|exists:benevoles,id',
             'don' => 'nullable|numeric',
         ];

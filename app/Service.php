@@ -18,6 +18,11 @@ class Service extends Model
         return $this->belongsTo(Beneficiaire::class);
     }
 
+    public function type()
+    {
+        return $this->belongsTo(ServiceType::class, 'service_type_id');
+    }
+
     public static function latest()
     {
         return Service::with(['benevole', 'beneficiaire'])->orderBy('created_at', 'desc')->limit(50)->get();

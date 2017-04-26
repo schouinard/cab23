@@ -35,21 +35,20 @@
             </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table>
+            <table class="table table-hover table-bordered datatable">
                 <thead>
                 <tr>
                     <td>Type</td>
                     <td>Bénéficiaire</td>
                     <td>Rendu le</td>
                     <td>Don</td>
-                    <td></td>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($benevole->services as $service)
                     <tr>
                         <td>
-                            {{ $service->service_type_id }}
+                            {{ $service->type->nom }}
                         </td>
                         <td>
                             <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom_complet }}</a>
@@ -58,21 +57,28 @@
                             {{ $service->rendu_le }}
                         </td>
                         <td>{{ $service->don }}</td>
-                        <td></td>
                     </tr>
                 @endforeach
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <table class="table table-bordered">
                 <form method="POST" action="{{ $benevole->path() . '/services' }}">
                     {{ csrf_field() }}
-                    <input type="hidden" name="benevole_id" id="benevole_id" value="{{ $benevole->id }}" />
+                    <input type="hidden" name="benevole_id" id="benevole_id" value="{{ $benevole->id }}"/>
                     <tr>
-                        <td><input name="service_type_id" id="service_type_id" type="text" class="form-control" placeholder="Type"/></td>
-                        <td><input name="beneficiaire_id" id="beneficiaire_id" type="text" class="form-control" placeholder="Bénéficiaire"/></td>
+                        <td>
+                            {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
+                        </td>
+                        <td><input name="beneficiaire_id" id="beneficiaire_id" type="text" class="form-control"
+                                   placeholder="Bénéficiaire"/></td>
                         <td>
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="rendu_le" type="text" class="form-control pull-right" />
+                                <input name="rendu_le" type="text" class="form-control pull-right" value="{{Carbon\Carbon::now()}}"/>
                             </div>
                         </td>
                         <td>
@@ -83,11 +89,7 @@
                         </td>
                     </tr>
                 </form>
-                </tbody>
             </table>
-        </div><!-- /.box-body -->
-        <div class="box-footer">
-
         </div><!-- box-footer -->
     </div><!-- /.box -->
 @stop
