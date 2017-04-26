@@ -12,11 +12,12 @@
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^2.3",
         "fzaninotto/faker": "~1.4",
         "laravel/homestead": "^5.2",
         "mockery/mockery": "0.9.*",
-        "sebastian/object-enumerator": "^3.0.2",
-        "phpunit/phpunit": "^6.1"
+        "phpunit/phpunit": "^6.1",
+        "sebastian/object-enumerator": "^3.0.2"
     },
     "autoload": {
         "classmap": [
