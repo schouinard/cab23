@@ -80,8 +80,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="rendu_le" type="text" class="form-control pull-right"
-                                       value="{{Carbon\Carbon::now()}}"/>
+                                {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right'])}}
                             </div>
                         </td>
                         <td>
