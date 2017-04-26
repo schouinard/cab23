@@ -31,14 +31,16 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'prenom' => $faker->firstName,
         'telephone' => $faker->phoneNumber,
         'telephone2' => $faker->phoneNumber,
-        'addresse' => $faker->address,
+        'adresse' => $faker->address,
         'ville' => $faker->city,
         'province' => $faker->country,
-        'codePostal' => $faker->postcode,
+        'code_postal' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'naissance' => $faker->dateTime,
-        'contactUrgenceNom' => $faker->name,
-        'contactUrgenceTel' => $faker->phoneNumber,
+        'quartier' => $faker->colorName,
+        'inscription' => $faker->dateTime,
+        'accepte_ca' => $faker->dateTime,
+        'remarque' => $faker->paragraph(2)
     ];
 });
 
@@ -49,14 +51,24 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'prenom' => $faker->firstName,
         'telephone' => $faker->phoneNumber,
         'telephone2' => $faker->phoneNumber,
-        'addresse' => $faker->address,
+        'adresse' => $faker->address,
         'ville' => $faker->city,
         'province' => $faker->country,
-        'codePostal' => $faker->postcode,
+        'code_postal' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'naissance' => $faker->dateTime,
-        'contactUrgenceNom' => $faker->name,
-        'contactUrgenceTel' => $faker->phoneNumber,
+        'quartier' => $faker->colorName,
+        'conjoint' => $faker->name,
+        'remarque' => $faker->paragraph(1),
+        'resource_nom' => $faker->name,
+        'resource_tel_maison' => $faker->phoneNumber,
+        'resource_tel_bureau' => $faker->phoneNumber,
+        'resource_tel_cel' => $faker->phoneNumber,
+        'resource_tel_pager' => $faker->phoneNumber,
+        'resource_email' => $faker->email,
+
+
+
     ];
 });
 
@@ -68,8 +80,9 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         'beneficiaire_id' => function () {
             return factory('App\Beneficiaire')->create()->id;
         },
-        'type_id' => $faker->numberBetween(1, 10),
+        'service_type_id' => $faker->numberBetween(1, 10),
         'rendu_le' => $faker->date(),
+        'don' => $faker->randomFloat(2,0,1000),
 
     ];
 });

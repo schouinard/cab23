@@ -15,9 +15,10 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('type_id')->index();
+            $table->integer('service_type_id')->index();
             $table->integer('benevole_id')->index();
             $table->integer('beneficiaire_id')->index();
+            $table->float('don');
             $table->date('rendu_le');
             $table->timestamps();
         });

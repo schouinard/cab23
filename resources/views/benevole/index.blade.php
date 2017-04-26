@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.adminlte')
 
 @section('title', 'Dashboard')
 
@@ -7,23 +7,31 @@
 @stop
 
 @section('content')
-    <table>
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Courriel</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($benevoles as $benevole)
-            <tr>
-                <td><a href="{{ $benevole->path() }}">{{ $benevole->nom }}</a></td>
-                <td>{{ $benevole->prenom }}</td>
-                <td>{{ $benevole->email }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-        <tfoot></tfoot>
-    </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive">
+                    <table class="datatable table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Courriel</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($benevoles as $benevole)
+                            <tr>
+                                <td><a href="{{ $benevole->path() }}">{{ $benevole->nom }}</a></td>
+                                <td>{{ $benevole->prenom }}</td>
+                                <td>{{ $benevole->email }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

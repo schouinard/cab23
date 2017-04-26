@@ -15,8 +15,8 @@ class BenevoleTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->be(factory('App\User')->create());
-        $this->benevole = factory('App\Benevole')->create();
+        $this->signIn();
+        $this->benevole = create('App\Benevole');
     }
 
     /** @test */
@@ -34,7 +34,7 @@ class BenevoleTest extends TestCase
     /** @test */
     function a_user_can_see_services_associated_with_a_benevole()
     {
-        $service = factory('App\Service')->create(['benevole_id' => $this->benevole->id]);
+        $service = create('App\Service', ['benevole_id' => $this->benevole->id]);
 
         $this->get($this->benevole->path())->assertSee($service->rendu_le);
     }
@@ -42,11 +42,10 @@ class BenevoleTest extends TestCase
     /** @test */
     function a_user_can_add_a_service()
     {
-        $service = factory('App\Service')->make();
+        $service = make('App\Service', ['benevole_id' => $this->benevole->id]);
         $this->post($this->benevole->path().'/services', $service->toArray());
 
         //the service should be visible on the page
-        $this->get($this->benevole->path())
-            ->assertSee($service->rendu_le);
+        $this->get($this->benevole->path())->assertSee($service->rendu_le);
     }
 }

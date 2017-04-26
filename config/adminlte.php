@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>CAB</b> Aide23',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>CAB</b>A23',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 
     'login_url' => 'login',
 
-    'register_url' => 'register',
+    'register_url' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -108,80 +108,40 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        'MENU PRINCIPAL',
         [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        'ACCOUNT SETTINGS',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
+            'text' => 'Bénévoles',
             'icon' => 'user',
-        ],
-        [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
-        ],
-        [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
             'submenu' => [
                 [
-                    'text' => 'Level One',
-                    'url'  => '#',
+                    'text' => 'Lister',
+                    'url' => 'benevoles',
                 ],
                 [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
+                    'text' => 'Ajouter',
+                    'url' => 'benevoles/create',
                 ],
             ],
         ],
-        'LABELS',
         [
-            'text'       => 'Important',
-            'icon_color' => 'red',
+            'text' => 'Bénéficiaires',
+            'icon' => 'user',
+            'submenu' => [
+                [
+                    'text' => 'Lister',
+                    'url' => 'beneficiaires',
+                ],
+                [
+                    'text' => 'Ajouter',
+                    'url' => 'beneficiaires/create',
+                ],
+            ],
         ],
+        'Gestion des utilisateurs',
         [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
+            'text' => 'Utilisateurs',
+            'url' => 'users',
+            'icon' => 'user',
         ],
     ],
 

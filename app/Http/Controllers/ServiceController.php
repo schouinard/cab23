@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Benevole;
+use App\Http\Requests\StoreService;
+use App\Service;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function store(Benevole $benevole)
+    public function store(StoreService $request)
     {
-        $benevole->addService([
-            'type_id' => request('type_id'),
+        Service::create([
+            'service_type_id' => request('service_type_id'),
             'beneficiaire_id' => request('beneficiaire_id'),
-            'rendu_le' => request('rendu_le')
+            'rendu_le' => request('rendu_le'),
+            'benevole_id' => request('benevole_id'),
+            'don' => request('don'),
         ]);
+
         return back();
     }
 }

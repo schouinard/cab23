@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class BenevoleTest extends TestCase
 {
     use DatabaseMigrations;
+
     /** @test */
     function it_has_a_prenom()
     {
@@ -54,11 +55,12 @@ class BenevoleTest extends TestCase
     /** @test */
     function it_can_add_a_service()
     {
-        $benevole = factory('App\Benevole')->create();
+        $benevole = create('App\Benevole');
         $benevole->addService([
-            'type_id' => 1,
-            'beneficiaire_id' => factory('App\Beneficiaire')->create()->id,
-            'rendu_le' => Carbon::now()->toDateTimeString()
+            'service_type_id' => 1,
+            'don' => 10,
+            'beneficiaire_id' => create('App\Beneficiaire')->id,
+            'rendu_le' => Carbon::now()->toDateTimeString(),
         ]);
 
         $this->assertCount(1, $benevole->services);

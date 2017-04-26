@@ -15,7 +15,7 @@ class ServiceTest extends TestCase
     function setUp()
     {
         parent::setUp();
-        $this->service = factory('App\Service')->create();
+        $this->service = create('App\Service');
     }
 
     /** @test */
