@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->integer('service_type_id')->index();
             $table->integer('benevole_id')->index();
             $table->integer('beneficiaire_id')->index();
-            $table->float('don');
+            $table->float('don')->nullable();
             $table->date('rendu_le');
             $table->timestamps();
         });

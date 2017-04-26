@@ -20,6 +20,6 @@ class Service extends Model
 
     public static function latest()
     {
-        return Service::orderBy('created_at', 'desc')->limit(50)->get();
+        return Service::with(['benevole', 'beneficiaire'])->orderBy('created_at', 'desc')->limit(50)->get();
     }
 }

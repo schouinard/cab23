@@ -52,6 +52,7 @@ class BeneficiaireController extends Controller
      */
     public function show(Beneficiaire $beneficiaire)
     {
+        $beneficiaire = Beneficiaire::with('services.benevole')->where('id', $beneficiaire->id)->first();
         return view('beneficiaire.show', compact('beneficiaire'));
     }
 
