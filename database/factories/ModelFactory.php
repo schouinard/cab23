@@ -31,6 +31,7 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'prenom' => $faker->firstName,
         'telephone' => $faker->phoneNumber,
         'telephone2' => $faker->phoneNumber,
+        'cellulaire' => $faker->phoneNumber,
         'adresse' => $faker->address,
         'ville' => $faker->city,
         'province' => $faker->country,
@@ -51,6 +52,7 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'prenom' => $faker->firstName,
         'telephone' => $faker->phoneNumber,
         'telephone2' => $faker->phoneNumber,
+        'cellulaire' => $faker->phoneNumber,
         'adresse' => $faker->address,
         'ville' => $faker->city,
         'province' => $faker->country,
@@ -66,9 +68,12 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'resource_tel_cel' => $faker->phoneNumber,
         'resource_tel_pager' => $faker->phoneNumber,
         'resource_email' => $faker->email,
-
-
-
+        'resource2_nom' => $faker->name,
+        'resource2_tel_maison' => $faker->phoneNumber,
+        'resource2_tel_bureau' => $faker->phoneNumber,
+        'resource2_tel_cel' => $faker->phoneNumber,
+        'resource2_tel_pager' => $faker->phoneNumber,
+        'resource2_email' => $faker->email,
     ];
 });
 

@@ -24,6 +24,7 @@ class CreateBenevolesTable extends Migration
             $table->string('quartier')->nullable();
             $table->string('telephone')->nullable();
             $table->string('telephone2')->nullable();
+            $table->string('cellulaire')->nullable();
             $table->date('naissance')->nullable();
             $table->date('inscription')->nullable();
             $table->date('accepte_ca')->nullable();

@@ -25,6 +25,7 @@ class CreateBeneficiairesTable extends Migration
             $table->string('conjoint')->nullable();
             $table->string('telephone')->nullable();
             $table->string('telephone2')->nullable();
+            $table->string('cellulaire')->nullable();
             $table->date('naissance')->nullable();
             $table->string('email')->nullable();
             $table->text('remarque')->nullable();
@@ -34,6 +35,12 @@ class CreateBeneficiairesTable extends Migration
             $table->string('resource_tel_cel')->nullable();
             $table->string('resource_tel_pager')->nullable();
             $table->string('resource_email')->nullable();
+            $table->string('resource2_nom')->nullable();
+            $table->string('resource2_tel_maison')->nullable();
+            $table->string('resource2_tel_bureau')->nullable();
+            $table->string('resource2_tel_cel')->nullable();
+            $table->string('resource2_tel_pager')->nullable();
+            $table->string('resource2_email')->nullable();
             $table->timestamps();
         });
     }

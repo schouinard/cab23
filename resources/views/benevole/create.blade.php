@@ -10,7 +10,7 @@
     <form method="POST" action="/benevoles">
         {{ csrf_field() }}
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Informations personnelles</h3>
@@ -69,7 +69,7 @@
                     </div><!-- box-footer -->
                 </div><!-- /.box -->
             </div>
-            <div class="col-xs-6">
+            <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Contact</h3>
@@ -113,39 +113,61 @@
                             <!--- telephone form input ---->
                             <div class="form-group col-md-6">
                                 <label for="telephone">Téléphone:</label>
-                                <input type="text" class="form-control telephone" name="telephone"/>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    <input type="text" class="form-control telephone" name="telephone"/>
+                                </div>
                             </div>
                             <!--- telephone2 form input ---->
                             <div class="form-group col-md-6">
                                 <label for="telephone2">Autre téléphone:</label>
-                                <input type="text" class="form-control telephone" name="telephone2"/>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    <input type="text" class="form-control telephone" name="telephone2"/>
+                                </div>
                             </div>
                         </div>
-                        <!--- email form input ---->
-                        <div class="form-group">
-                            <label for="email">Courriel:</label>
-                            <input type="text" class="form-control" name="email"/>
+                        <div class="row">
+                            <!--- cellulaire form input ---->
+                            <div class="form-group col-md-6">
+                                <label for="cellulaire">Cellulaire:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                    <input type="text" class="form-control telephone" name="cellulaire"/>
+                                </div>
+                            </div>
+                            <!--- email form input ---->
+                            <div class="form-group col-md-6">
+                                <label for="email">Courriel:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <input type="text" class="form-control" name="email"/>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><label for="remarque">Remarque</label></h3>
-                    <div class="box-tools pull-right">
-                        <!-- This will cause the box to collapse when clicked -->
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div><!-- /.box-tools -->
-                </div>
-                <div class="box-body">
-                    <!--- remarque form input ---->
-                    <div class="form-group">
-                        <textarea name="remarque" class="form-control textarea" rows="10" width="100%"></textarea>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><label for="remarque">Remarque</label></h3>
+                        <div class="box-tools pull-right">
+                            <!-- This will cause the box to collapse when clicked -->
+                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div><!-- /.box-tools -->
+                    </div>
+                    <div class="box-body">
+                        <!--- remarque form input ---->
+                        <div class="form-group">
+                            <textarea name="remarque" class="form-control textarea" rows="10" width="100%"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
