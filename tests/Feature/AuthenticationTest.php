@@ -18,4 +18,23 @@ class AuthenticationTest extends TestCase
         $this->expectException(Auth\AuthenticationException::class);
         $this->get('/');
     }
+
+    /** @test */
+    function an_anonymous_user_cannot_register()
+    {
+        $this->withExceptionHandling()->get('/login')->assertDontSee('register');
+    }
+
+    /** @test */
+    function the_register_route_is_disabled()
+    {
+        $this->expectException('ReflectionException');
+        $this->get('/register');
+    }
+
+    /** @test */
+    function the_login_homepage_is_the_benevole_list()
+    {
+        $this->withExceptionHandling()->signIn()->get('/')->assertRedirect('/benevoles');
+    }
 }

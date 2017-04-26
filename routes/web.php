@@ -14,8 +14,8 @@
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('home');
+    Route::get('/', function(){
+        return redirect('/benevoles');
     });
 
     Route::resource('benevoles', 'BenevoleController');
