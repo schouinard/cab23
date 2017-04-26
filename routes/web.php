@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('benevoles', 'BenevoleController');
     Route::resource('beneficiaires', 'BeneficiaireController');
+    Route::resource('services', 'ServiceController');
 
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
     Route::post('/beneficiaires/{beneficiaire}/services', 'ServiceController@store');

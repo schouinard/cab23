@@ -18,4 +18,8 @@ class Service extends Model
         return $this->belongsTo(Beneficiaire::class);
     }
 
+    public static function latest()
+    {
+        return Service::orderBy('created_at', 'desc')->limit(50)->get();
+    }
 }

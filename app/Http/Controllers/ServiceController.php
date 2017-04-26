@@ -20,4 +20,11 @@ class ServiceController extends Controller
 
         return back();
     }
+
+    public function index()
+    {
+        $services = Service::latest();
+
+        return view('service.index', compact('services'));
+    }
 }

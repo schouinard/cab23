@@ -137,6 +137,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Services rendus',
+            'icon' => 'heart',
+            'url' => 'services',
+        ],
         'Gestion des utilisateurs',
         [
             'text' => 'Utilisateurs',
