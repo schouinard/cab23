@@ -93,7 +93,7 @@ return [
 
     'login_url' => 'login',
 
-    'register_url' => 'register',
+    'register_url' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -111,18 +111,36 @@ return [
         'MENU PRINCIPAL',
         [
             'text' => 'Bénévoles',
-            'url'  => 'benevoles',
             'icon' => 'user',
+            'submenu' => [
+                [
+                    'text' => 'Lister',
+                    'url' => 'benevoles',
+                ],
+                [
+                    'text' => 'Ajouter',
+                    'url' => 'benevoles/create',
+                ],
+            ],
         ],
         [
-            'text'        => 'Bénéficiaires',
-            'url'         => 'beneficiaires',
-            'icon'        => 'user',
+            'text' => 'Bénéficiaires',
+            'icon' => 'user',
+            'submenu' => [
+                [
+                    'text' => 'Lister',
+                    'url' => 'beneficiaires',
+                ],
+                [
+                    'text' => 'Ajouter',
+                    'url' => 'beneficiaires/create',
+                ],
+            ],
         ],
         'Gestion des utilisateurs',
         [
             'text' => 'Utilisateurs',
-            'url'  => 'users',
+            'url' => 'users',
             'icon' => 'user',
         ],
     ],

@@ -30,6 +30,8 @@ class StorePerson extends FormRequest
             'ville' => 'required',
             'province' => 'required',
             'code_postal' => 'required',
+            'email' => 'email',
+            'resource_email' => 'email',
         ];
     }
 }
