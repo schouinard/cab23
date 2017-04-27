@@ -90,11 +90,9 @@ class BenevoleController extends Controller
         //
     }
 
-    public function listAllBenevolesForAutocomplete()
+    public function listAllForAutocomplete()
     {
-        $term = request('term');
-
-        return Benevole::append(['nom_complet'])->get([
+        return Benevole::get([
             'id',
             'nom',
             'prenom',

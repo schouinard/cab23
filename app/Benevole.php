@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Benevole extends Model
 {
     protected $guarded = [];
+    protected $appends = ['nom_complet'];
 
     public function path()
     {

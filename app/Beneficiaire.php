@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Beneficiaire extends Model
 {
     protected $guarded = [];
+    protected $appends = ['nom_complet'];
 
     public function path()
     {

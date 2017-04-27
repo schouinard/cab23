@@ -14,13 +14,13 @@ class CreateBeneficiaireTest extends TestCase
     function an_authenticated_user_can_create_new_beneficiaire()
     {
         $this->signIn();
-        $beneficiaire = make('App\Beneficiaire');
+        $beneficiaire = raw('App\Beneficiaire');
 
-        $this->post('/beneficiaires', $beneficiaire->toArray());
+        $this->post('/beneficiaires', $beneficiaire);
 
-        $this->get($beneficiaire->path())
-            ->assertSee($beneficiaire->nom)
-            ->assertSee($beneficiaire->prenom);
+        $this->get('/beneficiaires')
+            ->assertSee($beneficiaire['nom'])
+            ->assertSee($beneficiaire['prenom']);
     }
 
     /** @test */

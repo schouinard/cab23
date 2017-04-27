@@ -15,11 +15,11 @@ class CreateBenevoleTest extends TestCase
     function an_authenticated_user_can_create_new_benevole()
     {
         $this->signIn();
-        $benevole = make('App\Benevole');
+        $benevole = raw('App\Benevole');
 
-        $this->post('/benevoles', $benevole->toArray());
+        $this->post('/benevoles', $benevole);
 
-        $this->get($benevole->path())->assertSee($benevole->nom)->assertSee($benevole->prenom);
+        $this->get('/benevoles')->assertSee($benevole['nom'])->assertSee($benevole['prenom']);
     }
 
     /** @test */

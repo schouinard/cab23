@@ -89,4 +89,13 @@ class BeneficiaireController extends Controller
     {
         //
     }
+
+    public function listAllForAutocomplete()
+    {
+        return Beneficiaire::get([
+            'id',
+            'nom',
+            'prenom',
+        ])->toJSON();
+    }
 }

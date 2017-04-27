@@ -75,7 +75,9 @@
                         <td>
                             {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
                         </td>
-                        <td><input type="text" class="form-control benevole-autocomplete" placeholder="Bénévole" /></td>
+                        <td><input type="text" class="form-control autocomplete"
+                                   data-model="benevole" data-display="nom_complet"
+                                   placeholder="Bénévole"/></td>
                         <td>
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">

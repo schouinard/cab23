@@ -19,11 +19,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::resource('benevoles', 'BenevoleController');
-    Route::get('/lists/benevoles.json', 'BenevoleController@listAllBenevolesForAutocomplete');
     Route::resource('beneficiaires', 'BeneficiaireController');
     Route::resource('services', 'ServiceController');
 
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
     Route::post('/beneficiaires/{beneficiaire}/services', 'ServiceController@store');
+
+    Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
+    Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');
 });
 
