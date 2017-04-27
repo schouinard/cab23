@@ -94,7 +94,7 @@ class BenevoleController extends Controller
     {
         $term = request('term');
 
-        return Benevole::get([
+        return Benevole::append(['nom_complet'])->get([
             'id',
             'nom',
             'prenom',
