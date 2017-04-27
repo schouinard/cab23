@@ -51,7 +51,8 @@ class BenevoleController extends Controller
      */
     public function show(Benevole $benevole)
     {
-        $benevole = Benevole::with(['services.beneficiaire', 'services.type'])->where('id',$benevole->id)->first();
+        $benevole = Benevole::with(['services.beneficiaire', 'services.type'])->where('id', $benevole->id)->first();
+
         return view('benevole.show', compact('benevole'));
     }
 
@@ -87,5 +88,16 @@ class BenevoleController extends Controller
     public function destroy(Benevole $benevole)
     {
         //
+    }
+
+    public function listAllBenevolesForAutocomplete()
+    {
+        $term = request('term');
+
+        return Benevole::get([
+            'id',
+            'nom',
+            'prenom',
+        ])->toJSON();
     }
 }

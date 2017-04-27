@@ -13,14 +13,15 @@
                 <div class="box-header">
                     <h3>Ajouter un nouveau service rendu</h3>
                 </div>
-                <div class="box-body table-responsive">
+                <div class="box-body">
                     <form method="POST" action="/services">
+                        <input type="hidden" name="benevole_id" id="benevole_id">
                         <table class="table table-bordered">
                             {{ csrf_field() }}
                             <tr>
                                 <td>{{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
                                 </td>
-                                <td><input name="benevole_id" id="benevole_id" type="text" class="form-control"
+                                <td><input type="text" class="form-control benevole-autocomplete"
                                            placeholder="Bénévole"/></td>
                                 <td><input name="beneficiaire_id" id="beneficiaire_id" type="text" class="form-control"
                                            placeholder="Bénéficiaire"/></td>

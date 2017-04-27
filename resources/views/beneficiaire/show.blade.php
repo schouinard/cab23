@@ -70,11 +70,12 @@
                 <form method="POST" action="{{ $beneficiaire->path() . '/services' }}">
                     {{ csrf_field() }}
                     <input type="hidden" name="beneficiaire_id" value="{{$beneficiaire->id}}">
+                    <input type="hidden" name="benevole_id" id="benevole_id">
                     <tr>
                         <td>
                             {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
                         </td>
-                        <td><input type="text" class="form-control" placeholder="Bénévole" name="benevole_id"/></td>
+                        <td><input type="text" class="form-control benevole-autocomplete" placeholder="Bénévole" /></td>
                         <td>
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">

@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::resource('benevoles', 'BenevoleController');
+    Route::get('/lists/benevoles.json', 'BenevoleController@listAllBenevolesForAutocomplete');
     Route::resource('beneficiaires', 'BeneficiaireController');
     Route::resource('services', 'ServiceController');
 
