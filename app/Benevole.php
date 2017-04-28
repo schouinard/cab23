@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Benevole extends Model
 {
     protected $guarded = [];
+
     protected $appends = ['nom_complet'];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'naissance',
+        'accepte_ca',
+        'inscription',
+    ];
 
     public function path()
     {
@@ -26,6 +36,6 @@ class Benevole extends Model
 
     public function getNomCompletAttribute()
     {
-        return $this->prenom . ' ' . $this->nom;
+        return $this->prenom.' '.$this->nom;
     }
 }

@@ -22,13 +22,13 @@ class BenevoleTest extends TestCase
     /** @test */
     function a_user_can_see_benevoles()
     {
-        $this->get('/benevoles')->assertSee($this->benevole->nom);
+        $this->get('/benevoles')->assertSee(htmlentities($this->benevole->nom, ENT_QUOTES));
     }
 
     /** @test */
     function a_user_can_see_a_specific_benevole()
     {
-        $this->get($this->benevole->path())->assertSee($this->benevole->nom);
+        $this->get($this->benevole->path())->assertSee(htmlentities($this->benevole->nom, ENT_QUOTES));
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class BenevoleTest extends TestCase
     {
         $service = create('App\Service', ['benevole_id' => $this->benevole->id]);
 
-        $this->get($this->benevole->path())->assertSee($service->rendu_le);
+        $this->get($this->benevole->path())->assertSeeText($service->rendu_le);
     }
 
     /** @test */

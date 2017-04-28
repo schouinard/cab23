@@ -13,6 +13,16 @@
                 <div class="box-header">
                     <h3>Ajouter un nouveau service rendu</h3>
                 </div>
+                @if (count($errors))
+                    <div class="callout callout-danger">
+                        <h4>Veuillez valider les points suivants avant de continuer.</h4>
+                        <ul class="error-content">
+                            @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="box-body">
                     <form method="POST" action="/services">
                         <input type="hidden" name="benevole_id" id="benevole_id">

@@ -6,6 +6,7 @@ use App\Exceptions\Handler;
 use DatabaseSeeder;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestResponse;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -53,5 +54,14 @@ abstract class TestCase extends BaseTestCase
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
 
         return $this;
+    }
+
+    protected function followRedirects(TestResponse $response)
+    {
+        while ($response->isRedirect()) {
+            $response = $this->get($response->headers->get('Location'));
+        }
+
+        return $response;
     }
 }

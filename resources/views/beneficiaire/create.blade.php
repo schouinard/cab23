@@ -7,6 +7,16 @@
 @stop
 
 @section('content')
+    @if (count($errors))
+        <div class="callout callout-danger">
+            <h4>Veuillez valider les points suivants avant de continuer.</h4>
+            <ul class="error-content">
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="POST" action="/beneficiaires">
         {{ csrf_field() }}
         <div class="row">
@@ -23,29 +33,31 @@
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="prenom">Prénom:</label>
-                            <input type="text" class="form-control" name="prenom"/>
+                        <!--- prenom form input ---->
+                        <div class="form-group {{ $errors->first('prenom', 'has-error') }}">
+                            {{ Form::label('prenom', 'Prénom (*):') }}
+                            {{ Form::text('prenom', null, ['class' => 'form-control']) }}
                         </div>
-                        <div class="form-group">
-                            <label for="nom">Nom:</label>
-                            <input type="text" class="form-control" name="nom"/>
+                        <!--- nom form input ---->
+                        <div class="form-group {{ $errors->first('nom', 'has-error') }}">
+                            {{ Form::label('nom', 'Nom (*):') }}
+                            {{ Form::text('nom', null, ['class' => 'form-control']) }}
                         </div>
 
                         <!--- naissance datepicker --->
                         <div class="form-group">
-                            <label for="naissance">Naissance:</label>
+                            {{ Form::label('naissance', 'Naissance:') }}
                             <div class="input-group date datepicker-naissance">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="naissance" type="text" class="form-control pull-right"/>
+                                {{ Form::text('naissance', null, ['class' => 'form-control pull-right']) }}
                             </div>
                         </div>
                         <!--- conjoint form input ---->
-                        <div class="form-group">
-                            <label for="conjoint">Conjoint:</label>
-                            <input type="text" class="form-control" name="conjoint"/>
+                        <div class="form-group {{ $errors->first('conjoint', 'has-error') }}">
+                            {{ Form::label('conjoint', 'Conjoint:') }}
+                            {{ Form::text('conjoint', null, ['class' => 'form-control']) }}
                         </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
@@ -54,83 +66,7 @@
                 </div><!-- /.box -->
             </div>
             <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Contact</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="form-group col-md-8">
-                                <label for="adresse">Adresse:</label>
-                                <input type="text" class="form-control" name="adresse">
-                            </div>
-                            <!--- ville form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="ville">Ville:</label>
-                                <input type="text" class="form-control" name="ville" value="Québec"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label for="quartier">Quartier:</label>
-                                <input type="text" class="form-control" name="quartier"/>
-                            </div>
-                            <!--- province form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="province">Province:</label>
-                                <input type="text" class="form-control" name="province" value="QC"/>
-                            </div>
-                            <!--- code_postal form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="code_postal">Code postal:</label>
-                                <input type="text" class="form-control codepostal" name="code_postal"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="telephone">Téléphone:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="telephone"/>
-                                </div>
-                            </div>
-                            <!--- telephone2 form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="telephone2">Autre téléphone:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="telephone2"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- cellulaire form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="cellulaire">Cellulaire:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="cellulaire"/>
-                                </div>
-                            </div>
-                            <!--- email form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="email">Courriel:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" class="form-control" name="email"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('partials.form.contact')
             </div>
         </div>
         <div class="row">
@@ -147,53 +83,53 @@
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <!-- resource_nom form input ---->
-                        <div class="form-group">
-                            <label for="resource_nom">Nom complet:</label>
-                            <input type="text" class="form-control" name="resource_nom"/>
+                        <!--- resource_nom form input ---->
+                        <div class="form-group {{ $errors->first('resource_nom', 'has-error') }}">
+                            {{ Form::label('resource_nom', 'Nom complet:') }}
+                            {{ Form::text('resource_nom', null, ['class' => 'form-control']) }}
                         </div>
                         <div class="row">
-                            <!-- resource_tel_maison form input ---->
+                            <!--- telephone form input ---->
                             <div class="form-group col-md-6">
-                                <label for="resource_tel_maison">Téléphone maison:</label>
+                                {{ Form::label('resource_tel_maison', 'Téléphone maison:') }}
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource_tel_maison"/>
+                                    {{ Form::text('resource_tel_maison', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
-                            <!-- resource_tel_bureau form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="resource_tel_bureau">Téléphone bureau:</label>
+                            <!--- telephone2 form input ---->
+                            <div class="form-group col-md-6 {{ $errors->first('resource_tel_bureau', 'has-error') }}">
+                                {{ Form::label('resource_tel_bureau', 'Bureau:') }}
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource_tel_bureau"/>
+                                    {{ Form::text('resource_tel_bureau', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <!-- resource_tel_cel form input ---->
+                            <!--- telephone form input ---->
                             <div class="form-group col-md-6">
-                                <label for="resource_tel_cel">Téléphone cellulaire:</label>
+                                {{ Form::label('resource_tel_cel', 'Cellulaire:') }}
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource_tel_cel"/>
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    {{ Form::text('resource_tel_cel', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
-                            <!-- resource_tel_pager form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="resource_tel_pager">Téléavertisseur:</label>
+                            <!--- resource_tel_pager form input ---->
+                            <div class="form-group col-md-6 {{ $errors->first('resource_tel_pager', 'has-error') }}">
+                                {{ Form::label('resource_tel_pager', 'Téléavertisseur:') }}
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource_tel_pager"/>
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    {{ Form::text('resource_tel_pager', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
                         </div>
                         <!-- resource_email form input ---->
-                        <div class="form-group">
+                        <div class="form-group  {{ $errors->first('resource_email', 'has-error') }}">
                             <label for="resource_email">Courriel:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" class="form-control" name="resource_email"/>
+                                {{ Form::text('resource_email', null, ['class' => 'form-control']) }}
                             </div>
                         </div>
                     </div>
@@ -212,53 +148,53 @@
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <!-- resource_nom form input ---->
-                        <div class="form-group">
-                            <label for="resource_nom">Nom complet:</label>
-                            <input type="text" class="form-control" name="resource2_nom"/>
+                        <!--- resource2_nom form input ---->
+                        <div class="form-group {{ $errors->first('resource2_nom', 'has-error') }}">
+                            {{ Form::label('resource2_nom', 'Nom complet:') }}
+                            {{ Form::text('resource2_nom', null, ['class' => 'form-control']) }}
                         </div>
                         <div class="row">
-                            <!-- resource_tel_maison form input ---->
+                            <!--- telephone form input ---->
                             <div class="form-group col-md-6">
-                                <label for="resource_tel_maison">Téléphone maison:</label>
+                                {{ Form::label('resource2_tel_maison', 'Téléphone maison:') }}
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource2_tel_maison"/>
+                                    {{ Form::text('resource2_tel_maison', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
-                            <!-- resource_tel_bureau form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="resource_tel_bureau">Téléphone bureau:</label>
+                            <!--- telephone2 form input ---->
+                            <div class="form-group col-md-6 {{ $errors->first('resource2_tel_bureau', 'has-error') }}">
+                                {{ Form::label('resource2_tel_bureau', 'Bureau:') }}
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource2_tel_bureau"/>
+                                    {{ Form::text('resource2_tel_bureau', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <!-- resource_tel_cel form input ---->
+                            <!--- telephone form input ---->
                             <div class="form-group col-md-6">
-                                <label for="resource_tel_cel">Téléphone cellulaire:</label>
+                                {{ Form::label('resource2_tel_cel', 'Cellulaire:') }}
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource2_tel_cel"/>
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    {{ Form::text('resource2_tel_cel', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
-                            <!-- resource_tel_pager form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="resource_tel_pager">Téléavertisseur:</label>
+                            <!--- resource2_tel_pager form input ---->
+                            <div class="form-group col-md-6 {{ $errors->first('resource2_tel_pager', 'has-error') }}">
+                                {{ Form::label('resource2_tel_pager', 'Téléavertisseur:') }}
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="resource2_tel_pager"/>
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    {{ Form::text('resource2_tel_pager', null, ['class' => 'form-control telephone']) }}
                                 </div>
                             </div>
                         </div>
-                        <!-- resource_email form input ---->
-                        <div class="form-group">
-                            <label for="resource_email">Courriel:</label>
+                        <!-- resource2_email form input ---->
+                        <div class="form-group  {{ $errors->first('resource2_email', 'has-error') }}">
+                            <label for="resource2_email">Courriel:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" class="form-control" name="resource2_email"/>
+                                {{ Form::text('resource2_email', null, ['class' => 'form-control']) }}
                             </div>
                         </div>
                     </div>

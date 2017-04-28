@@ -38,4 +38,22 @@ class ServiceCreationValidationTest extends TestCase
 
         $this->publishService(['service_type_id' => 999])->assertSessionHasErrors('service_type_id');
     }
+
+    /** @test */
+    function it_does_not_show_error_messages_on_first_load()
+    {
+        $this->withExceptionHandling()->signIn();
+        $this->get('/services')->assertDontSee('error-content');
+    }
+
+    /** @test */
+    function it_shows_error_on_invalid_service_type()
+    {
+        $this->withExceptionHandling()->signIn();
+        $this->get('/services')->assertDontSee('error-content');
+        $response = $this->publishService(['service_type_id' => null]);
+        $response->assertRedirect('/services');
+
+        $this->followRedirects($response)->assertSee('error-content');
+    }
 }

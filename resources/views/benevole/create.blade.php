@@ -7,6 +7,16 @@
 @stop
 
 @section('content')
+    @if (count($errors))
+        <div class="callout callout-danger">
+            <h4>Veuillez valider les points suivants avant de continuer.</h4>
+            <ul class="error-content">
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="POST" action="/benevoles">
         {{ csrf_field() }}
         <div class="row">
@@ -23,44 +33,46 @@
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="prenom">Prénom:</label>
-                            <input type="text" class="form-control" name="prenom"/>
+                        <!--- prenom form input ---->
+                        <div class="form-group {{ $errors->first('prenom', 'has-error') }}">
+                            {{ Form::label('prenom', 'Prénom (*):') }}
+                            {{ Form::text('prenom', null, ['class' => 'form-control']) }}
                         </div>
-                        <div class="form-group">
-                            <label for="nom">Nom:</label>
-                            <input type="text" class="form-control" name="nom"/>
+                        <!--- nom form input ---->
+                        <div class="form-group {{ $errors->first('nom', 'has-error') }}">
+                            {{ Form::label('nom', 'Nom (*):') }}
+                            {{ Form::text('nom', null, ['class' => 'form-control']) }}
                         </div>
 
                         <!--- naissance datepicker --->
                         <div class="form-group">
-                            <label for="naissance">Naissance:</label>
+                            {{ Form::label('naissance', 'Naissance:') }}
                             <div class="input-group date datepicker-naissance">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="naissance" type="text" class="form-control pull-right"/>
+                                {{ Form::text('naissance', null, ['class' => 'form-control pull-right']) }}
                             </div>
                         </div>
+
                         <!--- inscription datepicker --->
                         <div class="form-group">
-                            <label for="inscription">Inscription:</label>
+                            {{ Form::label('inscription', 'Inscription:') }}
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="inscription" type="text" class="form-control pull-right"
-                                       value="{{Carbon\Carbon::today()->toDateString()}}"/>
+                                {{ Form::text('inscription', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right']) }}
                             </div>
                         </div>
                         <!--- accepte_ca datepicker --->
                         <div class="form-group">
-                            <label for="accepte_ca">Accepté CA:</label>
+                            {{ Form::label('accepte_ca', 'Accepté CA:') }}
                             <div class="input-group date datepicker">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input name="accepte_ca" type="text" class="form-control pull-right"/>
+                                {{ Form::text('accepte_ca', null, ['class' => 'form-control pull-right']) }}
                             </div>
                         </div>
                     </div><!-- /.box-body -->
@@ -70,84 +82,7 @@
                 </div><!-- /.box -->
             </div>
             <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Contact</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="form-group col-md-8">
-                                <label for="adresse">Adresse:</label>
-                                <input type="text" class="form-control" name="adresse">
-                            </div>
-                            <!--- ville form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="ville">Ville:</label>
-                                <input type="text" class="form-control" name="ville" value="Québec"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label for="quartier">Quartier:</label>
-                                <input type="text" class="form-control" name="quartier"/>
-                            </div>
-                            <!--- province form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="province">Province:</label>
-                                <input type="text" class="form-control" name="province" value="QC"/>
-                            </div>
-                            <!--- code_postal form input ---->
-                            <div class="form-group col-md-4">
-                                <label for="code_postal">Code postal:</label>
-                                <input type="text" class="form-control codepostal" name="code_postal"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="telephone">Téléphone:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="telephone"/>
-                                </div>
-                            </div>
-                            <!--- telephone2 form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="telephone2">Autre téléphone:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="telephone2"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- cellulaire form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="cellulaire">Cellulaire:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                    <input type="text" class="form-control telephone" name="cellulaire"/>
-                                </div>
-                            </div>
-                            <!--- email form input ---->
-                            <div class="form-group col-md-6">
-                                <label for="email">Courriel:</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" class="form-control" name="email"/>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                @include('partials.form.contact')
             </div>
         </div>
         <div class="row">
@@ -166,7 +101,7 @@
                     <div class="box-body">
                         <!--- remarque form input ---->
                         <div class="form-group">
-                            <textarea name="remarque" class="form-control textarea" rows="10" width="100%"></textarea>
+                            {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'rows'=>10, 'width'=>'100%']) }}
                         </div>
                     </div>
                 </div>

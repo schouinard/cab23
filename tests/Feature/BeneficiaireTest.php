@@ -21,13 +21,13 @@ class BeneficiaireTest extends TestCase
     /** @test */
     function a_user_can_see_beneficiaires()
     {
-        $this->get('/beneficiaires')->assertSee($this->beneficiaire->nom);
+        $this->get('/beneficiaires')->assertSee(htmlentities($this->beneficiaire->nom, ENT_QUOTES));
     }
 
     /** @test */
     function a_user_can_see_a_specific_beneficiaire()
     {
-        $this->get($this->beneficiaire->path())->assertSee($this->beneficiaire->nom);
+        $this->get($this->beneficiaire->path())->assertSee(htmlentities($this->beneficiaire->nom, ENT_QUOTES));
     }
 
     /** @test */
