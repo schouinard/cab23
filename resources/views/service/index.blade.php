@@ -24,39 +24,47 @@
                     </div>
                 @endif
                 <div class="box-body">
-                    <form method="POST" action="/services">
-                        <input type="hidden" name="benevole_id" id="benevole_id">
-                        <input type="hidden" name="beneficiaire_id" id="beneficiaire_id">
-                        <table class="table table-bordered">
+                    <table class="table table-bordered">
+                        <form method="POST" action="/services">
                             {{ csrf_field() }}
+                            {{ Form::hidden('beneficiaire_id', null , ['id' => 'beneficiaire_id']) }}
+                            {{ Form::hidden('benevole_id', null, ['id' => 'benevole_id']) }}
                             <tr>
-                                <td>{{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
+                                <td class="{{ $errors->first('service_type_id', 'has-error') }}">
+                                    {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
                                 </td>
-                                <td><input type="text" class="form-control autocomplete"
-                                           data-model="benevole"
-                                           data-display="nom_complet"
-                                           placeholder="Bénévole"/></td>
-                                <td><input type="text" class="form-control autocomplete"
-                                           data-model="beneficiaire"
-                                           data-display="nom_complet"
-                                           placeholder="Bénéficiaire"/></td>
+                                <td class="{{ $errors->first('benevole_id', 'has-error') }}">
+                                    {{ Form::text('benevole', null, ['class' => 'form-control autocomplete',
+                                        'data-model' => 'benevole',
+                                        'data-display' => 'nom_complet',
+                                        'placeholder' => 'Bénévole',
+                                        'required' => 'required',
+                                        ]) }}
+                                </td>
+                                <td class="{{ $errors->first('beneficiaire_id', 'has-error') }}">{{ Form::text('beneficiaire', null, ['class' => 'form-control autocomplete',
+                                'data-model' => 'beneficiaire',
+                                'data-display' => 'nom_complet',
+                                'placeholder' => 'Bénéficiaire',
+                                'required' => 'required',
+                                ]) }}
+                                </td>
                                 <td>
-                                    <div class="input-group date datepicker">
+                                    <div class="input-group date datepicker {{ $errors->first('rendu_le', 'has-error') }}">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right'])}}
+                                        {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right', 'required' => 'required'])}}
                                     </div>
                                 </td>
-                                <td>
-                                    <input name="don" type="text" class="form-control"/>
+                                <td class="{{ $errors->first('don', 'has-error') }}">
+                                    {{ Form::text('don', null, ['class' => 'form-control']) }}
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-primary">Ajouter</button>
                                 </td>
                             </tr>
-                        </table>
-                    </form>
+                        </form>
+                    </table>
                 </div>
             </div>
         </div>

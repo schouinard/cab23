@@ -80,7 +80,7 @@
                     {{ Form::hidden('benevole_id', $benevole->id, ['id' => 'benevole_id']) }}
                     <tr>
                         <td class="{{ $errors->first('service_type_id', 'has-error') }}">
-                            {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
+                            {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
                         </td>
                         <td class="{{ $errors->first('beneficiaire_id', 'has-error') }}">{{ Form::text('beneficiaire', null, ['class' => 'form-control autocomplete',
                                 'data-model' => 'beneficiaire',

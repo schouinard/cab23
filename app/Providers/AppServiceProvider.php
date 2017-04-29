@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index'], function($view){
+           $view->with('serviceTypes', \App\ServiceType::all());
+        });
     }
 
     /**
