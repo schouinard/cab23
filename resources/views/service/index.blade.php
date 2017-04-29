@@ -76,7 +76,20 @@
                     <h3>Liste des derniers services entrés</h3>
                 </div>
                 <div class="box-body table-responsive">
-
+                    <header>
+                        <h4>Filtres</h4>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">Type</a>
+                            <ul class="dropdown-menu">
+                                @foreach($serviceTypes as $service)
+                                    <li>
+                                        <a href="/services?type={{$service->id}}">{{$service->nom}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </header>
                     <table class="datatable table table-hover table-bordered">
                         <thead>
                         <tr>

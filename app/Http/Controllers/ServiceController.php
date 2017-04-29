@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreService;
 use App\Service;
+use App\Filters\ServiceFilters;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -21,9 +22,9 @@ class ServiceController extends Controller
         return back();
     }
 
-    public function index()
+    public function index(ServiceFilters $filters)
     {
-        $services = Service::latest();
+        $services = Service::filter($filters)->get();
 
         return view('service.index', compact('services'));
     }

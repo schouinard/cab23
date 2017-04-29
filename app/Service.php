@@ -27,4 +27,9 @@ class Service extends Model
     {
         return Service::with(['benevole', 'beneficiaire'])->orderBy('created_at', 'desc')->limit(50)->get();
     }
+
+    public static function scopeFilter($query, $filters = [])
+    {
+        return $filters->apply($query);
+    }
 }
