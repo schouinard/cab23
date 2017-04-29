@@ -63,28 +63,42 @@
             </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
+            @if (count($errors))
+                <div class="callout callout-danger">
+                    <h4>Veuillez valider les points suivants avant de continuer.</h4>
+                    <ul class="error-content">
+                        @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <table class="table table-bordered">
                 <form method="POST" action="{{ $benevole->path() . '/services' }}">
                     {{ csrf_field() }}
-                    <input type="hidden" name="benevole_id" id="benevole_id" value="{{ $benevole->id }}"/>
-                    <input type="hidden" name="beneficiaire_id" id="beneficiaire_id">
+                    {{ Form::hidden('beneficiaire_id', null , ['id' => 'beneficiaire_id']) }}
+                    {{ Form::hidden('benevole_id', $benevole->id, ['id' => 'benevole_id']) }}
                     <tr>
-                        <td>
-                            {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control']) }}
+                        <td class="{{ $errors->first('service_type_id', 'has-error') }}">
+                            {{ Form::select('service_type_id', \App\ServiceType::pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
                         </td>
-                        <td><input type="text" class="form-control autocomplete" data-model="beneficiaire"
-                                   data-display="nom_complet"
-                                   placeholder="Bénéficiaire"/></td>
+                        <td class="{{ $errors->first('beneficiaire_id', 'has-error') }}">{{ Form::text('beneficiaire', null, ['class' => 'form-control autocomplete',
+                                'data-model' => 'beneficiaire',
+                                'data-display' => 'nom_complet',
+                                'placeholder' => 'Bénéficiaire',
+                                'required' => 'required',
+                                ]) }}
+                        </td>
                         <td>
-                            <div class="input-group date datepicker">
+                            <div class="input-group date datepicker {{ $errors->first('rendu_le', 'has-error') }}">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right'])}}
+                                {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right', 'required' => 'required'])}}
                             </div>
                         </td>
-                        <td>
-                            <input name="don" type="text" class="form-control"/>
+                        <td class="{{ $errors->first('don', 'has-error') }}">
+                            {{ Form::text('don', null, ['class' => 'form-control']) }}
                         </td>
                         <td>
                             <button type="submit" class="btn btn-primary">Ajouter</button>
