@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Benevole;
+use App\Filters\BenevoleFilters;
 use App\Http\Requests\StorePerson;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,9 @@ class BenevoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BenevoleFilters $filters)
     {
-        $benevoles = Benevole::all();
-
+        $benevoles = Benevole::filter($filters)->get();
         return view('benevole.index', compact('benevoles'));
     }
 

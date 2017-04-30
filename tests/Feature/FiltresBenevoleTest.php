@@ -1,0 +1,39 @@
+<?php
+
+namespace Tests\Feature;
+
+use Carbon\Carbon;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+class FiltresBenevoleTest extends TestCase
+{
+    use DatabaseMigrations;
+
+    /** @test */
+    public function a_user_can_filter_by_naissance_month()
+    {
+        $this->signIn();
+
+        $bornInJanuary = create('App\Benevole', ['naissance' => Carbon::create(null,1,1)]);
+        $bornInMarch = create('App\Benevole', ['naissance' => Carbon::create(null,3,1)]);
+
+        $this->get('benevoles?anniversaire=01')
+            ->assertSee($bornInJanuary->nom)
+            ->assertDontSee($bornInMarch->nom);
+    }
+
+    /** @test */
+    public function a_user_can_filter_by_quartier()
+    {
+        $this->signIn();
+        $benevole = create('App\Benevole', ['quartier_id' => 1]);
+        $benevoleWithOtherQuartier = create('App\Benevole', ['quartier_id' => 2]);
+
+        $this->get('benevoles?quartier=1')
+            ->assertSee($benevole->nom)
+            ->assertDontSee($benevoleWithOtherQuartier->nom);
+    }
+}

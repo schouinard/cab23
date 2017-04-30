@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Benevole extends Model
+class Benevole extends BaseModel
 {
     protected $guarded = [];
 

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Quartier;
 use App\ServiceType;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 
@@ -23,11 +24,29 @@ class AppServiceProvider extends ServiceProvider
             $view->with('serviceTypes', $serviceTypes);
         });
 
-        \View::composer(['beneficiaire.create', 'benevole.create'], function ($view) {
-           $quartiers = \Cache::rememberForever('quartiers', function(){
-               return Quartier::orderBy('nom')->get();
-           });
-           $view->with('quartiers', $quartiers);
+        \View::composer('*', function ($view) {
+            $quartiers = \Cache::rememberForever('quartiers', function () {
+                return Quartier::orderBy('nom')->get();
+            });
+            $view->with('quartiers', $quartiers);
+        });
+
+        \View::composer(['benevole.index', 'beneficiaire.index'], function ($view) {
+            $months = [
+                'Janvier' => 1,
+                'Février' => 2,
+                'Mars' => 3,
+                'Avril' => 4,
+                'Mai' => 5,
+                'Juin' => 6,
+                'Juillet' => 7,
+                'Août' => 8,
+                'Septembre' => 9,
+                'Octobre' => 10,
+                'Novembre' => 11,
+                'Décembre' => 12,
+            ];
+            $view->with('months', array_flip($months));
         });
     }
 
