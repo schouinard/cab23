@@ -2,11 +2,8 @@
 
 namespace App;
 
-
 class Benevole extends BaseModel
 {
-    protected $guarded = [];
-
     protected $appends = ['nom_complet'];
 
     protected $dates = [

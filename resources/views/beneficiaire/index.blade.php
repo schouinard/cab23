@@ -8,7 +8,39 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Filtres</h3>
+                    <div class="box-tools pull-right">
+                        <!-- This will cause the box to collapse when clicked -->
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div><!-- /.box-tools -->
+                </div>
+                <div class="box-body">
+                    <form action="" method="get">
+                        <div class="form-group col-md-3">
+                            {{ Form::label('quartier', 'Quartier:') }}
+                            {{ Form::select('quartier', $quartiers->pluck('nom','id'),request('quartier'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ Form::label('type', 'Mois de naissance:') }}
+                            {{ Form::select('anniversaire', $months,request('anniversaire'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                        </div>
+                        <div class="form-group col-md-12">
+                            <input type="submit" class="btn btn-primary" value="Filtrer"/>
+                            <a href="/beneficiaires" class="btn btn-primary">Effacer les filtres</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="box">
                 <div class="box-body table-responsive">
                     <table class="datatable table table-hover table-bordered">
@@ -19,7 +51,12 @@
                             <th>Prenom</th>
                             <th>Courriel</th>
                             <th>Telephone</th>
-                            <th>Quartier</th>
+                            @if(request('quartier'))
+                                <th>Quartier</th>
+                            @endif
+                            @if(request('anniversaire'))
+                                <th>Anniversaire</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -30,7 +67,20 @@
                                 <td>{{ $beneficiaire->prenom }}</td>
                                 <td>{{ $beneficiaire->email }}</td>
                                 <td>{{ $beneficiaire->telephone }}</td>
-                                <td>{{ $beneficiaire->quartier }}</td>
+                                @if(request('quartier'))
+                                    <td>
+                                        @if($beneficiaire->quartier_id)
+                                            {{$quartiers->where('id', $beneficiaire->quartier_id)->first()->nom}}
+                                        @endif
+                                    </td>
+                                @endif
+                                @if(request('anniversaire'))
+                                    <td>
+                                        @if($beneficiaire->naissance)
+                                            {{ $beneficiaire->naissance->format('d M') }}
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

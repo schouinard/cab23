@@ -5,10 +5,8 @@ namespace App;
 use App\Service;
 use Illuminate\Database\Eloquent\Model;
 
-class Beneficiaire extends Model
+class Beneficiaire extends BaseModel
 {
-    protected $guarded = [];
-
     protected $appends = ['nom_complet'];
 
     protected $dates = [

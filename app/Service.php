@@ -2,10 +2,8 @@
 
 namespace App;
 
-
 class Service extends BaseModel
 {
-    protected $guarded = [];
     protected $with = ['type'];
 
     public function benevole()
@@ -26,10 +24,5 @@ class Service extends BaseModel
     public static function latest()
     {
         return Service::with(['benevole', 'beneficiaire'])->orderBy('created_at', 'desc')->limit(50)->get();
-    }
-
-    public static function scopeFilter($query, $filters = [])
-    {
-        return $filters->apply($query);
     }
 }

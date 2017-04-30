@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Beneficiaire;
 use App\Benevole;
+use App\Filters\BeneficiaireFilters;
 use App\Http\Requests\StorePerson;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class BeneficiaireController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BeneficiaireFilters $filters)
     {
-        $beneficiaires = Beneficiaire::all();
+        $beneficiaires = Beneficiaire::filter($filters)->get();
 
         return view('beneficiaire.index', compact('beneficiaires'));
     }
