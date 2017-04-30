@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\ServiceType;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 
@@ -15,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \View::composer(['beneficiaire.show', 'benevole.show', 'service.index'], function($view){
-           $view->with('serviceTypes', \App\ServiceType::all());
+            $serviceTypes = \Cache::rememberForever('serviceTypes', function(){
+                return ServiceType::all()->orderBy('nom');
+            });
+           $view->with('serviceTypes', $serviceTypes);
         });
     }
 

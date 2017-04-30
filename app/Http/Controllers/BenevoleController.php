@@ -51,8 +51,7 @@ class BenevoleController extends Controller
      */
     public function show(Benevole $benevole)
     {
-        $benevole = Benevole::with(['services.beneficiaire', 'services.type'])->where('id', $benevole->id)->first();
-
+        $benevole->load('services.beneficiaire');
         return view('benevole.show', compact('benevole'));
     }
 

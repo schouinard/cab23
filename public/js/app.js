@@ -20,6 +20,14 @@ $('.datatable').DataTable({
     stateSave: true
 });
 
+$('.services-rendus').DataTable({
+    language: {
+        url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
+    },
+    stateSave: true,
+    "order": [[ 3, "desc" ]]
+});
+
 $('.textarea').wysihtml5({
     toolbar: {
         fa: true

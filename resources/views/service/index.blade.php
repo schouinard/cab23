@@ -11,7 +11,14 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3>Ajouter un nouveau service rendu</h3>
+                    <h3 class="box-title">Ajouter un nouveau service rendu</h3>
+                    <div class="box-tools pull-right">
+                        <!-- This will cause the box to collapse when clicked -->
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div><!-- /.box-tools -->
                 </div>
                 @if (count($errors))
                     <div class="callout callout-danger">
@@ -31,7 +38,7 @@
                             {{ Form::hidden('benevole_id', null, ['id' => 'benevole_id']) }}
                             <tr>
                                 <td class="{{ $errors->first('service_type_id', 'has-error') }}">
-                                    {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
+                                    {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),request('type'), ['class' => 'form-control', 'required' => 'required']) }}
                                 </td>
                                 <td class="{{ $errors->first('benevole_id', 'has-error') }}">
                                     {{ Form::text('benevole', null, ['class' => 'form-control autocomplete',
@@ -73,24 +80,57 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3>Liste des derniers services entrés</h3>
+                    <h3 class="box-title">Filtres</h3>
+                    <div class="box-tools pull-right">
+                        <!-- This will cause the box to collapse when clicked -->
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div><!-- /.box-tools -->
+                </div>
+                <div class="box-body">
+                    <form action="" method="get">
+                        <div class="form-group col-md-6">
+                            {{ Form::label('type', 'Type de service:') }}
+                            {{ Form::select('type', $serviceTypes->pluck('nom', 'id'),request('type'), ['class' => 'form-control', 'placeholder' => 'Tous les types']) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ Form::label('from', 'De:') }}
+                            <div class="input-group date datepicker">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                {{Form::text('from', request('from'), ['class' => 'form-control pull-right'])}}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ Form::label('to', 'À:') }}
+                            <div class="input-group date datepicker">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                {{Form::text('to', request('to'), ['class' => 'form-control pull-right'])}}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <input type="submit" class="btn btn-primary" value="Filtrer" />
+                            <a href="/services" class="btn btn-primary">Effacer les filtres</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Liste des services rendus</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <header>
-                        <h4>Filtres</h4>
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">Type</a>
-                            <ul class="dropdown-menu">
-                                @foreach($serviceTypes as $service)
-                                    <li>
-                                        <a href="/services?type={{$service->id}}">{{$service->nom}}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </header>
-                    <table class="datatable table table-hover table-bordered">
+
+                    <table class="table table-hover table-bordered services-rendus">
                         <thead>
                         <tr>
                             <td>Type</td>
