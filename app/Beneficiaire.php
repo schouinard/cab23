@@ -28,6 +28,11 @@ class Beneficiaire extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function quartier()
+    {
+        return $this->belongsTo(Quartier::class);
+    }
+
     public function addService($service)
     {
         $this->services()->create($service);

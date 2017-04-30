@@ -86,4 +86,10 @@ class BeneficiaireTest extends TestCase
 
         $this->followRedirects($response)->assertSee('error-content');
     }
+
+    /** @test */
+    function it_can_have_a_quartier()
+    {
+        $this->assertInstanceOf(\App\Quartier::class, $this->beneficiaire->quartier);
+    }
 }

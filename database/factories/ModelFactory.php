@@ -38,10 +38,10 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'code_postal' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'naissance' => $faker->dateTime,
-        'quartier' => $faker->colorName,
+        'quartier_id' => App\Quartier::inRandomOrder()->first(),
         'inscription' => $faker->dateTime,
         'accepte_ca' => $faker->dateTime,
-        'remarque' => $faker->paragraph(2)
+        'remarque' => $faker->paragraph(2),
     ];
 });
 
@@ -59,7 +59,7 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'code_postal' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'naissance' => $faker->dateTime,
-        'quartier' => $faker->colorName,
+        'quartier_id' => App\Quartier::inRandomOrder()->first(),
         'conjoint' => $faker->name,
         'remarque' => $faker->paragraph(1),
         'resource_nom' => $faker->name,
@@ -85,11 +85,11 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         'beneficiaire_id' => function () {
             return factory('App\Beneficiaire')->create()->id;
         },
-        'service_type_id' => function() {
+        'service_type_id' => function () {
             return App\ServiceType::inRandomOrder()->first();
         },
         'rendu_le' => $faker->date(),
-        'don' => $faker->randomFloat(2,0,1000),
+        'don' => $faker->randomFloat(2, 0, 1000),
 
     ];
 });

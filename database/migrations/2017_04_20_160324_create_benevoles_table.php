@@ -21,7 +21,7 @@ class CreateBenevolesTable extends Migration
             $table->string('ville');
             $table->string('province');
             $table->string('code_postal');
-            $table->string('quartier')->nullable();
+            $table->unsignedInteger('quartier_id')->nullable();
             $table->string('telephone')->nullable();
             $table->string('telephone2')->nullable();
             $table->string('cellulaire')->nullable();
