@@ -32,11 +32,11 @@ class ChampsInteretsBenevoleTest extends TestCase
         $clientele = Clientele::find(1);
 
         $this->get($this->benevole->path())
-             ->assertDontSee($clientele->nom);
+            ->assertDontSee($clientele->nom);
 
         $this->benevole->clienteles()->sync([$clientele->id]);
-        
+
         $this->get($this->benevole->path())
-             ->assertSee($clientele->nom);
+            ->assertSee($clientele->nom);
     }
 }
