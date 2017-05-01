@@ -1,9 +1,16 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Dashboard')
+@section('title', 'Fiche bénévole - '. $benevole->nom_complet)
 
 @section('content_header')
-    <h1>Fiche bénévole - {{ $benevole->prenom }} &nbsp; {{ $benevole->nom }}</h1>
+    <div class="page-heading">
+        <h1 class="flex">
+            Fiche bénévole - {{ $benevole->nom_complet }}
+            @if($benevole->inscription)
+                <small class="pull-right">Inscrit {{ $benevole->inscription->diffForHumans() }}</small>
+            @endif
+        </h1>
+    </div>
 @stop
 
 @section('content')

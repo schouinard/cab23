@@ -39,3 +39,7 @@
 .datepicker{
     padding:0;
 }
+
+.flex{
+    display:flex;
+}
