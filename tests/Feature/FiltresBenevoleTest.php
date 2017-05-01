@@ -17,12 +17,12 @@ class FiltresBenevoleTest extends TestCase
     {
         $this->signIn();
 
-        $bornInJanuary = create('App\Benevole', ['naissance' => Carbon::create(null,1,1)]);
-        $bornInMarch = create('App\Benevole', ['naissance' => Carbon::create(null,3,1)]);
+        $bornInJanuary = create('App\Benevole', ['naissance' => Carbon::create(null, 1, 1)]);
+        $bornInMarch = create('App\Benevole', ['naissance' => Carbon::create(null, 3, 1)]);
 
         $this->get('benevoles?anniversaire=01')
-            ->assertSee($bornInJanuary->nom)
-            ->assertDontSee($bornInMarch->nom);
+             ->assertSee(htmlentities($bornInJanuary->nom, ENT_QUOTES))
+             ->assertDontSee(htmlentities($bornInMarch->nom, ENT_QUOTES));
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class FiltresBenevoleTest extends TestCase
         $benevoleWithOtherQuartier = create('App\Benevole', ['quartier_id' => 2]);
 
         $this->get('benevoles?quartier=1')
-            ->assertSee($benevole->nom)
-            ->assertDontSee($benevoleWithOtherQuartier->nom);
+             ->assertSee(htmlentities($benevole->nom, ENT_QUOTES))
+             ->assertDontSee(htmlentities($benevoleWithOtherQuartier->nom, ENT_QUOTES));
     }
 }

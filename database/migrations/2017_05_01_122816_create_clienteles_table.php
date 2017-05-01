@@ -19,7 +19,7 @@ class CreateClientelesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('clienteles_benevoles', function(Blueprint $table){
+        Schema::create('clienteles_benevoles', function (Blueprint $table) {
             $table->unsignedInteger('clientele_id')->index();
             $table->unsignedInteger('benevole_id')->index();
             $table->timestamps();

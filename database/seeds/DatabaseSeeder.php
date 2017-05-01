@@ -103,6 +103,7 @@ class DatabaseSeeder extends Seeder
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
             ]);
+            $benevole->clienteles()->attach([1,3,5]);
         }
     }
 }

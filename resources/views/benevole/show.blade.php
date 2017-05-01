@@ -26,6 +26,25 @@
     </div><!-- /.box -->
     <div class="box box-primary">
         <div class="box-header with-border">
+            <h3 class="box-title">Champs d'intérêt</h3>
+            <div class="box-tools pull-right">
+                <!-- This will cause the box to collapse when clicked -->
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div><!-- /.box-tools -->
+        </div>
+        <div class="box-body">
+            <h4>Clientèles</h4>
+            <ul>
+                @foreach($benevole->clienteles as $clientele)
+                    <li>{{$clientele->nom}}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
             <h3 class="box-title">Services rendus</h3>
             <div class="box-tools pull-right">
                 <!-- This will cause the box to collapse when clicked -->
