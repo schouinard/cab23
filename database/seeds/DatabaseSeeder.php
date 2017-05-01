@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +25,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedServiceTypes();
         $this->seedQuartiers();
+        $this->seedClienteles();
     }
 
     public function seedServiceTypes()
@@ -69,6 +69,29 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($quartiers as $quartier) {
             App\Quartier::create(['nom' => $quartier]);
+        }
+    }
+
+    public function seedClienteles()
+    {
+        $clienteles = [
+            'Famille/couple',
+            'Handicap physique',
+            'Dépendance',
+            'Femmes',
+            'Handicap intellectuel',
+            'Services aux organismes',
+            'Hommes',
+            'Santé mentale',
+            'Adolescent',
+            'Problème de santé',
+            'Enfants',
+            'Immigrant',
+            'Ainé(e)s',
+            'Pauvreté et exclusion',
+        ];
+        foreach ($clienteles as $clientele) {
+            App\Clientele::create(['nom' => $clientele]);
         }
     }
 

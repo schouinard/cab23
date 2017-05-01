@@ -30,6 +30,11 @@ class Benevole extends BaseModel
         return $this->belongsTo(Quartier::class);
     }
 
+    public function clienteles()
+    {
+        return $this->belongsToMany(Clientele::class, 'clienteles_benevoles');
+    }
+
     public function addService($service)
     {
         $this->services()->create($service);
