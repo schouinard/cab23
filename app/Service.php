@@ -4,6 +4,8 @@ namespace App;
 
 class Service extends BaseModel
 {
+    use RecordsActivity;
+
     protected $with = ['type'];
 
     public function benevole()

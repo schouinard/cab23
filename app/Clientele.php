@@ -2,6 +2,9 @@
 
 namespace App;
 
-class Clientele extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+
+class Clientele extends Model
 {
+    protected $guarded = [];
 }

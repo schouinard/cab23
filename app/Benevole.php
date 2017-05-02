@@ -4,6 +4,8 @@ namespace App;
 
 class Benevole extends BaseModel
 {
+    use RecordsActivity;
+
     protected $appends = ['nom_complet'];
 
     protected $dates = [
