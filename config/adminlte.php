@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'CAB Aide23',
 
     'title_prefix' => '',
 
@@ -142,11 +142,11 @@ return [
             'icon' => 'heart',
             'url' => 'services',
         ],
-        'Gestion des utilisateurs',
         [
             'text' => 'Utilisateurs',
             'url' => 'users',
             'icon' => 'user',
+            'can' => 'manage-users',
         ],
     ],
 

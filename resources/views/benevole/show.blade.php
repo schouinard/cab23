@@ -3,7 +3,7 @@
 @section('title', 'Fiche bénévole - '. $benevole->nom_complet)
 
 @section('content_header')
-    <div class="page-heading">
+    <div class="page-header">
         <h1 class="flex">
             Fiche bénévole - {{ $benevole->nom_complet }}
             @if($benevole->inscription)

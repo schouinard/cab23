@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\UserFilters;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -12,9 +14,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserFilters $filters)
     {
-        //
+        if (Gate::denies('manage-users')) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
+        $users = User::filter($filters)->get();
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -24,7 +31,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        if (Gate::denies('manage-users')) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
     }
 
     /**
@@ -35,7 +44,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Gate::denies('manage-users')) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
     }
 
     /**
@@ -46,6 +57,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if (Gate::denies('manage-users') && auth()->user()->id != $user->id) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
+
         return view('users.show', ['profileUser' => $user]);
     }
 
@@ -57,7 +72,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        abort_if(! auth()->user()->isAdmin, 403);
     }
 
     /**
@@ -69,7 +84,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        abort_if(! auth()->user()->isAdmin, 403);
     }
 
     /**
@@ -80,6 +95,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort_if(! auth()->user()->isAdmin, 403);
     }
 }

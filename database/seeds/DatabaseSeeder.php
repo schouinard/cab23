@@ -11,14 +11,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = new App\User(['name' => 'cab23', 'email' => 'cab23@cab23.com', 'password' => bcrypt('1qaz2wsx')]);
-        $user->save();
-
         $this->seedStaticTables();
+
+        $this->seedSuperAdmin();
 
         if (getenv('APP_ENV') == 'local') {
             $this->seedTestData();
         }
+    }
+
+    public function seedSuperAdmin()
+    {
+        $user = new App\User([
+            'name' => 'cab23',
+            'email' => 'cab23@cab23.com',
+            'password' => bcrypt('1qaz2wsx'),
+            'isAdmin' => true,
+        ]);
+        $user->save();
     }
 
     public function seedStaticTables()
@@ -103,7 +113,21 @@ class DatabaseSeeder extends Seeder
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
             ]);
-            $benevole->clienteles()->attach([1,3,5]);
+            $benevole->clienteles()->attach([1, 3, 5]);
         }
+
+        factory('App\User')->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('admin'),
+            'isAdmin' => true,
+        ]);
+
+        factory('App\User')->create([
+            'name' => 'accueil',
+            'email' => 'accueil@accueil.com',
+            'password' => bcrypt('accueil'),
+            'isAdmin' => false,
+        ]);
     }
 }

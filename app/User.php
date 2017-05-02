@@ -29,4 +29,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public static function scopeFilter($query, $filters = [])
+    {
+        return $filters->apply($query);
+    }
+
+    public function path()
+    {
+        return '/users/' . $this->id;
+    }
 }
