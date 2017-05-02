@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
 use App\Filters\UserFilters;
 use App\User;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -61,7 +63,10 @@ class UserController extends Controller
             abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
         }
 
-        return view('users.show', ['profileUser' => $user]);
+        return view('users.show', [
+            'profileUser' => $user,
+            'activities' => Activity::feed($user),
+        ]);
     }
 
     /**

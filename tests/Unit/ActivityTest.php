@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Activity;
 use App\User;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -49,5 +50,23 @@ class ActivityTest extends TestCase
 
         //the factory creates a benevole, a beneficiaire and a service.
         $this->assertEquals(3, Activity::count());
+    }
+
+    /** @test */
+    function it_fetches_a_feed_for_a_user()
+    {
+        factory('App\Benevole',2)->create();
+
+        auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
+
+        $feed = Activity::feed(auth()->user(), 50);
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->format('Y-m-d')
+        ));
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->subWeek()->format('Y-m-d')
+        ));
     }
 }

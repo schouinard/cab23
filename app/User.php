@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return '/users/' . $this->id;
     }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
