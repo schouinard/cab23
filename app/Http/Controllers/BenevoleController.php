@@ -41,7 +41,8 @@ class BenevoleController extends Controller
     {
         $benevole = Benevole::create($request->toArray());
 
-        return redirect($benevole->path());
+        return redirect($benevole->path())
+            ->with('flash', 'Bénévole créé avec succès.');
     }
 
     /**

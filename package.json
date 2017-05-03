@@ -19,6 +19,7 @@
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4",
     "notify-send": "^0.1.2",
-    "vue": "^2.1.10"
+    "vue": "^2.3",
+    "vue-template-compiler": "^2.3"
   }
 }

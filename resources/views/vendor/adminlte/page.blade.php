@@ -14,7 +14,7 @@
 ][config('adminlte.layout')] : '') . (config('adminlte.collapse_sidebar') ? ' sidebar-collapse ' : ''))
 
 @section('body')
-    <div class="wrapper">
+    <div id="app" class="wrapper">
 
         <!-- Main Header -->
         <header class="main-header">
@@ -116,6 +116,7 @@
             <section class="content">
 
                 @yield('content')
+                <flash message="{{ session('flash') }}"></flash>
 
             </section>
             <!-- /.content -->
@@ -126,12 +127,16 @@
         </div>
         <!-- /.content-wrapper -->
 
+        <!-- ./wrapper -->
+
+
     </div>
-    <!-- ./wrapper -->
+
 @stop
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/app.min.js') }}"></script>
+    <script src="{{asset('js_compiled/app.js')}}"></script>
     @stack('js')
     @yield('js')
 @stop

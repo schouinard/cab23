@@ -11,4 +11,4 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.copy('/vendor/caouecs/laravel-lang/src/fr/*.*', '/resources/lang/fr/');
+mix.js('resources/assets/js/app.js', 'public/js_compiled');
