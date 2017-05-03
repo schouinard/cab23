@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Activity;
 use App\Filters\UserFilters;
 use App\User;
-use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -98,8 +97,17 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        abort_if(! auth()->user()->isAdmin, 403);
+        if (Gate::denies('can-delete')) {
+            abort(403, 'Seuls les administrateurs peuvent supprimer des entrées.');
+        }
+
+        $user->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/users');
     }
 }

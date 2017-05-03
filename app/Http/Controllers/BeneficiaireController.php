@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Beneficiaire;
-use App\Benevole;
 use App\Filters\BeneficiaireFilters;
 use App\Http\Requests\StorePerson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BeneficiaireController extends Controller
 {
@@ -54,6 +54,7 @@ class BeneficiaireController extends Controller
     public function show(Beneficiaire $beneficiaire)
     {
         $beneficiaire->load('services.benevole');
+
         return view('beneficiaire.show', compact('beneficiaire'));
     }
 
@@ -88,7 +89,16 @@ class BeneficiaireController extends Controller
      */
     public function destroy(Beneficiaire $beneficiaire)
     {
-        //
+        if (Gate::denies('can-delete')) {
+            abort(403, 'Seuls les administrateurs peuvent supprimer des entrées.');
+        }
+
+        $beneficiaire->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/beneficiaires');
     }
 
     public function listAllForAutocomplete()

@@ -28,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-users', function ($user){
             return $user->isAdmin;
         });
+
+        Gate::define('can-delete', function ($user){
+            return $user->isAdmin;
+        });
     }
 }

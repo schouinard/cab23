@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -9,6 +10,13 @@ class User extends Authenticatable
 {
     use Notifiable;
     use RecordsActivity;
+    use SoftDeletes;
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * The attributes that are mass assignable.

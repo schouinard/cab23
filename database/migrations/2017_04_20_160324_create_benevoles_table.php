@@ -31,6 +31,7 @@ class CreateBenevolesTable extends Migration
             $table->text('remarque')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

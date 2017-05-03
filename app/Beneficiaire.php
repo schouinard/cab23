@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Beneficiaire extends BaseModel
 {
-    use RecordsActivity;
-
     protected $appends = ['nom_complet'];
 
     protected $dates = [

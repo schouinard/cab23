@@ -42,6 +42,7 @@ class CreateBeneficiairesTable extends Migration
             $table->string('resource2_tel_pager')->nullable();
             $table->string('resource2_email')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

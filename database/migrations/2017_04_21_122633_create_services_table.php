@@ -21,6 +21,7 @@ class CreateServicesTable extends Migration
             $table->float('don')->nullable();
             $table->date('rendu_le');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

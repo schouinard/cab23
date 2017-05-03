@@ -7,6 +7,8 @@ use App\Filters\BenevoleFilters;
 use App\Http\Requests\StorePerson;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class BenevoleController extends Controller
 {
@@ -88,7 +90,16 @@ class BenevoleController extends Controller
      */
     public function destroy(Benevole $benevole)
     {
-        //
+        if (Gate::denies('can-delete')) {
+            abort(403, 'Seuls les administrateurs peuvent supprimer des entrées.');
+        }
+
+        $benevole->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/benevoles');
     }
 
     public function listAllForAutocomplete()

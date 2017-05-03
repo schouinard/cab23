@@ -22,13 +22,12 @@ class DatabaseSeeder extends Seeder
 
     public function seedSuperAdmin()
     {
-        $user = new App\User([
+        $user = App\User::create([
             'name' => 'cab23',
             'email' => 'cab23@cab23.com',
             'password' => bcrypt('1qaz2wsx'),
             'isAdmin' => true,
         ]);
-        $user->save();
     }
 
     public function seedStaticTables()
