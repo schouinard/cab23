@@ -31,8 +31,16 @@
                             {{ Form::select('anniversaire', $months,request('anniversaire'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                         </div>
                         <div class="form-group col-md-3">
+                            {{ Form::label('accepte_ca', 'Accepté au CA:') }}
+                            {{ Form::select('accepte_ca', ['accepte' => 'Accepté', 'probation' => 'Probation'],request('accepte_ca'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                        </div>
+                        <div class="form-group col-md-3">
                             {{ Form::label('statut', 'Statut:') }}
                             {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],request('statut'), ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ Form::label('inscription', 'Année d\'inscription:') }}
+                            {{ Form::selectYear('inscription', 1980, Carbon\Carbon::now()->year, request('inscription'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                         </div>
                         <div class="form-group col-md-12">
                             <input type="submit" class="btn btn-primary" value="Filtrer"/>
@@ -61,6 +69,12 @@
                             @if(request('anniversaire'))
                                 <th>Anniversaire</th>
                             @endif
+                            @if(request('accepte_ca'))
+                                <th>Accepté</th>
+                            @endif
+                            @if(request('inscription') || request('accepte_ca'))
+                                <th>Inscription</th>
+                            @endif
                             @if(request('statut'))
                                 <th>Statut</th>
                             @endif
@@ -87,6 +101,14 @@
                                             {{ $benevole->naissance->format('d M') }}
                                         @endif
                                     </td>
+                                @endif
+                                @if(request('accepte_ca') && $benevole->accepte_ca)
+                                    <td>{{ $benevole->accepte_ca->format('Y-m-d') }}</td>
+                                @elseif(request('accepte_ca'))
+                                    <td>En probation</td>
+                                @endif
+                                @if(request('inscription') || request('accepte_ca'))
+                                    <td>{{ $benevole->inscription->format('Y-m-d') }}</td>
                                 @endif
                                 @if(request('statut'))
                                     <td>

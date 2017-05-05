@@ -63,4 +63,32 @@ class FiltresBenevoleTest extends TestCase
             ->assertSee($deletedItem->nom);
     }
 
+    /** @test */
+    public function a_user_can_filter_by_inscription_year()
+    {
+        $this->signIn();
+        $benevole = create('App\Benevole', ['inscription' => '1985-10-10']);
+        $benevoleWithOtherYear = create('App\Benevole', ['inscription' => '1989-10-10']);
+
+        $this->get('benevoles?inscription=1985')
+            ->assertSee($benevole->inscription->format('Y-m-d'))
+            ->assertDontSee($benevoleWithOtherYear->inscription->format('Y-m-d'));
+    }
+
+    /** @test */
+    public function a_user_can_filter_by_accepte_ca()
+    {
+        $this->signIn();
+        $benevole = create('App\Benevole', ['accepte_ca' => '1985-10-10']);
+        $benevoleProbation = create('App\Benevole', ['accepte_ca' => null]);
+
+        $this->get('benevoles?accepte_ca=accepte')
+            ->assertSee($benevole->accepte_ca->format('Y-m-d'))
+            ->assertDontSee($benevoleProbation->nom);
+
+        $this->get('benevoles?accepte_ca=probation')
+            ->assertSee($benevoleProbation->nom)
+            ->assertDontSee($benevole->nom);
+    }
+
 }
