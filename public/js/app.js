@@ -17,7 +17,11 @@ $('.datatable').DataTable({
     language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
     },
-    stateSave: true
+    stateSave: true,
+    dom: 'lfrtipB',
+    buttons: [
+        'copy', 'csv', 'excel', 'pdf'
+    ]
 });
 
 $('.services-rendus').DataTable({
@@ -25,7 +29,11 @@ $('.services-rendus').DataTable({
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
     },
     stateSave: true,
-    "order": [[ 3, "desc" ]]
+    "order": [[ 3, "desc" ]],
+    dom: 'lfrtipB',
+    buttons: [
+        'copy', 'csv', 'excel', 'pdf'
+    ]
 });
 
 $('.textarea').wysihtml5({

@@ -39,9 +39,9 @@ class SoftDeletionTest extends TestCase
 
         $items = [
             'benevoles' => create('App\Benevole'),
-             'users' => create('App\User'),
-             'beneficiaires' => create('App\Beneficiaire'),
-             'services' => create('App\Service'),
+            'users' => create('App\User'),
+            'beneficiaires' => create('App\Beneficiaire'),
+            'services' => create('App\Service'),
         ];
 
         foreach ($items as $item => $model) {

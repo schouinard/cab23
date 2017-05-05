@@ -31,8 +31,9 @@
                     </div>
                 @endif
                 <div class="box-body">
-                    <table class="table table-bordered">
-                        <form method="POST" action="/services">
+                    <form method="POST" action="/services">
+
+                        <table class="table table-bordered">
                             {{ csrf_field() }}
                             {{ Form::hidden('beneficiaire_id', null , ['id' => 'beneficiaire_id']) }}
                             {{ Form::hidden('benevole_id', null, ['id' => 'benevole_id']) }}
@@ -70,8 +71,9 @@
                                     <button type="submit" class="btn btn-primary">Ajouter</button>
                                 </td>
                             </tr>
-                        </form>
-                    </table>
+                        </table>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -114,7 +116,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <input type="submit" class="btn btn-primary" value="Filtrer" />
+                            <input type="submit" class="btn btn-primary" value="Filtrer"/>
                             <a href="/services" class="btn btn-primary">Effacer les filtres</a>
                         </div>
                     </form>
@@ -147,10 +149,10 @@
                                     {{ $service->type->nom }}
                                 </td>
                                 <td>
-                                    <a href="{{$service->benevole->path()}}">{{$service->benevole->nom_complet}}</a>
+                                    <a href="{{$service->benevole->path()}}">{{$service->benevole->nom}}, {{ $service->benevole->prenom }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom_complet }}</a>
+                                    <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}, {{ $service->beneficiaire->prenom }}</a>
                                 </td>
                                 <td>
                                     {{ $service->rendu_le }}

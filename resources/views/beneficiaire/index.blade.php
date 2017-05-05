@@ -30,6 +30,10 @@
                             {{ Form::label('type', 'Mois de naissance:') }}
                             {{ Form::select('anniversaire', $months,request('anniversaire'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                         </div>
+                        <div class="form-group col-md-3">
+                            {{ Form::label('statut', 'Statut:') }}
+                            {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],request('statut'), ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                        </div>
                         <div class="form-group col-md-12">
                             <input type="submit" class="btn btn-primary" value="Filtrer"/>
                             <a href="/beneficiaires" class="btn btn-primary">Effacer les filtres</a>
@@ -57,6 +61,9 @@
                             @if(request('anniversaire'))
                                 <th>Anniversaire</th>
                             @endif
+                            @if(request('statut'))
+                                <th>Statut</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -79,6 +86,11 @@
                                         @if($beneficiaire->naissance)
                                             {{ $beneficiaire->naissance->format('d M') }}
                                         @endif
+                                    </td>
+                                @endif
+                                @if(request('statut'))
+                                    <td>
+                                        {{ $beneficiaire->trashed() ? 'Inactif' : 'Actif' }}
                                     </td>
                                 @endif
                             </tr>

@@ -77,7 +77,7 @@
                             {{ $service->type->nom }}
                         </td>
                         <td>
-                            <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom_complet }}</a>
+                            <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}, {{ $service->beneficiaire->prenom }}</a>
                         </td>
                         <td>
                             {{ $service->rendu_le }}
@@ -99,8 +99,9 @@
                     </ul>
                 </div>
             @endif
-            <table class="table table-bordered">
-                <form method="POST" action="{{ $benevole->path() . '/services' }}">
+            <form method="POST" action="{{ $benevole->path() . '/services' }}">
+
+                <table class="table table-bordered">
                     {{ csrf_field() }}
                     {{ Form::hidden('beneficiaire_id', null , ['id' => 'beneficiaire_id']) }}
                     {{ Form::hidden('benevole_id', $benevole->id, ['id' => 'benevole_id']) }}
@@ -130,8 +131,9 @@
                             <button type="submit" class="btn btn-primary">Ajouter</button>
                         </td>
                     </tr>
-                </form>
-            </table>
+                </table>
+            </form>
+
         </div><!-- box-footer -->
     </div><!-- /.box -->
 @stop

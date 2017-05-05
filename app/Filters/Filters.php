@@ -25,7 +25,7 @@ abstract class Filters
         $this->builder = $builder;
 
         foreach ($this->getFilters() as $filter => $value) {
-            if(method_exists($this,$filter)){
+            if (method_exists($this, $filter)) {
                 $this->$filter($value);
             }
         }
@@ -33,12 +33,23 @@ abstract class Filters
         return $this->builder;
     }
 
-
     /**
      * @return array
      */
     public function getFilters()
     {
         return $this->request->intersect($this->filters);
+    }
+
+    public function statut($statut)
+    {
+        switch ($statut) {
+            case 'Tous' :
+                return $this->builder->withTrashed();
+            case 'Inactifs' :
+                return $this->builder->onlyTrashed();
+            default :
+                return $this->builder;
+        }
     }
 }

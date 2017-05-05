@@ -4,7 +4,7 @@ namespace App\Filters;
 
 class BenevoleFilters extends Filters
 {
-    protected $filters = ['anniversaire', 'quartier'];
+    protected $filters = ['anniversaire', 'quartier', 'statut'];
 
     public function anniversaire($month)
     {

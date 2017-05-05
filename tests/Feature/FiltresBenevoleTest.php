@@ -36,4 +36,31 @@ class FiltresBenevoleTest extends TestCase
              ->assertSee(htmlentities($benevole->nom, ENT_QUOTES))
              ->assertDontSee(htmlentities($benevoleWithOtherQuartier->nom, ENT_QUOTES));
     }
+
+    /** @test */
+    public function a_user_can_filter_and_get_all_statuses()
+    {
+        $this->signIn();
+        $item = create('App\Benevole');
+        $deletedItem = create('App\Benevole');
+        $deletedItem->delete();
+
+        $this->get('benevoles?statut=Tous')
+            ->assertSee($item->nom)
+            ->assertSee($deletedItem->nom);
+    }
+
+    /** @test */
+    public function a_user_can_filter_and_get_only_trashed()
+    {
+        $this->signIn();
+        $item = create('App\Benevole');
+        $deletedItem = create('App\Benevole');
+        $deletedItem->delete();
+
+        $this->get('benevoles?statut=Inactifs')
+            ->assertDontSee($item->nom)
+            ->assertSee($deletedItem->nom);
+    }
+
 }
