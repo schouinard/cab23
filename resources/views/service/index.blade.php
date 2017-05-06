@@ -20,60 +20,9 @@
                         </button>
                     </div><!-- /.box-tools -->
                 </div>
-                @if (count($errors))
-                    <div class="callout callout-danger">
-                        <h4>Veuillez valider les points suivants avant de continuer.</h4>
-                        <ul class="error-content">
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="box-body">
-                    <form method="POST" action="/services">
-
-                        <table class="table table-bordered">
-                            {{ csrf_field() }}
-                            {{ Form::hidden('beneficiaire_id', null , ['id' => 'beneficiaire_id']) }}
-                            {{ Form::hidden('benevole_id', null, ['id' => 'benevole_id']) }}
-                            <tr>
-                                <td class="{{ $errors->first('service_type_id', 'has-error') }}">
-                                    {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),request('type'), ['class' => 'form-control', 'required' => 'required']) }}
-                                </td>
-                                <td class="{{ $errors->first('benevole_id', 'has-error') }}">
-                                    {{ Form::text('benevole', null, ['class' => 'form-control autocomplete',
-                                        'data-model' => 'benevole',
-                                        'data-display' => 'nom_complet',
-                                        'placeholder' => 'Bénévole',
-                                        'required' => 'required',
-                                        ]) }}
-                                </td>
-                                <td class="{{ $errors->first('beneficiaire_id', 'has-error') }}">{{ Form::text('beneficiaire', null, ['class' => 'form-control autocomplete',
-                                'data-model' => 'beneficiaire',
-                                'data-display' => 'nom_complet',
-                                'placeholder' => 'Bénéficiaire',
-                                'required' => 'required',
-                                ]) }}
-                                </td>
-                                <td>
-                                    <div class="input-group date datepicker {{ $errors->first('rendu_le', 'has-error') }}">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        {{Form::text('rendu_le', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right', 'required' => 'required'])}}
-                                    </div>
-                                </td>
-                                <td class="{{ $errors->first('don', 'has-error') }}">
-                                    {{ Form::text('don', null, ['class' => 'form-control']) }}
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-
+                    @component("components.addService", ['serviceTypes' => $serviceTypes, 'beneficiaireId' => null, 'benevoleId' => null, 'showBenevole' => true, 'showBeneficiaire' =>true])
+                    @endcomponent
                 </div>
             </div>
         </div>
@@ -149,10 +98,12 @@
                                     {{ $service->type->nom }}
                                 </td>
                                 <td>
-                                    <a href="{{$service->benevole->path()}}">{{$service->benevole->nom}}, {{ $service->benevole->prenom }}</a>
+                                    <a href="{{$service->benevole->path()}}">{{$service->benevole->nom}}
+                                        , {{ $service->benevole->prenom }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}, {{ $service->beneficiaire->prenom }}</a>
+                                    <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}
+                                        , {{ $service->beneficiaire->prenom }}</a>
                                 </td>
                                 <td>
                                     {{ $service->rendu_le }}
