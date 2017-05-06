@@ -26,9 +26,9 @@ class Beneficiaire extends BaseModel
         return $this->hasMany(Service::class);
     }
 
-    public function quartier()
+    public function secteur()
     {
-        return $this->belongsTo(Quartier::class);
+        return $this->belongsTo(Secteur::class);
     }
 
     public function addService($service)

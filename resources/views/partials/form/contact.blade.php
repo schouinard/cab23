@@ -23,10 +23,10 @@
             </div>
         </div>
         <div class="row">
-            <!--- quartier form input ---->
-            <div class="form-group col-md-4 {{ $errors->first('quartier', 'has-error') }}">
-            	{{ Form::label('quartier_id', 'Quartier:') }}
-            	{{ Form::select('quartier_id', $quartiers->pluck('nom', 'id'), null, ['class' => 'form-control', 'placeholder' => '']) }}
+            <!--- secteur form input ---->
+            <div class="form-group col-md-4 {{ $errors->first('secteur', 'has-error') }}">
+            	{{ Form::label('secteur_id', 'Secteur:') }}
+            	{{ Form::select('secteur_id', $secteurs->pluck('nom', 'id'), null, ['class' => 'form-control', 'placeholder' => '']) }}
             </div>
             <!--- province form input ---->
             <div class="form-group col-md-4 {{ $errors->first('province', 'has-error') }}">

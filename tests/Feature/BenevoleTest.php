@@ -89,8 +89,8 @@ class BenevoleTest extends TestCase
     }
 
     /** @test */
-    function it_can_have_a_quartier()
+    function it_can_have_a_secteur()
     {
-        $this->assertInstanceOf(\App\Quartier::class, $this->benevole->quartier);
+        $this->assertInstanceOf(\App\Secteur::class, $this->benevole->secteur);
     }
 }

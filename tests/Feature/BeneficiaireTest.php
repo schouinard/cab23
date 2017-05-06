@@ -88,8 +88,8 @@ class BeneficiaireTest extends TestCase
     }
 
     /** @test */
-    function it_can_have_a_quartier()
+    function it_can_have_a_secteur()
     {
-        $this->assertInstanceOf(\App\Quartier::class, $this->beneficiaire->quartier);
+        $this->assertInstanceOf(\App\Secteur::class, $this->beneficiaire->secteur);
     }
 }

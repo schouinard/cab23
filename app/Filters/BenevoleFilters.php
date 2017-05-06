@@ -4,16 +4,16 @@ namespace App\Filters;
 
 class BenevoleFilters extends Filters
 {
-    protected $filters = ['anniversaire', 'quartier', 'statut', 'accepte_ca', 'inscription'];
+    protected $filters = ['anniversaire', 'secteur', 'statut', 'accepte_ca', 'inscription'];
 
     public function anniversaire($month)
     {
         return $this->builder->whereMonth('naissance', $month);
     }
 
-    public function quartier($quartier)
+    public function secteur($secteur)
     {
-        return $this->builder->where('quartier_id', $quartier);
+        return $this->builder->where('secteur_id', $secteur);
     }
 
     public function accepte_ca($accepte)

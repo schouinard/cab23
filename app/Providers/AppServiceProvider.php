@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Quartier;
+use App\Secteur;
 use App\ServiceType;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         \View::composer('*', function ($view) {
-            $quartiers = \Cache::rememberForever('quartiers', function () {
-                return Quartier::orderBy('nom')->get();
+            $secteurs = \Cache::rememberForever('secteurs', function () {
+                return Secteur::orderBy('nom')->get();
             });
-            $view->with('quartiers', $quartiers);
+            $view->with('secteurs', $secteurs);
         });
 
         \View::composer(['benevole.index', 'beneficiaire.index'], function ($view) {

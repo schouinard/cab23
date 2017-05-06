@@ -26,15 +26,15 @@ class FiltresBenevoleTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_by_quartier()
+    public function a_user_can_filter_by_secteur()
     {
         $this->signIn();
-        $benevole = create('App\Benevole', ['quartier_id' => 1]);
-        $benevoleWithOtherQuartier = create('App\Benevole', ['quartier_id' => 2]);
+        $benevole = create('App\Benevole', ['secteur_id' => 1]);
+        $benevoleWithOtherSecteur = create('App\Benevole', ['secteur_id' => 2]);
 
-        $this->get('benevoles?quartier=1')
+        $this->get('benevoles?secteur=1')
              ->assertSee(htmlentities($benevole->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($benevoleWithOtherQuartier->nom, ENT_QUOTES));
+             ->assertDontSee(htmlentities($benevoleWithOtherSecteur->nom, ENT_QUOTES));
     }
 
     /** @test */

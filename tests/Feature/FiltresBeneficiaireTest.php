@@ -24,14 +24,14 @@ class FiltresBeneficiaireTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_by_quartier()
+    public function a_user_can_filter_by_secteur()
     {
         $this->signIn();
-        $beneficiaire = create('App\Beneficiaire', ['quartier_id' => 1]);
-        $beneficiaireWithOtherQuartier = create('App\Beneficiaire', ['quartier_id' => 2]);
+        $beneficiaire = create('App\Beneficiaire', ['secteur_id' => 1]);
+        $beneficiaireWithOtherSecteur = create('App\Beneficiaire', ['secteur_id' => 2]);
 
-        $this->get('beneficiaires?quartier=1')
+        $this->get('beneficiaires?secteur=1')
              ->assertSee(htmlentities($beneficiaire->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($beneficiaireWithOtherQuartier->nom, ENT_QUOTES));
+             ->assertDontSee(htmlentities($beneficiaireWithOtherSecteur->nom, ENT_QUOTES));
     }
 }

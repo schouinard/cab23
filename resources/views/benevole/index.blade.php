@@ -23,8 +23,8 @@
                 <div class="box-body">
                     <form action="" method="get">
                         <div class="form-group col-md-3">
-                            {{ Form::label('quartier', 'Quartier:') }}
-                            {{ Form::select('quartier', $quartiers->pluck('nom','id'),request('quartier'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                            {{ Form::label('secteur', 'Secteur:') }}
+                            {{ Form::select('secteur', $secteurs->pluck('nom','id'),request('secteur'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                         </div>
                         <div class="form-group col-md-3">
                             {{ Form::label('type', 'Mois de naissance:') }}
@@ -63,8 +63,8 @@
                             <th>Prenom</th>
                             <th>Courriel</th>
                             <th>Telephone</th>
-                            @if(request('quartier'))
-                                <th>Quartier</th>
+                            @if(request('secteur'))
+                                <th>Secteur</th>
                             @endif
                             @if(request('anniversaire'))
                                 <th>Anniversaire</th>
@@ -88,10 +88,10 @@
                                 <td>{{ $benevole->prenom }}</td>
                                 <td>{{ $benevole->email }}</td>
                                 <td>{{ $benevole->telephone }}</td>
-                                @if(request('quartier'))
+                                @if(request('secteur'))
                                     <td>
-                                        @if($benevole->quartier_id)
-                                            {{$quartiers->where('id', $benevole->quartier_id)->first()->nom}}
+                                        @if($benevole->secteur_id)
+                                            {{$secteurs->where('id', $benevole->secteur_id)->first()->nom}}
                                         @endif
                                     </td>
                                 @endif

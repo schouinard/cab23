@@ -4,15 +4,15 @@ namespace App\Filters;
 
 class BeneficiaireFilters extends Filters
 {
-    protected $filters = ['quartier', 'anniversaire', 'statut'];
+    protected $filters = ['secteur', 'anniversaire', 'statut'];
 
     public function anniversaire($month)
     {
         return $this->builder->whereMonth('naissance', $month);
     }
 
-    public function quartier($quartier)
+    public function secteur($secteur)
     {
-        return $this->builder->where('quartier_id', $quartier);
+        return $this->builder->where('secteur_id', $secteur);
     }
 }

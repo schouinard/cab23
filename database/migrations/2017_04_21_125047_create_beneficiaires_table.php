@@ -21,7 +21,7 @@ class CreateBeneficiairesTable extends Migration
             $table->string('ville');
             $table->string('province');
             $table->string('code_postal');
-            $table->unsignedInteger('quartier_id')->nullable();
+            $table->unsignedInteger('secteur_id')->nullable();
             $table->string('conjoint')->nullable();
             $table->string('telephone')->nullable();
             $table->string('telephone2')->nullable();

@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
     public function seedStaticTables()
     {
         $this->seedServiceTypes();
-        $this->seedQuartiers();
+        $this->seedSecteurs();
         $this->seedClienteles();
     }
 
@@ -59,9 +59,9 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    public function seedQuartiers()
+    public function seedSecteurs()
     {
-        $quartiers = [
+        $secteurs = [
             'Ile d\'Orléans',
             'Côte de Beauport',
             'Ville de Québec',
@@ -76,8 +76,8 @@ class DatabaseSeeder extends Seeder
             'Villeneuve',
             'Ste-Brigitte de Laval',
         ];
-        foreach ($quartiers as $quartier) {
-            App\Quartier::create(['nom' => $quartier]);
+        foreach ($secteurs as $secteur) {
+            App\Secteur::create(['nom' => $secteur]);
         }
     }
 
