@@ -51,7 +51,9 @@
                         <span class="bg-blue">{{$date}}</span>
                     </li>
                     @foreach($records as $record)
-                        @include("users.activities.{$record->type}")
+                        @if(view()->exists("users.activities.{$record->type}"))
+                            @include("users.activities.{$record->type}")
+                        @endif
                     @endforeach
                 @endforeach
                 <li>

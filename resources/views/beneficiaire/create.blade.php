@@ -19,208 +19,63 @@
     @endif
     <form method="POST" action="/beneficiaires">
         {{ csrf_field() }}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Informations personnelles</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <!--- prenom form input ---->
-                        <div class="form-group {{ $errors->first('prenom', 'has-error') }}">
-                            {{ Form::label('prenom', 'Prénom (*):') }}
-                            {{ Form::text('prenom', null, ['class' => 'form-control', 'required' => true]) }}
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Contact</a></li>
+                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
+                <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Statut</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active row" id="tab_1">
+                    @component("components.identification")
+                        @slot('additionalFields')
+                            <div class="form-group  col-md-6 {{ $errors->first('conjoint', 'has-error') }}">
+                                {{ Form::label('conjoint', 'Conjoint:') }}
+                                {{ Form::text('conjoint', null, ['class' => 'form-control']) }}
+                            </div>
+                        @endslot
+                    @endcomponent
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    @include('partials.form.contact')
+                    <h3>Adresse de facturation</h3>
+                    <div class="row">
+                        <!--- adresse form input ---->
+                        <div class="form-group col-md-12 {{ $errors->first('adresse', 'has-error') }}">
+                            {{ Form::label('facturation_adresse', 'Adresse:') }}
+                            {{ Form::text('facturation_adresse', null, ['class' => 'form-control']) }}
                         </div>
-                        <!--- nom form input ---->
-                        <div class="form-group {{ $errors->first('nom', 'has-error') }}">
-                            {{ Form::label('nom', 'Nom (*):') }}
-                            {{ Form::text('nom', null, ['class' => 'form-control', 'required' => true]) }}
+                        <!--- ville form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('ville', 'has-error') }}">
+                            {{ Form::label('facturation_ville', 'Ville:') }}
+                            {{ Form::text('facturation_ville', 'Québec', ['class' => 'form-control']) }}
                         </div>
 
-                        <!--- naissance datepicker --->
-                        <div class="form-group">
-                            {{ Form::label('naissance', 'Naissance:') }}
-                            <div class="input-group date datepicker-naissance">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                {{ Form::text('naissance', null, ['class' => 'form-control pull-right']) }}
-                            </div>
+                        <!--- province form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('province', 'has-error') }}">
+                            {{ Form::label('facturation_province', 'Province:') }}
+                            {{ Form::text('facturation_province', 'QC', ['class' => 'form-control']) }}
                         </div>
-                        <!--- conjoint form input ---->
-                        <div class="form-group {{ $errors->first('conjoint', 'has-error') }}">
-                            {{ Form::label('conjoint', 'Conjoint:') }}
-                            {{ Form::text('conjoint', null, ['class' => 'form-control']) }}
+                        <!--- code_postal form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('code_postal', 'has-error') }}">
+                            {{ Form::label('facturation_code_postal', 'Code postal:') }}
+                            {{ Form::text('facturation_code_postal', null, ['class' => 'form-control codepostal']) }}
                         </div>
-                    </div><!-- /.box-body -->
-                    <div class="box-footer">
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                    @include('partials.form.ressources')
+                </div>
+                <div class="tab-pane row" id="tab_4">
+                    @include('beneficiaire.partials.statut')
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
 
-                    </div><!-- box-footer -->
-                </div><!-- /.box -->
-            </div>
-            <div class="col-md-6">
-                @include('partials.form.contact')
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Personne ressource 1</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <!--- resource_nom form input ---->
-                        <div class="form-group {{ $errors->first('resource_nom', 'has-error') }}">
-                            {{ Form::label('resource_nom', 'Nom complet:') }}
-                            {{ Form::text('resource_nom', null, ['class' => 'form-control']) }}
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                {{ Form::label('resource_tel_maison', 'Téléphone maison:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource_tel_maison', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                            <!--- telephone2 form input ---->
-                            <div class="form-group col-md-6 {{ $errors->first('resource_tel_bureau', 'has-error') }}">
-                                {{ Form::label('resource_tel_bureau', 'Bureau:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource_tel_bureau', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                {{ Form::label('resource_tel_cel', 'Cellulaire:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource_tel_cel', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                            <!--- resource_tel_pager form input ---->
-                            <div class="form-group col-md-6 {{ $errors->first('resource_tel_pager', 'has-error') }}">
-                                {{ Form::label('resource_tel_pager', 'Téléavertisseur:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource_tel_pager', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- resource_email form input ---->
-                        <div class="form-group  {{ $errors->first('resource_email', 'has-error') }}">
-                            <label for="resource_email">Courriel:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                {{ Form::text('resource_email', null, ['class' => 'form-control']) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Personne ressource 2</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <!--- resource2_nom form input ---->
-                        <div class="form-group {{ $errors->first('resource2_nom', 'has-error') }}">
-                            {{ Form::label('resource2_nom', 'Nom complet:') }}
-                            {{ Form::text('resource2_nom', null, ['class' => 'form-control']) }}
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                {{ Form::label('resource2_tel_maison', 'Téléphone maison:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource2_tel_maison', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                            <!--- telephone2 form input ---->
-                            <div class="form-group col-md-6 {{ $errors->first('resource2_tel_bureau', 'has-error') }}">
-                                {{ Form::label('resource2_tel_bureau', 'Bureau:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource2_tel_bureau', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--- telephone form input ---->
-                            <div class="form-group col-md-6">
-                                {{ Form::label('resource2_tel_cel', 'Cellulaire:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource2_tel_cel', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                            <!--- resource2_tel_pager form input ---->
-                            <div class="form-group col-md-6 {{ $errors->first('resource2_tel_pager', 'has-error') }}">
-                                {{ Form::label('resource2_tel_pager', 'Téléavertisseur:') }}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    {{ Form::text('resource2_tel_pager', null, ['class' => 'form-control telephone']) }}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- resource2_email form input ---->
-                        <div class="form-group  {{ $errors->first('resource2_email', 'has-error') }}">
-                            <label for="resource2_email">Courriel:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                {{ Form::text('resource2_email', null, ['class' => 'form-control']) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><label for="remarque">Remarque</label></h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div>
-                    <div class="box-body">
-                        <!--- remarque form input ---->
-                        <div class="form-group">
-                            <textarea name="remarque" class="form-control textarea" rows="10" width="100%"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>
 @stop

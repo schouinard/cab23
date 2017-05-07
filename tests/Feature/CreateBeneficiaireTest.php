@@ -19,7 +19,9 @@ class CreateBeneficiaireTest extends TestCase
 
         $this->post('/beneficiaires', $beneficiaire);
 
-        $this->get('/beneficiaires')->assertSee($beneficiaire['nom'])->assertSee($beneficiaire['prenom']);
+        $this->get('/beneficiaires')
+            ->assertSee(webformat($beneficiaire['nom']))
+            ->assertSee(webformat($beneficiaire['prenom']));
     }
 
     /** @test */

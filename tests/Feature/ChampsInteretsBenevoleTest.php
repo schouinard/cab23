@@ -37,6 +37,6 @@ class ChampsInteretsBenevoleTest extends TestCase
         $this->benevole->clienteles()->sync([$clientele->id]);
 
         $this->get($this->benevole->path())
-            ->assertSee($clientele->nom);
+            ->assertSee(webformat($clientele->nom));
     }
 }

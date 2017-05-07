@@ -14,3 +14,7 @@ function raw($class, $attributes = [])
 {
     return factory($class)->raw();
 }
+
+function webformat($string){
+    return htmlentities($string, ENT_QUOTES);
+}

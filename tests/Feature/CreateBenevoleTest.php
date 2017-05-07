@@ -19,7 +19,9 @@ class CreateBenevoleTest extends TestCase
 
         $this->post('/benevoles', $benevole);
 
-        $this->get('/benevoles')->assertSee($benevole['nom'])->assertSee($benevole['prenom']);
+        $this->get('/benevoles')
+            ->assertSee(webformat($benevole['nom']))
+            ->assertSee(webformat($benevole['prenom']));
     }
 
     /** @test */

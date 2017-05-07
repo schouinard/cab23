@@ -1,0 +1,28 @@
+<!--- prenom form input ---->
+<div class="form-group col-md-6 {{ $errors->first('prenom', 'has-error') }}">
+    {{ Form::label('prenom', 'Prénom (*):') }}
+    {{ Form::text('prenom', null, ['class' => 'form-control', 'required' => true]) }}
+</div>
+<!--- nom form input ---->
+<div class="form-group  col-md-6 {{ $errors->first('nom', 'has-error') }}">
+    {{ Form::label('nom', 'Nom (*):') }}
+    {{ Form::text('nom', null, ['class' => 'form-control', 'required' => true]) }}
+</div>
+
+<!--- naissance datepicker --->
+<div class="form-group  col-md-6">
+    {{ Form::label('naissance', 'Naissance:') }}
+    <div class="input-group date datepicker-naissance">
+        <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </div>
+        {{ Form::text('naissance', null, ['class' => 'form-control pull-right']) }}
+    </div>
+</div>
+
+{{ $additionalFields  }}
+
+<div class="form-group col-md-12 {{ $errors->first('', 'has-error') }}">
+	{{ Form::label('remarque', 'Remarques:') }}
+	{{ Form::textarea('', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
+</div>

@@ -21,6 +21,10 @@ class CreateBeneficiairesTable extends Migration
             $table->string('ville');
             $table->string('province');
             $table->string('code_postal');
+            $table->string('facturation_adresse')->nullable();
+            $table->string('facturation_ville')->nullable();
+            $table->string('facturation_province')->nullable();
+            $table->string('facturation_code_postal')->nullable();
             $table->unsignedInteger('secteur_id')->nullable();
             $table->string('conjoint')->nullable();
             $table->string('telephone')->nullable();
@@ -35,12 +39,32 @@ class CreateBeneficiairesTable extends Migration
             $table->string('resource_tel_cel')->nullable();
             $table->string('resource_tel_pager')->nullable();
             $table->string('resource_email')->nullable();
+            $table->string('resource_lien')->nullable();
             $table->string('resource2_nom')->nullable();
             $table->string('resource2_tel_maison')->nullable();
             $table->string('resource2_tel_bureau')->nullable();
             $table->string('resource2_tel_cel')->nullable();
             $table->string('resource2_tel_pager')->nullable();
             $table->string('resource2_email')->nullable();
+            $table->string('resource2_lien')->nullable();
+            $table->string('resource3_nom')->nullable();
+            $table->string('resource3_tel_maison')->nullable();
+            $table->string('resource3_tel_bureau')->nullable();
+            $table->string('resource3_tel_cel')->nullable();
+            $table->string('resource3_tel_pager')->nullable();
+            $table->string('resource3_email')->nullable();
+            $table->string('resource3_lien')->nullable();
+
+            // statut
+            $table->string('residence')->nullable();
+            $table->string('occupation')->nullable();
+            $table->date('evaluation_domicile')->nullable();
+            $table->date('premiere_demande')->nullable();
+            $table->unsignedInteger('income_source_id');
+            $table->boolean('contribution_volontaire');
+            $table->boolean('visite_medicale');
+            $table->boolean('gratuite');
+
             $table->timestamps();
             $table->softDeletes();
         });

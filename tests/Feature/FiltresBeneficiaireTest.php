@@ -19,8 +19,8 @@ class FiltresBeneficiaireTest extends TestCase
         $bornInMarch = create('App\Beneficiaire', ['naissance' => Carbon::create(null, 3, 1)]);
 
         $this->get('beneficiaires?anniversaire=01')
-             ->assertSee(htmlentities($bornInJanuary->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($bornInMarch->nom, ENT_QUOTES));
+             ->assertSee(webformat($bornInJanuary->nom))
+             ->assertDontSee(webformat($bornInMarch->nom));
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class FiltresBeneficiaireTest extends TestCase
         $beneficiaireWithOtherSecteur = create('App\Beneficiaire', ['secteur_id' => 2]);
 
         $this->get('beneficiaires?secteur=1')
-             ->assertSee(htmlentities($beneficiaire->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($beneficiaireWithOtherSecteur->nom, ENT_QUOTES));
+             ->assertSee(webformat($beneficiaire->nom))
+             ->assertDontSee(webformat($beneficiaireWithOtherSecteur->nom));
     }
 }

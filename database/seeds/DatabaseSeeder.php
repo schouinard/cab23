@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->seedServiceTypes();
         $this->seedSecteurs();
         $this->seedClienteles();
+        $this->seedIncomeSources();
     }
 
     public function seedServiceTypes()
@@ -101,6 +102,23 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($clienteles as $clientele) {
             App\Clientele::create(['nom' => $clientele]);
+        }
+    }
+
+    public function seedIncomeSources()
+    {
+        $incomeSources = [
+            'Sécurité de vieillesse',
+            'Supplément de revenu garanti',
+            'Sécurité sociale',
+            'Curateur public du Québec',
+            'RRQ',
+            'Autre',
+        ];
+
+        foreach ($incomeSources as $incomeSource)
+        {
+            App\IncomeSource::create(['nom' => $incomeSource]);
         }
     }
 

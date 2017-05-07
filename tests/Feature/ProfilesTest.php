@@ -23,6 +23,6 @@ class ProfilesTest extends TestCase
     function a_user_has_a_profile()
     {
         $this->get('users/'. $this->user->id)
-            ->assertSee($this->user->name);
+            ->assertSee(webformat($this->user->name));
     }
 }

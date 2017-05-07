@@ -22,13 +22,13 @@ class BenevoleTest extends TestCase
     /** @test */
     function a_user_can_see_benevoles()
     {
-        $this->get('/benevoles')->assertSee(htmlentities($this->benevole->nom, ENT_QUOTES));
+        $this->get('/benevoles')->assertSee(webformat($this->benevole->nom));
     }
 
     /** @test */
     function a_user_can_see_a_specific_benevole()
     {
-        $this->get($this->benevole->path())->assertSee(htmlentities($this->benevole->nom, ENT_QUOTES));
+        $this->get($this->benevole->path())->assertSee(webformat($this->benevole->nom));
     }
 
     /** @test */

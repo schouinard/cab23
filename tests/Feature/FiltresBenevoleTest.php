@@ -21,8 +21,8 @@ class FiltresBenevoleTest extends TestCase
         $bornInMarch = create('App\Benevole', ['naissance' => Carbon::create(null, 3, 1)]);
 
         $this->get('benevoles?anniversaire=01')
-             ->assertSee(htmlentities($bornInJanuary->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($bornInMarch->nom, ENT_QUOTES));
+             ->assertSee(webformat($bornInJanuary->nom))
+             ->assertDontSee(webformat($bornInMarch->nom));
     }
 
     /** @test */
@@ -33,8 +33,8 @@ class FiltresBenevoleTest extends TestCase
         $benevoleWithOtherSecteur = create('App\Benevole', ['secteur_id' => 2]);
 
         $this->get('benevoles?secteur=1')
-             ->assertSee(htmlentities($benevole->nom, ENT_QUOTES))
-             ->assertDontSee(htmlentities($benevoleWithOtherSecteur->nom, ENT_QUOTES));
+             ->assertSee(webformat($benevole->nom))
+             ->assertDontSee(webformat($benevoleWithOtherSecteur->nom));
     }
 
     /** @test */
@@ -46,8 +46,8 @@ class FiltresBenevoleTest extends TestCase
         $deletedItem->delete();
 
         $this->get('benevoles?statut=Tous')
-            ->assertSee($item->nom)
-            ->assertSee($deletedItem->nom);
+            ->assertSee(webformat($item->nom))
+            ->assertSee(webformat($deletedItem->nom));
     }
 
     /** @test */
@@ -59,8 +59,8 @@ class FiltresBenevoleTest extends TestCase
         $deletedItem->delete();
 
         $this->get('benevoles?statut=Inactifs')
-            ->assertDontSee($item->nom)
-            ->assertSee($deletedItem->nom);
+            ->assertDontSee(webformat($item->nom))
+            ->assertSee(webformat($deletedItem->nom));
     }
 
     /** @test */
@@ -84,11 +84,11 @@ class FiltresBenevoleTest extends TestCase
 
         $this->get('benevoles?accepte_ca=accepte')
             ->assertSee($benevole->accepte_ca->format('Y-m-d'))
-            ->assertDontSee($benevoleProbation->nom);
+            ->assertDontSee(webformat($benevoleProbation->nom));
 
         $this->get('benevoles?accepte_ca=probation')
-            ->assertSee($benevoleProbation->nom)
-            ->assertDontSee($benevole->nom);
+            ->assertSee(webformat($benevoleProbation->nom))
+            ->assertDontSee(webformat($benevole->nom));
     }
 
 }
