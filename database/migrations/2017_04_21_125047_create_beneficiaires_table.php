@@ -61,9 +61,13 @@ class CreateBeneficiairesTable extends Migration
             $table->date('evaluation_domicile')->nullable();
             $table->date('premiere_demande')->nullable();
             $table->unsignedInteger('income_source_id');
-            $table->boolean('contribution_volontaire');
-            $table->boolean('visite_medicale');
-            $table->boolean('gratuite');
+            $table->boolean('contribution_volontaire')->default(false);
+            $table->boolean('visite_medicale')->default(false);
+            $table->boolean('gratuite')->default(false);
+            $table->boolean('accepte_sollicitation')->default(false);
+            $table->string('securite_sociale')->nullable();
+            $table->string('curateur_public')->nullable();
+            $table->string('autre_revenu')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

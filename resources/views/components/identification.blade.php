@@ -1,12 +1,12 @@
 <!--- prenom form input ---->
 <div class="form-group col-md-6 {{ $errors->first('prenom', 'has-error') }}">
     {{ Form::label('prenom', 'Prénom (*):') }}
-    {{ Form::text('prenom', null, ['class' => 'form-control', 'required' => true]) }}
+    {{ Form::text('prenom', null, ['class' => 'form-control']) }}
 </div>
 <!--- nom form input ---->
 <div class="form-group  col-md-6 {{ $errors->first('nom', 'has-error') }}">
     {{ Form::label('nom', 'Nom (*):') }}
-    {{ Form::text('nom', null, ['class' => 'form-control', 'required' => true]) }}
+    {{ Form::text('nom', null, ['class' => 'form-control']) }}
 </div>
 
 <!--- naissance datepicker --->

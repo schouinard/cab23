@@ -43,3 +43,8 @@
 .flex{
     display:flex;
 }
+
+.additional-field
+{
+    display: none;
+}

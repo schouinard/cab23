@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin;
         });
 
+        Gate::define('manage-confidential-fields', function($user){
+            return $user->isAdmin;
+        });
+
         Gate::define('can-delete', function ($user){
             return $user->isAdmin;
         });

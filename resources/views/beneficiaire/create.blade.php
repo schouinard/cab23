@@ -42,24 +42,24 @@
                     @include('partials.form.contact')
                     <h3>Adresse de facturation</h3>
                     <div class="row">
-                        <!--- adresse form input ---->
-                        <div class="form-group col-md-12 {{ $errors->first('adresse', 'has-error') }}">
+                        <!--- facturation_adresse form input ---->
+                        <div class="form-group col-md-12 {{ $errors->first('facturation_adresse', 'has-error') }}">
                             {{ Form::label('facturation_adresse', 'Adresse:') }}
                             {{ Form::text('facturation_adresse', null, ['class' => 'form-control']) }}
                         </div>
-                        <!--- ville form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('ville', 'has-error') }}">
+                        <!--- facturation_ville form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('facturation_ville', 'has-error') }}">
                             {{ Form::label('facturation_ville', 'Ville:') }}
                             {{ Form::text('facturation_ville', 'Québec', ['class' => 'form-control']) }}
                         </div>
 
-                        <!--- province form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('province', 'has-error') }}">
+                        <!--- facturation_province form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('facturation_province', 'has-error') }}">
                             {{ Form::label('facturation_province', 'Province:') }}
                             {{ Form::text('facturation_province', 'QC', ['class' => 'form-control']) }}
                         </div>
-                        <!--- code_postal form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('code_postal', 'has-error') }}">
+                        <!--- facturation_code_postal form input ---->
+                        <div class="form-group col-md-4 {{ $errors->first('facturation_code_postal', 'has-error') }}">
                             {{ Form::label('facturation_code_postal', 'Code postal:') }}
                             {{ Form::text('facturation_code_postal', null, ['class' => 'form-control codepostal']) }}
                         </div>
