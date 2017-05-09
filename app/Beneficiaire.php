@@ -36,6 +36,11 @@ class Beneficiaire extends FilterableModel
         return $this->belongsTo(Secteur::class);
     }
 
+    public function autonomies()
+    {
+        return $this->belongsToMany(Autonomie::class);
+    }
+
     public function addService($service)
     {
         $this->services()->create($service);
@@ -44,6 +49,11 @@ class Beneficiaire extends FilterableModel
     public function addServiceRequest($requestId, $attributes = [])
     {
         $this->serviceRequests()->sync($requestId, $attributes);
+    }
+
+    public function addAutonomie($autonomies = [])
+    {
+        $this->autonomies()->sync($autonomies);
     }
 
     public function getNomCompletAttribute()

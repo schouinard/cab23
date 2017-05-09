@@ -77,6 +77,7 @@
                     @include('beneficiaire.partials.statut')
                 </div>
                 <div class="tab-pane row" id="tab_5">
+                    @include('beneficiaire.partials.sante')
                 </div>
                 <div class="tab-pane" id="tab_6">
                     @include('beneficiaire.partials.requests')

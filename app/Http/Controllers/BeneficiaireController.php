@@ -40,14 +40,20 @@ class BeneficiaireController extends Controller
      */
     public function store(StorePerson $request)
     {
+        // extraire les relations many to many
         $serviceRequests = $request['requests'];
-        $request =  array_except($request, ['requests']);
+        $autonomies = $request['autonomy'];
+
+        $request =  array_except($request, ['requests', 'autonomy']);
 
         $beneficiaire = Beneficiaire::create($request->toArray());
 
+        // ajouter les relations many to many
         $beneficiaire->addServiceRequest($serviceRequests);
+        $beneficiaire->addAutonomie($autonomies);
 
-        return redirect($beneficiaire->path());
+        return redirect($beneficiaire->path())
+            ->with('flash', 'Bénéficiaire créé avec succès.');
     }
 
     /**

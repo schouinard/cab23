@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
         $this->seedClienteles();
         $this->seedIncomeSources();
         $this->seedRequestStatuses();
+        $this->seedEtatsSante();
+        $this->seedAutonomies();
     }
 
     public function seedServiceTypes()
@@ -133,6 +135,35 @@ class DatabaseSeeder extends Seeder
 
         foreach ($statuses as $status) {
             App\ServiceRequestStatus::create(['nom' => $status]);
+        }
+    }
+
+    public function seedEtatsSante()
+    {
+        $etats = [
+            'Convalescence',
+            'Autre',
+        ];
+        foreach ($etats as $etat){
+            App\EtatSante::create(['nom' => $etat]);
+        }
+    }
+
+    public function seedAutonomies()
+    {
+        $autonomies = [
+            'Marchette',
+            'Canne',
+            'Chaise roulante',
+            'Handicap visuel',
+            'Problème auditif',
+            'Problème d\'élocution',
+            'Troubles cognitifs',
+            'Besoin d\'accompagnement',
+        ];
+        foreach($autonomies as $autonomy)
+        {
+            \App\Autonomie::create(['nom' => $autonomy]);
         }
     }
 

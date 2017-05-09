@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceRequestStatus extends Model
+class Autonomie extends Model
 {
     protected $guarded = [];
 }

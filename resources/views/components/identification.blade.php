@@ -24,5 +24,5 @@
 
 <div class="form-group col-md-12 {{ $errors->first('', 'has-error') }}">
     {{ Form::label('remarque', 'Remarques:') }}
-    {{ Form::textarea('', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
+    {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
 </div>

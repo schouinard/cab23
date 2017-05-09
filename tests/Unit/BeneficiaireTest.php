@@ -20,7 +20,7 @@ class BeneficiaireTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->beneficiaire = create('App\Beneficiaire');
+        $this->beneficiaire = create(Beneficiaire::class);
     }
 
     /** @test */
@@ -89,5 +89,43 @@ class BeneficiaireTest extends TestCase
             ]
         );
         $this->assertCount(2, $this->beneficiaire->serviceRequests);
+    }
+
+    /** @test */
+    public function it_can_have_autonomies()
+    {
+        DB::table('autonomie_beneficiaire')->insert([
+            'beneficiaire_id' => $this->beneficiaire->id,
+            'autonomie_id' => 1,
+        ]);
+
+        $this->assertCount(1, $this->beneficiaire->autonomies);
+    }
+
+    /** @test */
+    public function it_can_add_autonomie()
+    {
+        $this->beneficiaire->addAutonomie(1);
+        $this->assertCount(1, $this->beneficiaire->autonomies);
+    }
+
+    /** @test */
+    public function it_cannot_add_the_same_autonomie_twice()
+    {
+        $this->beneficiaire->addAutonomie(1);
+        $this->beneficiaire->addAutonomie(1);
+        $this->assertCount(1, $this->beneficiaire->autonomies);
+    }
+
+    /** @test */
+    public function it_can_add_multiple_autonomies_at_the_same_time()
+    {
+        $this->beneficiaire->addAutonomie(
+            [
+                1,
+                2,
+            ]
+        );
+        $this->assertCount(2, $this->beneficiaire->autonomies);
     }
 }

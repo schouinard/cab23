@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Autonomie;
+use App\EtatSante;
 use App\IncomeSource;
 use App\Secteur;
 use App\ServiceRequestStatus;
@@ -30,6 +32,16 @@ class ViewServiceProvider extends ServiceProvider
                 return ServiceRequestStatus::all();
             });
             $view->with('serviceRequestStatuses', $serviceRequestsStatus);
+        });
+
+        \View::composer(['beneficiaire.partials.sante'], function ($view) {
+            $etats = \Cache::rememberForever('etatsSante', function() {
+                return EtatSante::all();
+            });
+            $autonomies = \Cache::rememberForever('autonomies', function(){
+                return Autonomie::all();
+            });
+            $view->with('etatsSante', $etats)->with('autonomies', $autonomies);
         });
 
         \View::composer('*', function ($view) {

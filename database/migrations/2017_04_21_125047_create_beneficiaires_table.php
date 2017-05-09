@@ -69,6 +69,12 @@ class CreateBeneficiairesTable extends Migration
             $table->string('curateur_public')->nullable();
             $table->string('autre_revenu')->nullable();
 
+            // etat de sante
+            $table->unsignedInteger('etat_sante_id')->nullable();
+            $table->text('etat_sante_autre')->nullable();
+            $table->text('autonomie_autre')->nullable();
+            $table->text('support_familial')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
