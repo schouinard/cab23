@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->seedRequestStatuses();
         $this->seedEtatsSante();
         $this->seedAutonomies();
+        $this->seedBenevoleTypes();
     }
 
     public function seedServiceTypes()
@@ -144,7 +145,7 @@ class DatabaseSeeder extends Seeder
             'Convalescence',
             'Autre',
         ];
-        foreach ($etats as $etat){
+        foreach ($etats as $etat) {
             App\EtatSante::create(['nom' => $etat]);
         }
     }
@@ -161,8 +162,7 @@ class DatabaseSeeder extends Seeder
             'Troubles cognitifs',
             'Besoin d\'accompagnement',
         ];
-        foreach($autonomies as $autonomy)
-        {
+        foreach ($autonomies as $autonomy) {
             \App\Autonomie::create(['nom' => $autonomy]);
         }
     }
@@ -191,5 +191,19 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('accueil'),
             'isAdmin' => false,
         ]);
+    }
+
+    public function seedBenevoleTypes()
+    {
+        $types = [
+            'Bénévole du CAB',
+            'Bénévole du milieu',
+            'Membre honoraire',
+        ];
+
+        foreach($types as $type)
+        {
+            \App\BenevoleType::create(['nom' => $type]);
+        }
     }
 }

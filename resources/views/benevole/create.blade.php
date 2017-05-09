@@ -19,93 +19,31 @@
     @endif
     <form method="POST" action="/benevoles">
         {{ csrf_field() }}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Informations personnelles</h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <!--- prenom form input ---->
-                        <div class="form-group {{ $errors->first('prenom', 'has-error') }}">
-                            {{ Form::label('prenom', 'Prénom (*):') }}
-                            {{ Form::text('prenom', null, ['class' => 'form-control', 'required' => true]) }}
-                        </div>
-                        <!--- nom form input ---->
-                        <div class="form-group {{ $errors->first('nom', 'has-error') }}">
-                            {{ Form::label('nom', 'Nom (*):') }}
-                            {{ Form::text('nom', null, ['class' => 'form-control', 'required' => true]) }}
-                        </div>
-
-                        <!--- naissance datepicker --->
-                        <div class="form-group">
-                            {{ Form::label('naissance', 'Naissance:') }}
-                            <div class="input-group date datepicker-naissance">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                {{ Form::text('naissance', null, ['class' => 'form-control pull-right']) }}
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Sélection</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active row" id="tab_1">
+                @component("components.identification")
+                    @slot('additionalFields')
+                        <!--- benevole_type_id form input ---->
+                            <div class="form-group col-md-6">
+                                {{ Form::label('benevole_type_id', 'Catégorie de bénévole:') }}
+                                {{ Form::select('benevole_type_id', $benevoleTypes->pluck('nom', 'id'),null, ['class' => 'form-control']) }}
                             </div>
-                        </div>
-
-                        <!--- inscription datepicker --->
-                        <div class="form-group">
-                            {{ Form::label('inscription', 'Inscription:') }}
-                            <div class="input-group date datepicker">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                {{ Form::text('inscription', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right']) }}
+                            <div class="col-md-12">
+                                @include('partials.form.contact')
                             </div>
-                        </div>
-                        <!--- accepte_ca datepicker --->
-                        <div class="form-group">
-                            {{ Form::label('accepte_ca', 'Accepté CA:') }}
-                            <div class="input-group date datepicker">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                {{ Form::text('accepte_ca', null, ['class' => 'form-control pull-right']) }}
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                    <div class="box-footer">
-
-                    </div><!-- box-footer -->
-                </div><!-- /.box -->
-            </div>
-            <div class="col-md-6">
-                @include('partials.form.contact')
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><label for="remarque">Remarque</label></h3>
-                        <div class="box-tools pull-right">
-                            <!-- This will cause the box to collapse when clicked -->
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div><!-- /.box-tools -->
-                    </div>
-                    <div class="box-body">
-                        <!--- remarque form input ---->
-                        <div class="form-group">
-                            {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'rows'=>10, 'width'=>'100%']) }}
-                        </div>
-                    </div>
+                        @endslot
+                    @endcomponent
+                </div>
+                <div class="tab-pane row" id="tab_2">
+                    @include('benevole.partials.selection')
                 </div>
             </div>
+            <!-- /.tab-content -->
         </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>

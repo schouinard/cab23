@@ -26,10 +26,15 @@ class CreateBenevolesTable extends Migration
             $table->string('telephone2')->nullable();
             $table->string('cellulaire')->nullable();
             $table->date('naissance')->nullable();
-            $table->date('inscription')->nullable();
-            $table->date('accepte_ca')->nullable();
             $table->text('remarque')->nullable();
             $table->string('email')->nullable();
+            $table->text('antecedents')->nullable();
+            $table->text('enquete_sociale')->nullable();
+            $table->date('inscription')->nullable();
+            $table->date('integration')->nullable();
+            $table->date('suivi')->nullable();
+            $table->date('accepte_ca')->nullable();
+            $table->unsignedInteger('benevole_type_id')->index();
             $table->timestamps();
             $table->softDeletes();
         });

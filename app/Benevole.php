@@ -13,6 +13,8 @@ class Benevole extends FilterableModel
         'naissance',
         'accepte_ca',
         'inscription',
+        'suivi',
+        'integration',
     ];
 
     public function path()

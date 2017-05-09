@@ -43,6 +43,11 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'inscription' => $faker->dateTime,
         'accepte_ca' => $faker->dateTime,
         'remarque' => $faker->paragraph(2),
+        'antecedents' => $faker->paragraph,
+        'enquete_sociale' => $faker->paragraph,
+        'integration' => $faker->dateTime,
+        'suivi' => $faker->dateTime,
+        'benevole_type_id' => App\BenevoleType::inRandomOrder()->first(),
     ];
 });
 

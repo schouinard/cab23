@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Autonomie;
+use App\BenevoleType;
 use App\EtatSante;
 use App\IncomeSource;
 use App\Secteur;
@@ -74,6 +75,13 @@ class ViewServiceProvider extends ServiceProvider
                 return IncomeSource::all();
             });
             $view->with('revenus', $revenus);
+        });
+
+        \View::composer(['benevole.create'], function ($view) {
+            $types = \Cache::rememberForever('benevoleTypes', function () {
+                return BenevoleType::all();
+            });
+            $view->with('benevoleTypes', $types);
         });
     }
 
