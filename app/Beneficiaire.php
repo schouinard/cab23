@@ -5,7 +5,7 @@ namespace App;
 use App\Service;
 use Illuminate\Database\Eloquent\Model;
 
-class Beneficiaire extends BaseModel
+class Beneficiaire extends FilterableModel
 {
     protected $appends = ['nom_complet'];
 

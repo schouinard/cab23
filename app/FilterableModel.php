@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-abstract class BaseModel extends Model
+abstract class FilterableModel extends Model
 {
     use RecordsActivity;
     use SoftDeletes;

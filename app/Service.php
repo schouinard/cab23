@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Service extends BaseModel
+class Service extends FilterableModel
 {
     protected $with = ['type'];
 

@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Benevole extends BaseModel
+class Benevole extends FilterableModel
 {
     protected $appends = ['nom_complet'];
 
