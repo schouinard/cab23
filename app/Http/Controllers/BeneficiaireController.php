@@ -40,7 +40,12 @@ class BeneficiaireController extends Controller
      */
     public function store(StorePerson $request)
     {
+        $serviceRequests = $request['requests'];
+        $request =  array_except($request, ['requests']);
+
         $beneficiaire = Beneficiaire::create($request->toArray());
+
+        $beneficiaire->addServiceRequest($serviceRequests);
 
         return redirect($beneficiaire->path());
     }

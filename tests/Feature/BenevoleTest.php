@@ -12,6 +12,9 @@ class BenevoleTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var \App\Benevole **/
+    protected $benevole;
+
     public function setUp()
     {
         parent::setUp();

@@ -1,4 +1,4 @@
-.tt-menu{
+.tt-menu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -20,7 +20,8 @@
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
-.tt-suggestion{
+
+.tt-suggestion {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -29,22 +30,22 @@
     color: #333;
     white-space: nowrap;
 }
-.tt-suggestion:hover{
+
+.tt-suggestion:hover {
     cursor: pointer;
     color: #262626;
     text-decoration: none;
     background-color: #f5f5f5;
 }
 
-.datepicker{
-    padding:0;
+.datepicker {
+    padding: 0;
 }
 
-.flex{
-    display:flex;
+.flex {
+    display: flex;
 }
 
-.additional-field
-{
+.additional-field {
     display: none;
 }

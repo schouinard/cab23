@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\IncomeSource;
 use App\Secteur;
+use App\ServiceRequestStatus;
 use App\ServiceType;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,11 +17,19 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index'], function ($view) {
-            $serviceTypes = \Cache::rememberForever('serviceTypes', function () {
-                return ServiceType::orderBy('nom')->get();
+        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index', 'beneficiaire.partials.requests'],
+            function ($view) {
+                $serviceTypes = \Cache::rememberForever('serviceTypes', function () {
+                    return ServiceType::orderBy('nom')->get();
+                });
+                $view->with('serviceTypes', $serviceTypes);
             });
-            $view->with('serviceTypes', $serviceTypes);
+
+        \View::composer(['beneficiaire.partials.requests'], function ($view) {
+            $serviceRequestsStatus = \Cache::rememberForever('serviceRequestsStatus', function() {
+                return ServiceRequestStatus::all();
+            });
+            $view->with('serviceRequestStatuses', $serviceRequestsStatus);
         });
 
         \View::composer('*', function ($view) {
@@ -48,8 +57,8 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('months', array_flip($months));
         });
 
-        \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut'], function ($view){
-            $revenus = \Cache::rememberForever('revenus', function(){
+        \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut'], function ($view) {
+            $revenus = \Cache::rememberForever('revenus', function () {
                 return IncomeSource::all();
             });
             $view->with('revenus', $revenus);

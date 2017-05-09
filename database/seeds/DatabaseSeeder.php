@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->seedSecteurs();
         $this->seedClienteles();
         $this->seedIncomeSources();
+        $this->seedRequestStatuses();
     }
 
     public function seedServiceTypes()
@@ -47,13 +48,13 @@ class DatabaseSeeder extends Seeder
             'Dépannage',
             'Dîner-rencontre',
             'Gardiennage',
-            'Popote roulante - Baladeur',
-            'Popote roulante - Conducteur',
+            'Popote roulante',
             'Service téléphonique',
-            'Support scolaire',
+            'Aide aux devoirs',
             'Télé - bonjour',
             'Travail de bureau',
             'Visite d’amitié',
+            'Autre service',
         ];
         foreach ($serviceTypes as $serviceType) {
             App\ServiceType::create(['nom' => $serviceType]);
@@ -116,9 +117,22 @@ class DatabaseSeeder extends Seeder
             'Autre',
         ];
 
-        foreach ($incomeSources as $incomeSource)
-        {
+        foreach ($incomeSources as $incomeSource) {
             App\IncomeSource::create(['nom' => $incomeSource]);
+        }
+    }
+
+    public function seedRequestStatuses()
+    {
+        $statuses = [
+            'Non demandé',
+            'En attente',
+            'En cours',
+            'Terminé / Annulé',
+        ];
+
+        foreach ($statuses as $status) {
+            App\ServiceRequestStatus::create(['nom' => $status]);
         }
     }
 

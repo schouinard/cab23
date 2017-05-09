@@ -14,9 +14,9 @@
 
     {{ Form::hidden('beneficiaire_id',$beneficiaireId, ['id' => 'beneficiaire_id']) }}
     {{ Form::hidden('benevole_id', $benevoleId, ['id' => 'benevole_id']) }}
-    <div class="{{ $errors->first('service_type_id', 'has-error') }} form-group col-md-4">
+    <div class="{{ $errors->first('service_id', 'has-error') }} form-group col-md-4">
         {{ Form::label('services_type_id', 'Type:') }}
-        {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::select('service_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
     </div>
     @if($showBenevole)
         <div class="{{ $errors->first('benevole_id', 'has-error') }} form-group col-md-2">

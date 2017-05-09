@@ -22,9 +22,11 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
-                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Contact</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Facturation</a></li>
                 <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
                 <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Statut</a></li>
+                <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">État de santé</a></li>
+                <li><a href="#tab_6" data-toggle="tab" aria-expanded="false">Services demandés</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active row" id="tab_1">
@@ -34,12 +36,14 @@
                                 {{ Form::label('conjoint', 'Conjoint:') }}
                                 {{ Form::text('conjoint', null, ['class' => 'form-control']) }}
                             </div>
+                            <div class="col-md-12">
+                                @include('partials.form.contact')
+                            </div>
                         @endslot
                     @endcomponent
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_2">
-                    @include('partials.form.contact')
                     <h3>Adresse de facturation</h3>
                     <div class="row">
                         <!--- facturation_adresse form input ---->
@@ -71,6 +75,11 @@
                 </div>
                 <div class="tab-pane row" id="tab_4">
                     @include('beneficiaire.partials.statut')
+                </div>
+                <div class="tab-pane row" id="tab_5">
+                </div>
+                <div class="tab-pane" id="tab_6">
+                    @include('beneficiaire.partials.requests')
                 </div>
             </div>
             <!-- /.tab-content -->

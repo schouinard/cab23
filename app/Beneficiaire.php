@@ -26,6 +26,11 @@ class Beneficiaire extends FilterableModel
         return $this->hasMany(Service::class);
     }
 
+    public function serviceRequests()
+    {
+        return $this->belongsToMany(ServiceType::class, 'service_requests', 'beneficiaire_id', 'service_type_id');
+    }
+
     public function secteur()
     {
         return $this->belongsTo(Secteur::class);
@@ -34,6 +39,11 @@ class Beneficiaire extends FilterableModel
     public function addService($service)
     {
         $this->services()->create($service);
+    }
+
+    public function addServiceRequest($requestId, $attributes = [])
+    {
+        $this->serviceRequests()->sync($requestId, $attributes);
     }
 
     public function getNomCompletAttribute()
