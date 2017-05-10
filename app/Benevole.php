@@ -22,6 +22,11 @@ class Benevole extends FilterableModel
         return '/benevoles/'.$this->id;
     }
 
+    public function getNomCompletAttribute()
+    {
+        return $this->prenom.' '.$this->nom;
+    }
+
     public function services()
     {
         return $this->hasMany(Service::class);
@@ -34,7 +39,17 @@ class Benevole extends FilterableModel
 
     public function clienteles()
     {
-        return $this->belongsToMany(Clientele::class, 'clienteles_benevoles');
+        return $this->belongsToMany(Clientele::class);
+    }
+
+    public function interets()
+    {
+        return $this->belongsToMany(Interet::class);
+    }
+
+    public function competences()
+    {
+        return $this->belongsToMany(Competence::class);
     }
 
     public function addService($service)
@@ -42,8 +57,41 @@ class Benevole extends FilterableModel
         $this->services()->create($service);
     }
 
-    public function getNomCompletAttribute()
+    public function addClientele($int)
     {
-        return $this->prenom.' '.$this->nom;
+        $this->clienteles()->sync($int);
+    }
+
+    public function addInteret($interet, $attributes = [])
+    {
+        $this->interets()->sync($interet, $attributes);
+    }
+
+    public function addCompetence($competence, $attributes = [])
+    {
+        $this->competences()->sync($competence, $attributes);
+    }
+
+    public function addInteretsCompetences($categoriesInterets)
+    {
+        foreach ($categoriesInterets as $categoriesInteret) {
+            if (key_exists('interets', $categoriesInteret)) {
+                $this->addInteret($this->removeUninterested($categoriesInteret['interets']));
+            }
+            if (key_exists('competences', $categoriesInteret)) {
+                $this->addCompetence($this->removeUninterested($categoriesInteret['competences']));
+            }
+        }
+    }
+
+    /**
+     * @param $categoriesInteret
+     * @return array
+     */
+    public function removeUninterested($array)
+    {
+        return array_where($array, function ($value, $key) {
+            return $value['priority'] > 0;
+        });
     }
 }

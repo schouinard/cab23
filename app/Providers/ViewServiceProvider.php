@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Autonomie;
 use App\BenevoleType;
+use App\CategorieInteretCompetence;
+use App\Clientele;
 use App\EtatSante;
 use App\IncomeSource;
 use App\Secteur;
@@ -82,6 +84,16 @@ class ViewServiceProvider extends ServiceProvider
                 return BenevoleType::all();
             });
             $view->with('benevoleTypes', $types);
+        });
+
+        \View::composer(['benevole.partials.interets'], function ($view) {
+            $interestGroups = \Cache::rememberForever('interestGroups', function () {
+                return CategorieInteretCompetence::all();
+            });
+            $clienteles = \Cache::rememberForever('clienteles', function(){
+                return Clientele::all();
+            });
+            $view->with(['interestGroups' => $interestGroups, 'clienteles' => $clienteles]);
         });
     }
 

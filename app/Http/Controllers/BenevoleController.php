@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-
 class BenevoleController extends Controller
 {
     /**
@@ -20,6 +19,7 @@ class BenevoleController extends Controller
     public function index(BenevoleFilters $filters)
     {
         $benevoles = Benevole::filter($filters)->get();
+
         return view('benevole.index', compact('benevoles'));
     }
 
@@ -41,7 +41,18 @@ class BenevoleController extends Controller
      */
     public function store(StorePerson $request)
     {
+        //extraire les relations many to many
+        $interets = array_pull($request, 'category');
+        $clienteles = array_pull($request, 'clienteles');
+
         $benevole = Benevole::create($request->toArray());
+
+        if ($clienteles) {
+            $benevole->addClientele($clienteles);
+        }
+        if ($interets) {
+            $benevole->addInteretsCompetences($interets);
+        }
 
         return redirect($benevole->path())
             ->with('flash', 'Bénévole créé avec succès.');
@@ -56,6 +67,7 @@ class BenevoleController extends Controller
     public function show(Benevole $benevole)
     {
         $benevole->load('services.beneficiaire');
+
         return view('benevole.show', compact('benevole'));
     }
 

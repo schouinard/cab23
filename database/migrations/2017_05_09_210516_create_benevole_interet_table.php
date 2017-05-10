@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientelesTable extends Migration
+class CreateBenevoleInteretTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateClientelesTable extends Migration
      */
     public function up()
     {
-        Schema::create('clienteles', function (Blueprint $table) {
+        Schema::create('benevole_interet', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nom');
-            $table->timestamps();
-        });
-
-        Schema::create('benevole_clientele', function (Blueprint $table) {
-            $table->unsignedInteger('clientele_id')->index();
             $table->unsignedInteger('benevole_id')->index();
+            $table->unsignedInteger('interet_id')->index();
+            $table->unsignedInteger('priority')->default(0);
             $table->timestamps();
-            $table->primary(['clientele_id', 'benevole_id']);
         });
     }
 
@@ -34,7 +29,6 @@ class CreateClientelesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clienteles');
-        Schema::dropIfExists('benevole_clientele');
+        Schema::dropIfExists('benevole_interet');
     }
 }
