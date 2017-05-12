@@ -18,6 +18,13 @@ class CreateEtatSantesTable extends Migration
             $table->string('nom');
             $table->timestamps();
         });
+
+        Schema::create('beneficiaire_etat_sante', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('beneficiaire_id');
+            $table->unsignedInteger('etat_sante_id');
+            $table->timestamps();
+        });
     }
 
     /**

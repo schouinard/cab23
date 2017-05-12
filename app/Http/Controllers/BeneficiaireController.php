@@ -43,6 +43,7 @@ class BeneficiaireController extends Controller
         // extraire les relations many to many
         $serviceRequests = array_pull($request, 'requests');
         $autonomies = array_pull($request, 'autonomy');
+        $etats_sante = array_pull($request, 'etats_sante');
 
         $beneficiaire = Beneficiaire::create($request->toArray());
 
@@ -52,6 +53,10 @@ class BeneficiaireController extends Controller
         }
         if ($autonomies) {
             $beneficiaire->addAutonomie($autonomies);
+        }
+        if($etats_sante)
+        {
+            $beneficiaire->addEtatSante($etats_sante);
         }
 
         return redirect($beneficiaire->path())

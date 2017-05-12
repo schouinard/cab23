@@ -83,7 +83,7 @@
     <div class="checkbox {{ $errors->first('visite_medicale', 'has-error') }}">
         <label>
             {{ Form::checkbox('visite_medicale', true) }}
-            Confirmation de visite médicale
+            Attestation de visite médicale
         </label>
     </div>
     <!--- gratuite form input ---->

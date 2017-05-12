@@ -143,8 +143,12 @@ class DatabaseSeeder extends Seeder
     public function seedEtatsSante()
     {
         $etats = [
+            'Déficience physique',
+            'Déficience intellectuelle',
+            'Démence',
+            'Pertes cognitives',
+            'Maladie mentale',
             'Convalescence',
-            'Autre',
         ];
         foreach ($etats as $etat) {
             App\EtatSante::create(['nom' => $etat]);

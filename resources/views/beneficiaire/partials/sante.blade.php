@@ -2,9 +2,11 @@
 <div class="form-group col-md-12">
     <fieldset>
         <legend>État de santé:</legend>
-        <div class="form-group">
-            {{ Form::select('etat_sante_id', $etatsSante->pluck('nom', 'id'),null, ['class' => 'form-control', 'placeholder' => 'Sélectionner']) }}
-        </div>
+        @foreach($etatsSante as $etat)
+            <div class="checkbox">
+                <label>{{Form::checkbox('etats_sante[]', $etat->id)}}{{ $etat->nom }}</label>
+            </div>
+        @endforeach
         {{ Form::textarea('etat_sante_autre', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
     </fieldset>
 </div>

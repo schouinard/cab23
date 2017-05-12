@@ -60,4 +60,14 @@ class Beneficiaire extends FilterableModel
     {
         return $this->prenom.' '.$this->nom;
     }
+
+    public function addEtatSante($int)
+    {
+        $this->etats_sante()->sync($int);
+    }
+
+    public function etats_sante()
+    {
+        return $this->belongsToMany(EtatSante::class);
+    }
 }

@@ -128,4 +128,42 @@ class BeneficiaireTest extends TestCase
         );
         $this->assertCount(2, $this->beneficiaire->autonomies);
     }
+
+    /** @test */
+    public function it_can_have_etats_sante()
+    {
+        DB::table('beneficiaire_etat_sante')->insert([
+            'beneficiaire_id' => $this->beneficiaire->id,
+            'etat_sante_id' => 1,
+        ]);
+
+        $this->assertCount(1, $this->beneficiaire->etats_sante);
+    }
+
+    /** @test */
+    public function it_can_add_etat_sante()
+    {
+        $this->beneficiaire->addEtatSante(1);
+        $this->assertCount(1, $this->beneficiaire->etats_sante);
+    }
+
+    /** @test */
+    public function it_cannot_add_the_same_etat_sante_twice()
+    {
+        $this->beneficiaire->addEtatSante(1);
+        $this->beneficiaire->addEtatSante(1);
+        $this->assertCount(1, $this->beneficiaire->etats_sante);
+    }
+
+    /** @test */
+    public function it_can_add_multiple_etats_sante_at_the_same_time()
+    {
+        $this->beneficiaire->addEtatSante(
+            [
+                1,
+                2,
+            ]
+        );
+        $this->assertCount(2, $this->beneficiaire->etats_sante);
+    }
 }
