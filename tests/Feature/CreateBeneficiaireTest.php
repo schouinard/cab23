@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,7 +16,7 @@ class CreateBeneficiaireTest extends TestCase
     function an_authenticated_user_can_create_new_beneficiaire()
     {
         $this->signIn();
-        $beneficiaire = raw('App\Beneficiaire');
+        $beneficiaire = raw(Beneficiaire::class);
 
         $this->post('/beneficiaires', $beneficiaire);
 
@@ -64,7 +65,7 @@ class CreateBeneficiaireTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $beneficiaire = make('App\Beneficiaire', $overrides);
+        $beneficiaire = make(Beneficiaire::class, $overrides);
 
         return $this->post('/beneficiaires', $beneficiaire->toArray());
     }

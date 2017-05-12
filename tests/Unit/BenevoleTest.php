@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Beneficiaire;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Benevole;
@@ -64,11 +65,11 @@ class BenevoleTest extends TestCase
     /** @test */
     function it_can_add_a_service()
     {
-        $benevole = create('App\Benevole');
+        $benevole = create(Benevole::class);
         $benevole->addService([
             'service_type_id' => 1,
             'don' => 10,
-            'beneficiaire_id' => create('App\Beneficiaire')->id,
+            'beneficiaire_id' => create(Beneficiaire::class)->id,
             'rendu_le' => Carbon::now()->toDateTimeString(),
         ]);
 

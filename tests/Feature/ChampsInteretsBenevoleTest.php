@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Benevole;
 use App\Clientele;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -10,13 +11,14 @@ class ChampsInteretsBenevoleTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var  Benevole */
     protected $benevole;
 
     public function setUp()
     {
         parent::setUp();
         $this->signIn();
-        $this->benevole = create('App\Benevole');
+        $this->benevole = create(Benevole::class);
     }
 
     /** @test */

@@ -20,7 +20,8 @@ class ServiceController extends Controller
             'don' => request('don'),
         ]);
 
-        return back();
+        return back()
+            ->with('flash', 'Service ajouté avec succès.');
     }
 
     public function index(ServiceFilters $filters)

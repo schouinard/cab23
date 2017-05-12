@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
+use App\Benevole;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,9 +18,9 @@ class SoftDeletionTest extends TestCase
         $this->withExceptionHandling()->signIn();
 
         $items = [
-            'benevoles' => create('App\Benevole'),
+            'benevoles' => create(Benevole::class),
             'users' => create('App\User'),
-            'beneficiaires' => create('App\Beneficiaire'),
+            'beneficiaires' => create(Beneficiaire::class),
             'services' => create('App\Service'),
         ];
 
@@ -38,9 +40,9 @@ class SoftDeletionTest extends TestCase
         $this->assertTrue(auth()->user()->isAdmin);
 
         $items = [
-            'benevoles' => create('App\Benevole'),
+            'benevoles' => create(Benevole::class),
             'users' => create('App\User'),
-            'beneficiaires' => create('App\Beneficiaire'),
+            'beneficiaires' => create(Beneficiaire::class),
             'services' => create('App\Service'),
         ];
 

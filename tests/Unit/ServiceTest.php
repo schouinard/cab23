@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Beneficiaire;
+use App\Benevole;
 use Tests\TestCase;
 use App\Service;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -22,13 +24,13 @@ class ServiceTest extends TestCase
     /** @test */
     function it_has_a_benevole()
     {
-        $this->assertInstanceOf('App\Benevole', $this->service->benevole);
+        $this->assertInstanceOf(Benevole::class, $this->service->benevole);
     }
 
     /** @test */
     function it_has_a_beneficiaire()
     {
-        $this->assertInstanceOf('App\Beneficiaire', $this->service->beneficiaire);
+        $this->assertInstanceOf(Beneficiaire::class, $this->service->beneficiaire);
     }
 
     /** @test */

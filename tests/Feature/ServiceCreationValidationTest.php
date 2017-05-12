@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
+use App\Benevole;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -11,11 +13,17 @@ class ServiceCreationValidationTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var  Beneficiaire */
+    protected $beneficiaire;
+
+    /** @var  Benevole */
+    protected $benevole;
+
     public function setUp()
     {
         parent::setUp();
-        $this->beneficiaire = create('App\Beneficiaire');
-        $this->benevole = create('App\Benevole');
+        $this->beneficiaire = create(Beneficiaire::class);
+        $this->benevole = create(Benevole::class);
     }
 
     public function publishService($overrides = [])

@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Activity;
+use App\Beneficiaire;
+use App\Benevole;
 use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -21,13 +23,13 @@ class ActivityTest extends TestCase
     /** @test */
     function it_records_activity_when_a_benevole_is_created()
     {
-        $benevole = create('App\Benevole');
+        $benevole = create(Benevole::class);
 
         $this->assertDatabaseHas('activities', [
             'type' => 'created_benevole',
             'user_id' => auth()->id(),
             'subject_id' => $benevole->id,
-            'subject_type' => 'App\Benevole',
+            'subject_type' => Benevole::class,
         ]);
 
         $activity = Activity::first();
@@ -38,7 +40,7 @@ class ActivityTest extends TestCase
     /** @test */
     function it_records_activity_when_a_beneficiaire_is_created()
     {
-        $beneficiaire = create('App\Beneficiaire');
+        $beneficiaire = create(Beneficiaire::class);
 
         $this->assertEquals(1, Activity::count());
     }
@@ -55,7 +57,7 @@ class ActivityTest extends TestCase
     /** @test */
     function it_fetches_a_feed_for_a_user()
     {
-        factory('App\Benevole',2)->create();
+        factory(Benevole::class,2)->create();
 
         auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
 

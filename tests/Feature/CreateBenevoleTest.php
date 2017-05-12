@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Benevole;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,7 +16,7 @@ class CreateBenevoleTest extends TestCase
     function an_authenticated_user_can_create_new_benevole()
     {
         $this->signIn();
-        $benevole = raw('App\Benevole');
+        $benevole = raw(Benevole::class);
 
         $this->post('/benevoles', $benevole);
 
@@ -64,7 +65,7 @@ class CreateBenevoleTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $benevole = make('App\Benevole', $overrides);
+        $benevole = make(Benevole::class, $overrides);
 
         return $this->post('/benevoles', $benevole->toArray());
     }

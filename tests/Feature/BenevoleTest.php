@@ -19,7 +19,7 @@ class BenevoleTest extends TestCase
     {
         parent::setUp();
         $this->signIn();
-        $this->benevole = create('App\Benevole');
+        $this->benevole = create(Benevole::class);
     }
 
     /** @test */

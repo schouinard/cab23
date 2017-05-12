@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
 use Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,8 +16,8 @@ class FiltresBeneficiaireTest extends TestCase
     {
         $this->signIn();
 
-        $bornInJanuary = create('App\Beneficiaire', ['naissance' => Carbon::create(null, 1, 1)]);
-        $bornInMarch = create('App\Beneficiaire', ['naissance' => Carbon::create(null, 3, 1)]);
+        $bornInJanuary = create(Beneficiaire::class, ['naissance' => Carbon::create(null, 1, 1)]);
+        $bornInMarch = create(Beneficiaire::class, ['naissance' => Carbon::create(null, 3, 1)]);
 
         $this->get('beneficiaires?anniversaire=01')
              ->assertSee(webformat($bornInJanuary->nom))
@@ -27,8 +28,8 @@ class FiltresBeneficiaireTest extends TestCase
     public function a_user_can_filter_by_secteur()
     {
         $this->signIn();
-        $beneficiaire = create('App\Beneficiaire', ['secteur_id' => 1]);
-        $beneficiaireWithOtherSecteur = create('App\Beneficiaire', ['secteur_id' => 2]);
+        $beneficiaire = create(Beneficiaire::class, ['secteur_id' => 1]);
+        $beneficiaireWithOtherSecteur = create(Beneficiaire::class, ['secteur_id' => 2]);
 
         $this->get('beneficiaires?secteur=1')
              ->assertSee(webformat($beneficiaire->nom))

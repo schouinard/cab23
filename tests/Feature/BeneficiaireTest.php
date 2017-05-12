@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -11,10 +12,13 @@ class BeneficiaireTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @var  Beneficiaire */
+    protected $beneficiaire;
+
     public function setUp()
     {
         parent::setUp();
-        $this->beneficiaire = create('App\Beneficiaire');
+        $this->beneficiaire = create(Beneficiaire::class);
         $this->signIn();
     }
 
