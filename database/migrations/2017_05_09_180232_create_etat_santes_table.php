@@ -35,5 +35,6 @@ class CreateEtatSantesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('etat_santes');
+        Schema::dropIfExists('beneficiaire_etat_sante');
     }
 }

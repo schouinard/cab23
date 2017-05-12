@@ -15,6 +15,8 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -27,19 +29,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
 
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
     return [
         'nom' => $faker->lastName,
         'prenom' => $faker->firstName,
-        'telephone' => $faker->phoneNumber,
-        'telephone2' => $faker->phoneNumber,
-        'cellulaire' => $faker->phoneNumber,
-        'adresse' => $faker->address,
-        'ville' => $faker->city,
-        'province' => $faker->country,
-        'code_postal' => $faker->postcode,
-        'email' => $faker->unique()->safeEmail,
+        'adress_id' => function () {
+            return factory('App\Adress')->create()->id;
+        },
         'naissance' => $faker->dateTime,
-        'secteur_id' => App\Secteur::inRandomOrder()->first(),
         'inscription' => $faker->dateTime,
         'accepte_ca' => $faker->dateTime,
         'remarque' => $faker->paragraph(2),
@@ -51,23 +49,36 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Adress::class, function () {
+
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
+    return [
+        'telephone' => $faker->phoneNumber,
+        'telephone2' => $faker->phoneNumber,
+        'cellulaire' => $faker->phoneNumber,
+        'adresse' => $faker->streetAddress,
+        'ville' => $faker->city,
+        'province' => $faker->stateAbbr,
+        'code_postal' => $faker->postcode,
+        'email' => $faker->unique()->safeEmail,
+        'secteur_id' => App\Secteur::inRandomOrder()->first()->id,
+    ];
+});
+
 $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
+
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
 
     return [
         'nom' => $faker->lastName,
         'prenom' => $faker->firstName,
-        'telephone' => $faker->phoneNumber,
-        'telephone2' => $faker->phoneNumber,
-        'cellulaire' => $faker->phoneNumber,
-        'adresse' => $faker->address,
-        'ville' => $faker->city,
-        'province' => $faker->country,
-        'code_postal' => $faker->postcode,
-        'email' => $faker->unique()->safeEmail,
         'naissance' => $faker->dateTime,
-        'secteur_id' => App\Secteur::inRandomOrder()->first()->id,
         'conjoint' => $faker->name,
-        'remarque' => $faker->paragraph(1),
+        'adress_id' => function () {
+            return factory('App\Adress')->create()->id;
+        },
+        'remarque' => $faker->paragraph(20, true),
         'resource_nom' => $faker->name,
         'resource_tel_maison' => $faker->phoneNumber,
         'resource_tel_bureau' => $faker->phoneNumber,
@@ -89,18 +100,31 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'resource3_tel_pager' => $faker->phoneNumber,
         'resource3_email' => $faker->email,
         'resource3_lien' => $faker->randomElement(['conjoint', 'fils', 'ami', 'fille', 'travailleur social']),
-        'residence' => $faker->name,
-        'occupation' => $faker->name,
+        'residence' => $faker->word,
+        'occupation' => $faker->word,
         'evaluation_domicile' => $faker->date(),
         'premiere_demande' => $faker->date(),
         'income_source_id' => App\IncomeSource::inRandomOrder()->first()->id,
         'contribution_volontaire' => $faker->boolean,
         'visite_medicale' => $faker->boolean,
         'gratuite' => $faker->boolean,
+        'accepte_sollicitation' => $faker->boolean,
+        'etat_sante_autre' => $faker->paragraph(20, true),
+        'autonomie_autre' => $faker->paragraph(20, true),
+        'support_familial' => $faker->paragraph(20, true),
+        'securite_sociale' => $faker->randomNumber(9, true),
+        'curateur_public' => $faker->randomNumber(6, true),
+        'autre_revenu' => $faker->word,
+        'facturation_id' => function () {
+            return factory('App\Adress')->create()->id;
+        },
     ];
 });
 
 $factory->define(App\Service::class, function (Faker\Generator $faker) {
+
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
     return [
         'benevole_id' => function () {
             return factory('App\Benevole')->create()->id;

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Adress;
 use App\Beneficiaire;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -89,11 +90,5 @@ class BeneficiaireTest extends TestCase
         $response->assertRedirect($this->beneficiaire->path());
 
         $this->followRedirects($response)->assertSee('error-content');
-    }
-
-    /** @test */
-    function it_can_have_a_secteur()
-    {
-        $this->assertInstanceOf(\App\Secteur::class, $this->beneficiaire->secteur);
     }
 }

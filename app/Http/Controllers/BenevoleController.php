@@ -44,6 +44,7 @@ class BenevoleController extends Controller
         //extraire les relations many to many
         $interets = array_pull($request, 'category');
         $clienteles = array_pull($request, 'clienteles');
+        $adress = array_pull($request, 'adress');
 
         $benevole = Benevole::create($request->toArray());
 
@@ -52,6 +53,9 @@ class BenevoleController extends Controller
         }
         if ($interets) {
             $benevole->addInteretsCompetences($interets);
+        }
+        if ($adress) {
+            $benevole->adress()->create($adress);
         }
 
         return redirect($benevole->path())

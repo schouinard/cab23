@@ -26,13 +26,10 @@ class StorePerson extends FormRequest
         return [
             'prenom' => 'required',
             'nom' => 'required',
-            'adresse' => 'required',
-            'ville' => 'required',
-            'province' => 'required',
-            'code_postal' => 'required',
-            'email' => 'nullable | email',
-            'resource_email' => 'nullable | email',
-            'resource2_email' => 'nullable | email',
+            'adress.adresse' => 'required',
+            'adress.ville' => 'required',
+            'adress.province' => 'required',
+            'adress.code_postal' => 'required',
         ];
     }
 }

@@ -35,7 +35,7 @@
                                 {{ Form::select('benevole_type_id', $benevoleTypes->pluck('nom', 'id'),null, ['class' => 'form-control']) }}
                             </div>
                             <div class="col-md-12">
-                                @include('partials.form.contact')
+                                @include('partials.form.contact', ['adress' => 'adress'])
                             </div>
                         @endslot
                     @endcomponent

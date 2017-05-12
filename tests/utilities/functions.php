@@ -16,5 +16,6 @@ function raw($class, $attributes = [])
 }
 
 function webformat($string){
-    return htmlentities($string, ENT_QUOTES);
+  //  return htmlentities($string, ENT_QUOTES);
+    return $string;
 }

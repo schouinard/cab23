@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Adress;
 use App\Benevole;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -17,6 +18,7 @@ class CreateBenevoleTest extends TestCase
     {
         $this->signIn();
         $benevole = raw(Benevole::class);
+        $benevole['adress'] = raw(Adress::class);
 
         $this->post('/benevoles', $benevole);
 
@@ -40,34 +42,34 @@ class CreateBenevoleTest extends TestCase
     /** @test */
     function it_must_have_a_adresse()
     {
-        $this->publishBenevole(['adresse' => null])->assertSessionHasErrors('adresse');
+        $this->publishBenevole([],['adress.adresse'])->assertSessionHasErrors('adress.adresse');
     }
 
     /** @test */
     function it_must_have_a_ville()
     {
-        $this->publishBenevole(['ville' => null])->assertSessionHasErrors('ville');
+        $this->publishBenevole([],['adress.ville'])->assertSessionHasErrors('adress.ville');
     }
 
     /** @test */
     function it_must_have_a_province()
     {
-        $this->publishBenevole(['province' => null])->assertSessionHasErrors('province');
+        $this->publishBenevole([],['adress.province'])->assertSessionHasErrors('adress.province');
     }
 
     /** @test */
     function it_must_have_a_cp()
     {
-        $this->publishBenevole(['code_postal' => null])->assertSessionHasErrors('code_postal');
+        $this->publishBenevole([],['adress.code_postal'])->assertSessionHasErrors('adress.code_postal');
     }
 
-    public function publishBenevole($overrides = [])
+    public function publishBenevole($overrides = [], $except = [])
     {
         $this->withExceptionHandling()->signIn();
 
         $benevole = make(Benevole::class, $overrides);
 
-        return $this->post('/benevoles', $benevole->toArray());
+        return $this->post('/benevoles', array_except($benevole->toArray(), $except));
     }
 
     /** @test */
@@ -75,7 +77,7 @@ class CreateBenevoleTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
         $this->get('/benevoles/create')->assertDontSee('Veuillez valider');
-        $response = $this->publishBenevole(['code_postal' => null]);
+        $response = $this->publishBenevole(['prenom' => null]);
         $response->assertRedirect('/benevoles/create');
 
         $this->followRedirects($response)->assertSee('Veuillez valider');

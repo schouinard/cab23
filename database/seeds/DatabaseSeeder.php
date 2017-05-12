@@ -175,12 +175,20 @@ class DatabaseSeeder extends Seeder
     public function seedTestData()
     {
         $benevoles = factory('App\Benevole', 50)->create();
+        $beneficiaires = factory('App\Beneficiaire', 50)->create();
+
         foreach ($benevoles as $benevole) {
             factory('App\Service')->create([
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
+                'beneficiaire_id' => random_int(1, 50),
             ]);
             $benevole->clienteles()->attach([1, 3, 5]);
+        }
+
+        foreach ($beneficiaires as $beneficiaire) {
+            $beneficiaire->etats_sante()->attach([1, 3, 4]);
+            $beneficiaire->autonomies()->attach([1, 2]);
         }
 
         factory('App\User')->create([

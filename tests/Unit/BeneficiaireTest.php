@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Adress;
 use App\Benevole;
 use App\Service;
 use App\Beneficiaire;
@@ -166,5 +167,11 @@ class BeneficiaireTest extends TestCase
             ]
         );
         $this->assertCount(2, $this->beneficiaire->etats_sante);
+    }
+
+    /** @test */
+    public function it_has_an_adress()
+    {
+        $this->assertInstanceOf(Adress::class, $this->beneficiaire->adress);
     }
 }

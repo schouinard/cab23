@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Adress;
 use App\Benevole;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -30,8 +31,12 @@ class FiltresBenevoleTest extends TestCase
     public function a_user_can_filter_by_secteur()
     {
         $this->signIn();
-        $benevole = create(Benevole::class, ['secteur_id' => 1]);
-        $benevoleWithOtherSecteur = create(Benevole::class, ['secteur_id' => 2]);
+
+        $adress1 = create(Adress::class, ['secteur_id' => 1]);
+        $adress2 = create(Adress::class, ['secteur_id' => 2]);
+
+        $benevole = create(Benevole::class, ['adress_id' => $adress1->id]);
+        $benevoleWithOtherSecteur = create(Benevole::class, ['adress_id' => $adress2->id]);
 
         $this->get('benevoles?secteur=1')
              ->assertSee(webformat($benevole->nom))

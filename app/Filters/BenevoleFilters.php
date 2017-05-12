@@ -13,7 +13,9 @@ class BenevoleFilters extends Filters
 
     public function secteur($secteur)
     {
-        return $this->builder->where('secteur_id', $secteur);
+        return $this->builder->whereHas('Adress', function ($q) use ($secteur) {
+            $q->where('secteur_id', $secteur);
+        });
     }
 
     public function accepte_ca($accepte)

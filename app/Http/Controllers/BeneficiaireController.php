@@ -45,6 +45,8 @@ class BeneficiaireController extends Controller
         $autonomies = array_pull($request, 'autonomy');
         $etats_sante = array_pull($request, 'etats_sante');
 
+        $adress =  array_pull($request, 'adress');
+
         $beneficiaire = Beneficiaire::create($request->toArray());
 
         // ajouter les relations many to many
@@ -57,6 +59,10 @@ class BeneficiaireController extends Controller
         if($etats_sante)
         {
             $beneficiaire->addEtatSante($etats_sante);
+        }
+        if($adress)
+        {
+            $beneficiaire->adress()->create($adress);
         }
 
         return redirect($beneficiaire->path())

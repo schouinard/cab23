@@ -16,6 +16,8 @@ class Beneficiaire extends FilterableModel
         'naissance',
     ];
 
+    protected $with = ['adress', 'facturation'];
+
     public function path()
     {
         return '/beneficiaires/'.$this->id;
@@ -29,11 +31,6 @@ class Beneficiaire extends FilterableModel
     public function serviceRequests()
     {
         return $this->belongsToMany(ServiceType::class, 'service_requests', 'beneficiaire_id', 'service_type_id');
-    }
-
-    public function secteur()
-    {
-        return $this->belongsTo(Secteur::class);
     }
 
     public function autonomies()
@@ -69,5 +66,20 @@ class Beneficiaire extends FilterableModel
     public function etats_sante()
     {
         return $this->belongsToMany(EtatSante::class);
+    }
+
+    public function income_source()
+    {
+        return $this->belongsTo(IncomeSource::class);
+    }
+
+    public function adress()
+    {
+        return $this->belongsTo(Adress::class);
+    }
+
+    public function facturation()
+    {
+        return $this->belongsTo(Adress::class);
     }
 }

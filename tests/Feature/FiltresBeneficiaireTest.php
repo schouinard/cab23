@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Adress;
 use App\Beneficiaire;
 use Tests\TestCase;
 use Carbon\Carbon;
@@ -28,8 +29,11 @@ class FiltresBeneficiaireTest extends TestCase
     public function a_user_can_filter_by_secteur()
     {
         $this->signIn();
-        $beneficiaire = create(Beneficiaire::class, ['secteur_id' => 1]);
-        $beneficiaireWithOtherSecteur = create(Beneficiaire::class, ['secteur_id' => 2]);
+        $adress1 = create(Adress::class, ['secteur_id' => 1]);
+        $adress2 = create(Adress::class, ['secteur_id' => 2]);
+
+        $beneficiaire = create(Beneficiaire::class, ['adress_id' => $adress1->id]);
+        $beneficiaireWithOtherSecteur = create(Beneficiaire::class, ['adress_id' => $adress2->id]);
 
         $this->get('beneficiaires?secteur=1')
              ->assertSee(webformat($beneficiaire->nom))

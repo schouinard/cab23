@@ -17,6 +17,8 @@ class Benevole extends FilterableModel
         'integration',
     ];
 
+    protected $with = ['adress'];
+
     public function path()
     {
         return '/benevoles/'.$this->id;
@@ -32,9 +34,9 @@ class Benevole extends FilterableModel
         return $this->hasMany(Service::class);
     }
 
-    public function secteur()
+    public function adress()
     {
-        return $this->belongsTo(Secteur::class);
+        return $this->belongsTo(Adress::class);
     }
 
     public function clienteles()

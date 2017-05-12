@@ -90,10 +90,4 @@ class BenevoleTest extends TestCase
 
         $this->followRedirects($response)->assertSee('error-content');
     }
-
-    /** @test */
-    function it_can_have_a_secteur()
-    {
-        $this->assertInstanceOf(\App\Secteur::class, $this->benevole->secteur);
-    }
 }
