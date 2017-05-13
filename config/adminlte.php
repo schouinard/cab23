@@ -144,9 +144,18 @@ return [
         ],
         [
             'text' => 'Utilisateurs',
-            'url' => 'users',
             'icon' => 'user',
             'can' => 'manage-users',
+            'submenu' => [
+                [
+                    'text' => 'Lister',
+                    'url' => 'users',
+                ],
+                [
+                    'text' => 'Ajouter',
+                    'url' => 'users/create'
+                ]
+            ]
         ],
     ],
 

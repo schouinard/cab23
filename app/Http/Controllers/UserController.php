@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Activity;
 use App\Filters\UserFilters;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -35,6 +36,12 @@ class UserController extends Controller
         if (Gate::denies('manage-users')) {
             abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
         }
+
+        $params = [
+            'title' => 'Créer un nouvel utilisateur',
+        ];
+
+        return view('users.create', $params);
     }
 
     /**
@@ -48,6 +55,22 @@ class UserController extends Controller
         if (Gate::denies('manage-users')) {
             abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
         }
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:users|email',
+            'password' => 'required|same:confirm_password',
+            'confirm_password' => 'required',
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'isAdmin' => $request->input('isAdmin'),
+        ]);
+
+        return redirect()->route('users.index')->with('flash', 'Utilisateur ajouté avec succès.');
     }
 
     /**
@@ -76,7 +99,23 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        abort_if(! auth()->user()->isAdmin, 403);
+        if (Gate::denies('manage-users')) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
+
+        try {
+            $user = User::findOrFail($id);
+            $params = [
+                'title' => 'Edit User',
+                'user' => $user,
+            ];
+
+            return view('users.edit', $params);
+        } catch (ModelNotFoundException $ex) {
+            if ($ex instanceof ModelNotFoundException) {
+                return response()->view('errors.'.'404');
+            }
+        }
     }
 
     /**
@@ -88,7 +127,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        abort_if(! auth()->user()->isAdmin, 403);
+        if (Gate::denies('manage-users')) {
+            abort(403, 'Seuls les administrateurs peuvent gérer les utilisateurs.');
+        }
+
+        try {
+            $user = User::findOrFail($id);
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,'.$id,
+            ]);
+            $user->email = $request->input('email');
+            $user->isAdmin = $request->input('isAdmin');
+            $user->save();
+
+            return redirect()->route('users.index')->with('flash', 'Utilisateur modifié avec succès.');
+        } catch (ModelNotFoundException $ex) {
+            if ($ex instanceof ModelNotFoundException) {
+                return response()->view('errors.'.'404');
+            }
+        }
     }
 
     /**
@@ -108,6 +166,6 @@ class UserController extends Controller
             return response([], 204);
         }
 
-        return redirect('/users');
+        return redirect()->route('users.index');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\PasswordResetNotification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    use RecordsActivity;
     use SoftDeletes;
 
     protected $dates = [
@@ -17,6 +17,17 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetNotification($token));
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +38,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'isAdmin',
     ];
 
     /**
@@ -46,7 +58,7 @@ class User extends Authenticatable
 
     public function path()
     {
-        return '/users/' . $this->id;
+        return '/users/'.$this->id;
     }
 
     public function activity()

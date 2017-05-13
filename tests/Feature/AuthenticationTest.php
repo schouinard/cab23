@@ -28,7 +28,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     function the_register_route_is_disabled()
     {
-        $this->expectException('ReflectionException');
+        $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
         $this->get('/register');
     }
 
