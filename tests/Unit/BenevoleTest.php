@@ -66,22 +66,22 @@ class BenevoleTest extends TestCase
     /** @test */
     public function it_can_add_clientele()
     {
-        $this->benevole->addClientele(1);
+        $this->benevole->addClienteles(1);
         $this->assertCount(1, $this->benevole->clienteles);
     }
 
     /** @test */
     public function it_cannot_add_the_same_clientele_twice()
     {
-        $this->benevole->addClientele(1);
-        $this->benevole->addClientele(1);
+        $this->benevole->addClienteles(1);
+        $this->benevole->addClienteles(1);
         $this->assertCount(1, $this->benevole->clienteles);
     }
 
     /** @test */
     public function it_can_add_multiple_clienteles_at_the_same_time()
     {
-        $this->benevole->addClientele(
+        $this->benevole->addClienteles(
             [
                 1,
                 2,

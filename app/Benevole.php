@@ -19,6 +19,12 @@ class Benevole extends FilterableModel
 
     protected $with = ['adress'];
 
+    protected $relationsToHandleOnStore = [
+        'category',
+        'clienteles',
+        'adress',
+    ];
+
     public function path()
     {
         return '/benevoles/'.$this->id;
@@ -46,12 +52,12 @@ class Benevole extends FilterableModel
 
     public function interets()
     {
-        return $this->belongsToMany(Interet::class);
+        return $this->belongsToMany(Interet::class)->withPivot('priority');
     }
 
     public function competences()
     {
-        return $this->belongsToMany(Competence::class);
+        return $this->belongsToMany(Competence::class)->withPivot('priority');
     }
 
     public function addService($service)
@@ -59,7 +65,7 @@ class Benevole extends FilterableModel
         $this->services()->create($service);
     }
 
-    public function addClientele($int)
+    public function addClienteles($int)
     {
         $this->clienteles()->sync($int);
     }
@@ -74,7 +80,7 @@ class Benevole extends FilterableModel
         $this->competences()->sync($competence, $attributes);
     }
 
-    public function addInteretsCompetences($categoriesInterets)
+    public function addCategory($categoriesInterets)
     {
         foreach ($categoriesInterets as $categoriesInteret) {
             if (key_exists('interets', $categoriesInteret)) {
