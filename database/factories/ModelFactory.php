@@ -79,27 +79,6 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
             return factory('App\Adress')->create()->id;
         },
         'remarque' => $faker->paragraph(20, true),
-        'resource_nom' => $faker->name,
-        'resource_tel_maison' => $faker->phoneNumber,
-        'resource_tel_bureau' => $faker->phoneNumber,
-        'resource_tel_cel' => $faker->phoneNumber,
-        'resource_tel_pager' => $faker->phoneNumber,
-        'resource_email' => $faker->email,
-        'resource_lien' => $faker->randomElement(['conjoint', 'fils', 'ami', 'fille', 'travailleur social']),
-        'resource2_nom' => $faker->name,
-        'resource2_tel_maison' => $faker->phoneNumber,
-        'resource2_tel_bureau' => $faker->phoneNumber,
-        'resource2_tel_cel' => $faker->phoneNumber,
-        'resource2_tel_pager' => $faker->phoneNumber,
-        'resource2_email' => $faker->email,
-        'resource2_lien' => $faker->randomElement(['conjoint', 'fils', 'ami', 'fille', 'travailleur social']),
-        'resource3_nom' => $faker->name,
-        'resource3_tel_maison' => $faker->phoneNumber,
-        'resource3_tel_bureau' => $faker->phoneNumber,
-        'resource3_tel_cel' => $faker->phoneNumber,
-        'resource3_tel_pager' => $faker->phoneNumber,
-        'resource3_email' => $faker->email,
-        'resource3_lien' => $faker->randomElement(['conjoint', 'fils', 'ami', 'fille', 'travailleur social']),
         'residence' => $faker->word,
         'occupation' => $faker->word,
         'evaluation_domicile' => $faker->date(),
@@ -117,6 +96,23 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'autre_revenu' => $faker->word,
         'facturation_id' => function () {
             return factory('App\Adress')->create()->id;
+        },
+        'facturation_nom' => $faker->name,
+    ];
+});
+
+$factory->define(App\Person::class, function () {
+
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
+    return [
+        'nom' => $faker->name,
+        'lien' => $faker->word,
+        'beneficiaire_id' => function () {
+            return factory(App\Beneficiaire::class)->create()->id;
+        },
+        'adress_id' => function () {
+            return factory(App\Adress::class)->create()->id;
         },
     ];
 });

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Adress;
 use App\Beneficiaire;
 use App\Filters\BeneficiaireFilters;
 use App\Http\Requests\StorePerson;
+use App\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -40,30 +42,14 @@ class BeneficiaireController extends Controller
      */
     public function store(StorePerson $request)
     {
-        // extraire les relations many to many
-        $serviceRequests = array_pull($request, 'requests');
-        $autonomies = array_pull($request, 'autonomy');
-        $etats_sante = array_pull($request, 'etats_sante');
+        $beneficiaire = new Beneficiaire();
 
-        $adress =  array_pull($request, 'adress');
+        $beneficiaire->fill(array_except($request->toArray(), $beneficiaire->getRelationsToHandleOnStore()));
 
-        $beneficiaire = Beneficiaire::create($request->toArray());
+        $beneficiaire->save();
 
-        // ajouter les relations many to many
-        if ($serviceRequests) {
-            $beneficiaire->addServiceRequest($serviceRequests);
-        }
-        if ($autonomies) {
-            $beneficiaire->addAutonomie($autonomies);
-        }
-        if($etats_sante)
-        {
-            $beneficiaire->addEtatSante($etats_sante);
-        }
-        if($adress)
-        {
-            $beneficiaire->adress()->create($adress);
-        }
+        $beneficiaire->handleRelationsOnStore($request->toArray());
+
 
         return redirect($beneficiaire->path())
             ->with('flash', 'Bénéficiaire créé avec succès.');

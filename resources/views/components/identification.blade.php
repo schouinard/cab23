@@ -22,6 +22,10 @@
 
 {{ $additionalFields  }}
 
+<div class="col-md-12">
+    @include('partials.form.contact', ['adress' => 'adress'])
+</div>
+
 <div class="form-group col-md-12 {{ $errors->first('', 'has-error') }}">
     {{ Form::label('remarque', 'Remarques:') }}
     {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}

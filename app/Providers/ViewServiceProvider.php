@@ -30,7 +30,7 @@ class ViewServiceProvider extends ServiceProvider
                 $view->with('serviceTypes', $serviceTypes);
             });
 
-        \View::composer(['beneficiaire.partials.requests'], function ($view) {
+        \View::composer(['beneficiaire.partials.requests', 'beneficiaire.show'], function ($view) {
             $serviceRequestsStatus = \Cache::rememberForever('serviceRequestsStatus', function() {
                 return ServiceRequestStatus::all();
             });

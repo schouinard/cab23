@@ -72,12 +72,12 @@
                                 <td>{{ $beneficiaire->id }}</td>
                                 <td><a href="{{ $beneficiaire->path() }}">{{ $beneficiaire->nom }}</a></td>
                                 <td>{{ $beneficiaire->prenom }}</td>
-                                <td>{{ $beneficiaire->email }}</td>
-                                <td>{{ $beneficiaire->telephone }}</td>
+                                <td>{{ $beneficiaire->adress->email }}</td>
+                                <td>{{ $beneficiaire->adress->telephone }}</td>
                                 @if(request('secteur'))
                                     <td>
-                                        @if($beneficiaire->secteur_id)
-                                            {{$secteurs->where('id', $beneficiaire->secteur_id)->first()->nom}}
+                                        @if($beneficiaire->adress->secteur_id)
+                                            {{$secteurs->where('id', $beneficiaire->adress->secteur_id)->first()->nom}}
                                         @endif
                                     </td>
                                 @endif

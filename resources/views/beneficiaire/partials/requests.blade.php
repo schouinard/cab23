@@ -17,7 +17,7 @@
 
             @foreach($serviceRequestStatuses as $requestStatus)
                 <div class="col-xs-1">
-                    {{Form::radio('requests[' . $serviceType->id . '][service_request_status_id]', $requestStatus->id, $requestStatus->id == 1)}}
+                    {{Form::radio('serviceRequests[' . $serviceType->id . '][service_request_status_id]', $requestStatus->id, $requestStatus->id == 1)}}
                 </div>
             @endforeach
         </fieldset>

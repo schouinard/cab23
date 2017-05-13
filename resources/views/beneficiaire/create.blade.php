@@ -29,9 +29,6 @@
                                 {{ Form::label('conjoint', 'Conjoint:') }}
                                 {{ Form::text('conjoint', null, ['class' => 'form-control']) }}
                             </div>
-                            <div class="col-md-12">
-                                @include('partials.form.contact', ['adress' => 'adress'])
-                            </div>
                         @endslot
                     @endcomponent
                 </div>
@@ -44,36 +41,18 @@
                     @include('beneficiaire.partials.statut')
                 </div>
                 <div class="tab-pane" id="tab_4">
-                    @include('partials.form.ressources')
+                    <div class="box-group" id="ressources">
+                        @for($i = 1; $i < 4; $i++)
+                            @include('beneficiaire.partials.person', ['person' => $i])
+                        @endfor
+                    </div>
                 </div>
                 <div class="tab-pane" id="tab_5">
                     @include('beneficiaire.partials.requests')
                 </div>
                 <div class="tab-pane" id="tab_6">
                     <h3>Adresse de facturation</h3>
-                    <div class="row">
-                        <!--- facturation_adresse form input ---->
-                        <div class="form-group col-md-12 {{ $errors->first('facturation_adresse', 'has-error') }}">
-                            {{ Form::label('facturation_adresse', 'Adresse:') }}
-                            {{ Form::text('facturation_adresse', null, ['class' => 'form-control']) }}
-                        </div>
-                        <!--- facturation_ville form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('facturation_ville', 'has-error') }}">
-                            {{ Form::label('facturation_ville', 'Ville:') }}
-                            {{ Form::text('facturation_ville', 'Québec', ['class' => 'form-control']) }}
-                        </div>
-
-                        <!--- facturation_province form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('facturation_province', 'has-error') }}">
-                            {{ Form::label('facturation_province', 'Province:') }}
-                            {{ Form::text('facturation_province', 'QC', ['class' => 'form-control']) }}
-                        </div>
-                        <!--- facturation_code_postal form input ---->
-                        <div class="form-group col-md-4 {{ $errors->first('facturation_code_postal', 'has-error') }}">
-                            {{ Form::label('facturation_code_postal', 'Code postal:') }}
-                            {{ Form::text('facturation_code_postal', null, ['class' => 'form-control codepostal']) }}
-                        </div>
-                    </div>
+                    @include('partials.form.contact', ['adress' => 'facturation'])
                 </div>
             </div>
             <!-- /.tab-content -->

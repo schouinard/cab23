@@ -1,5 +1,7 @@
 <?php
 
+use App\Adress;
+use App\Person;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -187,8 +189,20 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($beneficiaires as $beneficiaire) {
-            $beneficiaire->etats_sante()->attach([1, 3, 4]);
-            $beneficiaire->autonomies()->attach([1, 2]);
+            $beneficiaire->addEtatsSante([1, 3, 4]);
+            $beneficiaire->addAutonomies([1, 2]);
+            $beneficiaire->addServiceRequests([
+                1 => ['service_request_status_id' => 1],
+                2 => ['service_request_status_id' => 2],
+                3 => ['service_request_status_id' => 3],
+            ]);
+            $people = raw(Person::class, [
+                'beneficiaire_id' => null,
+                'adress_id' => null,
+                'adress' => raw
+                (Adress::class),
+            ], 3);
+            $beneficiaire->addPeople($people);
         }
 
         factory('App\User')->create([

@@ -4,7 +4,7 @@
         <legend>État de santé:</legend>
         @foreach($etatsSante as $etat)
             <div class="checkbox">
-                <label>{{Form::checkbox('etats_sante[]', $etat->id)}}{{ $etat->nom }}</label>
+                <label>{{Form::checkbox('etatsSante[]', $etat->id)}}{{ $etat->nom }}</label>
             </div>
         @endforeach
         {{ Form::textarea('etat_sante_autre', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
@@ -16,7 +16,7 @@
         <legend>Autonomie:</legend>
         @foreach($autonomies as $autonomy)
             <div class="checkbox">
-                <label>{{Form::checkbox('autonomy[]', $autonomy->id)}}{{ $autonomy->nom }}</label>
+                <label>{{Form::checkbox('autonomies[]', $autonomy->id)}}{{ $autonomy->nom }}</label>
             </div>
         @endforeach
         {{ Form::textarea('autonomie_autre', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}

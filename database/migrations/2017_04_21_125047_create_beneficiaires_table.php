@@ -22,27 +22,6 @@ class CreateBeneficiairesTable extends Migration
             $table->unsignedInteger('adress_id')->nullable();
             $table->unsignedInteger('facturation_id')->nullable();
             $table->text('remarque')->nullable();
-            $table->string('resource_nom')->nullable();
-            $table->string('resource_tel_maison')->nullable();
-            $table->string('resource_tel_bureau')->nullable();
-            $table->string('resource_tel_cel')->nullable();
-            $table->string('resource_tel_pager')->nullable();
-            $table->string('resource_email')->nullable();
-            $table->string('resource_lien')->nullable();
-            $table->string('resource2_nom')->nullable();
-            $table->string('resource2_tel_maison')->nullable();
-            $table->string('resource2_tel_bureau')->nullable();
-            $table->string('resource2_tel_cel')->nullable();
-            $table->string('resource2_tel_pager')->nullable();
-            $table->string('resource2_email')->nullable();
-            $table->string('resource2_lien')->nullable();
-            $table->string('resource3_nom')->nullable();
-            $table->string('resource3_tel_maison')->nullable();
-            $table->string('resource3_tel_bureau')->nullable();
-            $table->string('resource3_tel_cel')->nullable();
-            $table->string('resource3_tel_pager')->nullable();
-            $table->string('resource3_email')->nullable();
-            $table->string('resource3_lien')->nullable();
 
             // statut
             $table->string('residence')->nullable();
@@ -62,6 +41,9 @@ class CreateBeneficiairesTable extends Migration
             $table->text('etat_sante_autre')->nullable();
             $table->text('autonomie_autre')->nullable();
             $table->text('support_familial')->nullable();
+
+            // facturation
+            $table->string('facturation_nom')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

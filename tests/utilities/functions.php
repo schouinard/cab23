@@ -1,18 +1,18 @@
 <?php
 
-function create($class, $attributes = [])
+function create($class, $attributes = [], $nb = null)
 {
-    return factory($class)->create($attributes);
+    return factory($class, $nb)->create($attributes);
 }
 
-function make($class, $attributes = [])
+function make($class, $attributes = [], $nb = null)
 {
-    return factory($class)->make($attributes);
+    return factory($class, $nb)->make($attributes);
 }
 
-function raw($class, $attributes = [])
+function raw($class, $attributes = [], $nb = null)
 {
-    return factory($class)->raw();
+    return factory($class, $nb)->raw($attributes);
 }
 
 function webformat($string){
