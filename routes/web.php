@@ -30,8 +30,14 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::resource('benevoles', 'BenevoleController');
+    Route::put('benevoles', 'BenevoleController@index');
+
     Route::resource('beneficiaires', 'BeneficiaireController');
+    Route::put('beneficiaires', 'BeneficiaireController@index');
+
     Route::resource('services', 'ServiceController');
+    Route::put('services', 'ServiceController@index');
+
     Route::resource('users', 'UserController');
 
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');

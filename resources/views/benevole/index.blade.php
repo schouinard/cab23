@@ -21,7 +21,9 @@
                     </div><!-- /.box-tools -->
                 </div>
                 <div class="box-body">
-                    <form action="" method="get">
+                    <form action="" method="post">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
                         <div class="form-group col-md-3">
                             {{ Form::label('secteur', 'Secteur:') }}
                             {{ Form::select('secteur', $secteurs->pluck('nom','id'),request('secteur'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
@@ -90,7 +92,7 @@
                                 <td>{{ $benevole->adress->telephone }}</td>
                                 @if(request('secteur'))
                                     <td>
-                                        @if($benevole->secteur_id)
+                                        @if($benevole->adress->secteur_id)
                                             {{$secteurs->where('id', $benevole->adress->secteur_id)->first()->nom}}
                                         @endif
                                     </td>

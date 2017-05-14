@@ -41,24 +41,6 @@ class BenevoleController extends Controller
      */
     public function store(StorePerson $request)
     {
-        /*
-        //extraire les relations many to many
-        $interets = array_pull($request, 'category');
-        $clienteles = array_pull($request, 'clienteles');
-        $adress = array_pull($request, 'adress');
-
-        $benevole = Benevole::create($request->toArray());
-
-        if ($clienteles) {
-            $benevole->addClientele($clienteles);
-        }
-        if ($interets) {
-            $benevole->addInteretsCompetences($interets);
-        }
-        if ($adress) {
-            $benevole->adress()->create($adress);
-        } */
-
         $benevole = new Benevole();
 
         $benevole->fill(array_except($request->toArray(), $benevole->getRelationsToHandleOnStore()));

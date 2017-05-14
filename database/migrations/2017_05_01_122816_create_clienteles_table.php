@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -25,6 +26,10 @@ class CreateClientelesTable extends Migration
             $table->timestamps();
             $table->primary(['clientele_id', 'benevole_id']);
         });
+
+        Artisan::call('db:seed', [
+            '--class' => ClientelesSeeder::class,
+        ]);
     }
 
     /**

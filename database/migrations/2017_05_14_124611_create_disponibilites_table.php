@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServiceTypeTable extends Migration
+class CreateDisponibilitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,12 @@ class CreateServiceTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_types', function (Blueprint $table) {
+        Schema::create('disponibilites', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nom');
+            $table->unsignedInteger('benevole_id');
+            $table->unsignedInteger('day_id');
             $table->timestamps();
         });
-
-        Artisan::call('db:seed', [
-            '--class' => ServiceTypesSeeder::class,
-        ]);
     }
 
     /**
@@ -32,6 +28,6 @@ class CreateServiceTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_types');
+        Schema::dropIfExists('disponibilites');
     }
 }

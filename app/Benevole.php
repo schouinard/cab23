@@ -60,6 +60,11 @@ class Benevole extends FilterableModel
         return $this->belongsToMany(Competence::class)->withPivot('priority');
     }
 
+    public function disponibilites()
+    {
+        return $this->hasMany(Disponibilite::class);
+    }
+
     public function addService($service)
     {
         $this->services()->create($service);

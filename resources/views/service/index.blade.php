@@ -41,7 +41,9 @@
                     </div><!-- /.box-tools -->
                 </div>
                 <div class="box-body">
-                    <form action="" method="get">
+                    <form action="" method="post">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
                         <div class="form-group col-md-6">
                             {{ Form::label('type', 'Type de service:') }}
                             {{ Form::select('type', $serviceTypes->pluck('nom', 'id'),request('type'), ['class' => 'form-control', 'placeholder' => 'Tous les types']) }}

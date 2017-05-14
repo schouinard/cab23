@@ -11,6 +11,16 @@
 |
 */
 
+$factory->define(App\Disponibilite::class, function () {
+    $faker = Faker\Factory::create('fr_CA');
+
+    return [
+        'benevole_id' => function () {
+            return factory(App\Benevole::class)->create();
+        },
+    ];
+});
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
