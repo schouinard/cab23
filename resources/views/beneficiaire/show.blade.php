@@ -1,9 +1,11 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Dashboard')
+@section('title', "Fiche bénéficiaire - {$beneficiaire->nom_complet}")
 
 @section('content_header')
-    <h1>Bénéficiaire</h1>
+    <div class="page-header">
+        <h1>Bénéficiaire</h1>
+    </div>
 @stop
 
 @section('content')

@@ -19,7 +19,7 @@ class Benevole extends FilterableModel
         'integration',
     ];
 
-    protected $with = ['adress'];
+    protected $with = ['adress', 'benevoleType', 'clienteles', 'interets', 'competences'];
 
     protected $relationsToHandleOnStore = [
         'category',
@@ -36,6 +36,11 @@ class Benevole extends FilterableModel
     public function getNomCompletAttribute()
     {
         return $this->prenom.' '.$this->nom;
+    }
+
+    public function benevoleType()
+    {
+        return $this->belongsTo(BenevoleType::class);
     }
 
     public function services()
@@ -86,6 +91,15 @@ class Benevole extends FilterableModel
     public function addCompetence($competence, $attributes = [])
     {
         $this->competences()->sync($competence, $attributes);
+    }
+
+    public function addAdress($adress)
+    {
+        if (is_array($adress)) {
+            $adress = Adress::create($adress);
+        }
+        $this->adress()->associate($adress);
+        $this->save();
     }
 
     public function addCategory($categoriesInterets)
