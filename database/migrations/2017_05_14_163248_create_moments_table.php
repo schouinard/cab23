@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDisponibilitesTable extends Migration
+class CreateMomentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,15 @@ class CreateDisponibilitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('disponibilites', function (Blueprint $table) {
+        Schema::create('moments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('benevole_id');
-            $table->unsignedInteger('day_id');
-            $table->unsignedInteger('moment_id');
+            $table->string('nom');
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => MomentSeeder::class,
+        ]);
     }
 
     /**
@@ -29,6 +32,6 @@ class CreateDisponibilitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disponibilites');
+        Schema::dropIfExists('moments');
     }
 }

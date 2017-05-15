@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 class Benevole extends FilterableModel
 {
     protected $appends = ['nom_complet'];
@@ -23,6 +25,7 @@ class Benevole extends FilterableModel
         'category',
         'clienteles',
         'adress',
+        'disponibilites',
     ];
 
     public function path()
@@ -106,5 +109,42 @@ class Benevole extends FilterableModel
         return array_where($array, function ($value, $key) {
             return $value['priority'] > 0;
         });
+    }
+
+    public function addDisponibilites($array = [])
+    {
+        $this->disponibilites()->delete();
+
+        if (count($array) > 0) {
+            if ($this->isDisponibilite(array_first($array))) {
+                $this->disponibilites()->createMany($array);
+            } else {
+                $this->createDisponibilitesFromPostData($array);
+            }
+        }
+    }
+
+    /**
+     * @param $array
+     * @return bool
+     */
+    public function isDisponibilite($array)
+    {
+        return key_exists('day_id', $array) && key_exists('moment_id', $array);
+    }
+
+    /**
+     * @param $array
+     */
+    public function createDisponibilitesFromPostData($array)
+    {
+        foreach ($array as $dayId => $moments) {
+            foreach ($moments as $moment) {
+                $this->disponibilites()->create([
+                    'day_id' => $dayId,
+                    'moment_id' => $moment,
+                ]);
+            }
+        }
     }
 }

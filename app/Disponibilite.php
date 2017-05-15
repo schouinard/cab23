@@ -8,15 +8,20 @@ class Disponibilite extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['dayOfTheWeek'];
+    protected $with = ['day', 'moment'];
 
     public function benevole()
     {
-        $this->belongsTo(Benevole::class);
+        return $this->belongsTo(Benevole::class);
     }
 
-    public function dayOfTheWeek()
+    public function day()
     {
-        $this->belongsTo(Day::class);
+        return $this->belongsTo(Day::class);
+    }
+
+    public function moment()
+    {
+        return $this->belongsTo(Moment::class);
     }
 }

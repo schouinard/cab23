@@ -6,8 +6,10 @@ use App\Autonomie;
 use App\BenevoleType;
 use App\CategorieInteretCompetence;
 use App\Clientele;
+use App\Day;
 use App\EtatSante;
 use App\IncomeSource;
+use App\Moment;
 use App\Secteur;
 use App\ServiceRequestStatus;
 use App\ServiceType;
@@ -31,17 +33,17 @@ class ViewServiceProvider extends ServiceProvider
             });
 
         \View::composer(['beneficiaire.partials.requests', 'beneficiaire.show'], function ($view) {
-            $serviceRequestsStatus = \Cache::rememberForever('serviceRequestsStatus', function() {
+            $serviceRequestsStatus = \Cache::rememberForever('serviceRequestsStatus', function () {
                 return ServiceRequestStatus::all();
             });
             $view->with('serviceRequestStatuses', $serviceRequestsStatus);
         });
 
         \View::composer(['beneficiaire.partials.sante'], function ($view) {
-            $etats = \Cache::rememberForever('etatsSante', function() {
+            $etats = \Cache::rememberForever('etatsSante', function () {
                 return EtatSante::all();
             });
-            $autonomies = \Cache::rememberForever('autonomies', function(){
+            $autonomies = \Cache::rememberForever('autonomies', function () {
                 return Autonomie::all();
             });
             $view->with('etatsSante', $etats)->with('autonomies', $autonomies);
@@ -90,10 +92,20 @@ class ViewServiceProvider extends ServiceProvider
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
                 return CategorieInteretCompetence::all();
             });
-            $clienteles = \Cache::rememberForever('clienteles', function(){
+            $clienteles = \Cache::rememberForever('clienteles', function () {
                 return Clientele::all();
             });
             $view->with(['interestGroups' => $interestGroups, 'clienteles' => $clienteles]);
+        });
+
+        \View::composer(['benevole.partials.disponibilites'], function ($view) {
+            $days = \Cache::rememberForever('days', function () {
+                return Day::all();
+            });
+            $moments = \Cache::rememberForever('moments', function () {
+                return Moment::all();
+            });
+            $view->with(['days' => $days, 'moments' => $moments]);
         });
     }
 

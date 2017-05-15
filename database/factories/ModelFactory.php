@@ -18,6 +18,12 @@ $factory->define(App\Disponibilite::class, function () {
         'benevole_id' => function () {
             return factory(App\Benevole::class)->create();
         },
+        'day_id' => function () {
+            return \App\Day::inRandomOrder()->first()->id;
+        },
+        'moment_id' => function() {
+            return \App\Moment::inRandomOrder()->first()->id;
+        }
     ];
 });
 
