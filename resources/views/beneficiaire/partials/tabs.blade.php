@@ -5,4 +5,5 @@
     <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
     <li><a href="#tab_5" data-toggle="tab" aria-expanded="false">Services</a></li>
     <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Facturation</a></li>
+    <li><a href="#tab_7" data-toggle="tab" aria-expanded="false">Notes</a></li>
 </ul>

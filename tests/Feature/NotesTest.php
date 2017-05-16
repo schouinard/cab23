@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
 use App\Benevole;
 use App\Note;
 use Tests\TestCase;
@@ -42,4 +43,29 @@ class NotesTest extends TestCase
 
         $this->get($benevole->path())->assertSee($note->text);
     }
+
+    /** @test */
+    function un_beneficiaire_a_des_notes()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+        create(Note::class, [
+            'notable_id' => $beneficiaire->id,
+            'notable_type' => Beneficiaire::class,
+        ]);
+
+        $this->assertInstanceOf(Note::class, $beneficiaire->notes->first());
+    }
+
+    /** @test */
+    function on_peut_voir_les_notes_sur_la_fiche_bénéficiaire()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+        $note = create(Note::class, [
+            'notable_id' => $beneficiaire->id,
+            'notable_type' => Beneficiaire::class,
+        ]);
+
+        $this->get($beneficiaire->path())->assertSee($note->text);
+    }
+
 }

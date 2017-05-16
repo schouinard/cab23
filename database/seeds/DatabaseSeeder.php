@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
 
     public function seedTestData()
     {
-        $benevoles = factory('App\Benevole', 50)->create();
-        $beneficiaires = factory('App\Beneficiaire', 50)->create();
+        $benevoles = factory(\App\Benevole::class, 50)->create();
+        $beneficiaires = factory(\App\Beneficiaire::class, 50)->create();
 
         foreach ($benevoles as $benevole) {
-            factory('App\Service')->create([
+            factory(\App\Service::class)->create([
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
                 'beneficiaire_id' => random_int(1, 50),
@@ -66,6 +66,10 @@ class DatabaseSeeder extends Seeder
                     'moment_id' => 3,
                 ],
             ]);
+            factory(\App\Note::class, random_int(5, 10))->create([
+                'notable_id' => $benevole->id,
+                'notable_type' => \App\Benevole::class,
+            ]);
         }
 
         foreach ($beneficiaires as $beneficiaire) {
@@ -83,6 +87,11 @@ class DatabaseSeeder extends Seeder
                 (Adress::class),
             ], 3);
             $beneficiaire->addPeople($people);
+
+            factory(\App\Note::class, random_int(5, 10))->create([
+                'notable_id' => $beneficiaire->id,
+                'notable_type' => \App\Beneficiaire::class,
+            ]);
         }
 
         factory('App\User')->create([

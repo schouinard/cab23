@@ -53,6 +53,11 @@ class Beneficiaire extends FilterableModel
         return $this->belongsTo(IncomeSource::class);
     }
 
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'notable');
+    }
+
     public function adress()
     {
         return $this->belongsTo(Adress::class);

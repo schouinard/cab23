@@ -192,6 +192,11 @@
                     <li><strong>Courriel:</strong> {{$beneficiaire->facturation->email}}</li>
                 </ul>
             </div>
+            <div class="tab-pane" id="#tab_7">
+                @foreach($beneficiaire->notes as $note)
+                    @include('partials.show.notes', ['note' => $note])
+                @endforeach
+            </div>
         </div>
         <!-- /.tab-content -->
     </div>
