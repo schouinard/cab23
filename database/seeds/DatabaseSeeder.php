@@ -30,6 +30,42 @@ class DatabaseSeeder extends Seeder
                 'beneficiaire_id' => random_int(1, 50),
             ]);
             $benevole->clienteles()->attach([1, 3, 5]);
+            $benevole->interets()->sync([
+                1 => ['priority' => 1],
+                2 => ['priority' => 2],
+                3 => ['priority' => 3],
+            ]);
+            $benevole->competences()->sync([
+                1 => ['priority' => 1],
+                2 => ['priority' => 2],
+                3 => ['priority' => 3],
+            ]);
+            $benevole->disponibilites()->createMany([
+                [
+                    'day_id' => 1,
+                    'moment_id' => 1,
+                ],
+                [
+                    'day_id' => 1,
+                    'moment_id' => 2,
+                ],
+                [
+                    'day_id' => 2,
+                    'moment_id' => 3,
+                ],
+                [
+                    'day_id' => 3,
+                    'moment_id' => 1,
+                ],
+                [
+                    'day_id' => 3,
+                    'moment_id' => 2,
+                ],
+                [
+                    'day_id' => 3,
+                    'moment_id' => 3,
+                ],
+            ]);
         }
 
         foreach ($beneficiaires as $beneficiaire) {

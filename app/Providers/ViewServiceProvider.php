@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Autonomie;
 use App\BenevoleType;
-use App\CategorieInteretCompetence;
+use App\Category;
 use App\Clientele;
 use App\Day;
 use App\EtatSante;
@@ -90,7 +90,7 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['benevole.partials.interets'], function ($view) {
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
-                return CategorieInteretCompetence::all();
+                return Category::all();
             });
             $clienteles = \Cache::rememberForever('clienteles', function () {
                 return Clientele::all();
@@ -98,7 +98,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with(['interestGroups' => $interestGroups, 'clienteles' => $clienteles]);
         });
 
-        \View::composer(['benevole.partials.disponibilites'], function ($view) {
+        \View::composer(['benevole.partials.disponibilites', 'benevole.show'], function ($view) {
             $days = \Cache::rememberForever('days', function () {
                 return Day::all();
             });

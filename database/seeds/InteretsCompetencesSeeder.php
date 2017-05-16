@@ -172,7 +172,7 @@ class InteretsCompetencesSeeder extends Seeder
         ];
 
         foreach ($groups as $key => $group) {
-            $categorie = \App\CategorieInteretCompetence::create(['nom' => $key]);
+            $categorie = \App\Category::create(['nom' => $key]);
             foreach ($group['Interets'] as $interet) {
                 $categorie->interets()->create(['nom' => $interet]);
             }

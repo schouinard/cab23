@@ -13,8 +13,6 @@ class Beneficiaire extends FilterableModel
         'naissance',
     ];
 
-    protected $with = ['adress', 'serviceRequests', 'facturation', 'people'];
-
     protected $relationsToHandleOnStore = [
         'serviceRequests',
         'autonomies',

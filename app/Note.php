@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Interet extends Model
+class Note extends Model
 {
     protected $guarded = [];
 
-    public function category()
+    public function notable()
     {
-        return $this->belongsTo(Category::class);
+        return $this->morphTo();
     }
 }

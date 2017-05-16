@@ -50,15 +50,20 @@
     display: none;
 }
 
-.striped .col-xs-12:nth-child(even){
+.striped .col-xs-12:nth-child(even) {
     background: #eee;
 }
-.striped{
-    margin-bottom:20px;
+
+.striped {
+    margin-bottom: 20px;
 }
 
 .vcenter {
     display: inline-block;
     vertical-align: middle;
     float: none;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    float: right;
 }

@@ -16,7 +16,7 @@ class CreateCompetencesTable extends Migration
         Schema::create('competences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
-            $table->unsignedInteger('categorie_interet_competence_id')->index();
+            $table->unsignedInteger('category_id')->index();
             $table->timestamps();
         });
     }

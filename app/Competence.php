@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Competence extends Model
 {
     protected $guarded = [];
-    protected $with = ['categorieInteretCompetence'];
 
-    public function categorieInteretCompetence()
+    public function category()
     {
-        $this->belongsTo(CategorieInteretCompetence::class);
+        return $this->belongsTo(Category::class);
     }
 }

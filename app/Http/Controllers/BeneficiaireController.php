@@ -19,7 +19,7 @@ class BeneficiaireController extends Controller
      */
     public function index(BeneficiaireFilters $filters)
     {
-        $beneficiaires = Beneficiaire::filter($filters)->get();
+        $beneficiaires = Beneficiaire::with('adress')->filter($filters)->get();
 
         return view('beneficiaire.index', compact('beneficiaires'));
     }
@@ -63,7 +63,7 @@ class BeneficiaireController extends Controller
      */
     public function show(Beneficiaire $beneficiaire)
     {
-        $beneficiaire->load('services.benevole');
+        $beneficiaire->load(['services.benevole']);
 
         return view('beneficiaire.show', compact('beneficiaire'));
     }

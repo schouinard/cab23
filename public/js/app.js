@@ -13,12 +13,12 @@ $('.datepicker-naissance').datepicker({
     }
 });
 
-$('.datatable').DataTable({
+var table = $('.datatable').DataTable({
     language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
     },
     stateSave: true,
-    dom: 'lfrtipB',
+    dom: 'flrtiBp',
     buttons: [
         'copy', 'csv', 'excel', 'pdf'
     ]
@@ -30,7 +30,7 @@ $('.services-rendus').DataTable({
     },
     stateSave: true,
     "order": [[ 3, "desc" ]],
-    dom: 'lfrtipB',
+    dom: 'flrtiBp',
     buttons: [
         'copy', 'csv', 'excel', 'pdf'
     ]

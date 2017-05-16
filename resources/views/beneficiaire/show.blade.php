@@ -3,9 +3,7 @@
 @section('title', "Fiche bénéficiaire - {$beneficiaire->nom_complet}")
 
 @section('content_header')
-    <div class="page-header">
         <h1>Bénéficiaire</h1>
-    </div>
 @stop
 
 @section('content')
@@ -136,7 +134,7 @@
                 <h3>Services reçus</h3>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover datatable table-responsive">
+                        <table class="table table-bordered table-hover datatable" width="100%">
                             <thead>
                             <tr>
                                 <td>Type</td>

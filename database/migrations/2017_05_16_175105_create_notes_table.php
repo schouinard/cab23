@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategorieInteretCompetencesTable extends Migration
+class CreateNotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,15 @@ class CreateCategorieInteretCompetencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nom');
+            $table->string('title')->nullable();
+            $table->date('date')->nullable();
+            $table->text('text')->nullable();
+            $table->unsignedInteger('notable_id');
+            $table->string('notable_type');
             $table->timestamps();
         });
-
-        Artisan::call('db:seed', [
-            '--class' => InteretsCompetencesSeeder::class,
-        ]);
     }
 
     /**
@@ -32,6 +31,6 @@ class CreateCategorieInteretCompetencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('notes');
     }
 }

@@ -16,7 +16,7 @@ class CreateInteretsTable extends Migration
         Schema::create('interets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
-            $table->unsignedInteger('categorie_interet_competence_id')->index();
+            $table->unsignedInteger('category_id')->index();
             $table->timestamps();
         });
     }

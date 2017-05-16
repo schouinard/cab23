@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CategorieInteretCompetence extends Model
+class Category extends Model
 {
     protected $guarded = [];
-    protected $with = ['interets', 'competences'];
 
     public function interets()
     {

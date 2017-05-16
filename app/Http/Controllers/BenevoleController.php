@@ -18,7 +18,7 @@ class BenevoleController extends Controller
      */
     public function index(BenevoleFilters $filters)
     {
-        $benevoles = Benevole::filter($filters)->get();
+        $benevoles = Benevole::with(['adress'])->filter($filters)->get();
 
         return view('benevole.index', compact('benevoles'));
     }
@@ -61,8 +61,7 @@ class BenevoleController extends Controller
      */
     public function show(Benevole $benevole)
     {
-        $benevole->load('services.beneficiaire');
-
+        $benevole->load('interets.category', 'competences.category', 'services.beneficiaire');
         return view('benevole.show', compact('benevole'));
     }
 

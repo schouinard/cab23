@@ -3,11 +3,9 @@
 @section('title', 'Fiche bénévole - '. $benevole->nom_complet)
 
 @section('content_header')
-    <div class="page-header">
-        <h1>
-            Bénévole
-        </h1>
-    </div>
+    <h1>
+        Bénévole
+    </h1>
 @stop
 
 @section('content')
@@ -17,6 +15,8 @@
             <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Sélection</a></li>
             <li><a href="#tab_3" data-toggle="tab" aria-expanded="false">Intérêts</a></li>
             <li><a href="#tab_4" data-toggle="tab" aria-expanded="false">Disponibilités</a></li>
+            <li><a href="#tab_5" data-toggle="tab" aria-expanded="false">Services</a></li>
+            <li><a href="#tab_6" data-toggle="tab" aria-expanded="false">Notes</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
@@ -68,7 +68,7 @@
                     @endforeach
                 </ul>
                 <h3>Intérêts et compétences</h3>
-                <table class="datatable">
+                <table class="table table-hover table-bordered datatable" width="100%">
                     <thead>
                     <tr>
                         <th>Catégorie</th>
@@ -78,98 +78,84 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach(array_merge($benevole->interets->toArray(), $benevole->competences->toArray()) as $item)
+                    @foreach($benevole->interets as $item)
                         <tr>
-                            <td>{{$item->categorieInteretCompetence->nom}}</td>
+                            <td>{{$item->category->nom}}</td>
                             <td>{{$item->nom}}</td>
                             <td>{{class_basename($item)}}</td>
-                            <td>{{$item->priority}}</td>
+                            <td>{{$item->pivot->priority}}</td>
+                        </tr>
+                    @endforeach
+                    @foreach($benevole->competences as $item)
+                        <tr>
+                            <td>{{$item->category->nom}}</td>
+                            <td>{{$item->nom}}</td>
+                            <td>{{class_basename($item)}}</td>
+                            <td>{{$item->pivot->priority}}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
+            <div class="tab-pane" id="tab_4">
 
-        </div>
-    </div>
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Identification</h3>
-            <div class="box-tools pull-right">
-                <!-- This will cause the box to collapse when clicked -->
-                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-            </div><!-- /.box-tools -->
-        </div><!-- /.box-header -->
-        <div class="box-body">
-            {{ $benevole->telephone }}
-        </div><!-- /.box-body -->
-        <div class="box-footer">
+                @foreach($days as $day)
+                    <div class="row">
+                        <div class="col-md-2">
+                            {{$day->nom}}
+                        </div>
+                        <div class="col-md-2">
+                            {{ count($benevole->disponibilites->where('day_id', $day->id)) ? $benevole->disponibilites->where('day_id', $day->id)->pluck(['moment'])->pluck('nom')->implode(', ') : "Indisponible" }}
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="tab-pane" id="tab_5">
+                <h3>Services aux bénéficiaires</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover datatable" width="100%">
+                            <thead>
+                            <tr>
+                                <td>Type</td>
+                                <td>Bénévole</td>
+                                <td>Rendu le</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($benevole->services as $service)
+                                <tr>
+                                    <td>
+                                        {{ $service->type->nom }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}
+                                            , {{ $service->beneficiaire->prenom }}</a>
+                                    </td>
+                                    <td>
+                                        {{ $service->rendu_le }}
+                                    </td>
+                                </tr>
+                            @endforeach
 
-        </div><!-- box-footer -->
-    </div><!-- /.box -->
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Champs d'intérêt</h3>
-            <div class="box-tools pull-right">
-                <!-- This will cause the box to collapse when clicked -->
-                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-            </div><!-- /.box-tools -->
-        </div>
-        <div class="box-body">
-            <h4>Clientèles</h4>
-            <ul>
-                @foreach($benevole->clienteles as $clientele)
-                    <li>{{$clientele->nom}}</li>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <h3>Ajouter un service bénéficiaire</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        @component("components.addService", ['serviceTypes' => $serviceTypes, 'beneficiaireId' => null, 'benevoleId' => $benevole->id, 'showBenevole' => false, 'showBeneficiaire' =>true])
+                        @endcomponent
+                    </div><!-- box-footer -->
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_6">
+                @foreach($benevole->notes as $note)
+                    @include('partials.show.notes', ['note' => $note])
                 @endforeach
-            </ul>
+            </div>
         </div>
-    </div>
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Services rendus</h3>
-            <div class="box-tools pull-right">
-                <!-- This will cause the box to collapse when clicked -->
-                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-            </div><!-- /.box-tools -->
-        </div><!-- /.box-header -->
-        <div class="box-body">
-            <table class="table table-hover table-bordered datatable">
-                <thead>
-                <tr>
-                    <td>Type</td>
-                    <td>Bénéficiaire</td>
-                    <td>Rendu le</td>
-                    <td>Don</td>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($benevole->services as $service)
-                    <tr>
-                        <td>
-                            {{ $service->type->nom }}
-                        </td>
-                        <td>
-                            <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}
-                                , {{ $service->beneficiaire->prenom }}</a>
-                        </td>
-                        <td>
-                            {{ $service->rendu_le }}
-                        </td>
-                        <td>{{ $service->don }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div><!-- /.box-body -->
-        <div class="box-footer">
-            @component("components.addService", ['serviceTypes' => $serviceTypes, 'beneficiaireId' => null, 'benevoleId' => $benevole->id, 'showBenevole' => false, 'showBeneficiaire' =>true])
-            @endcomponent
-        </div><!-- box-footer -->
+
     </div><!-- /.box -->
 @stop

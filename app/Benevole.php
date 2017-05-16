@@ -19,8 +19,6 @@ class Benevole extends FilterableModel
         'integration',
     ];
 
-    protected $with = ['adress', 'benevoleType', 'clienteles', 'interets', 'competences'];
-
     protected $relationsToHandleOnStore = [
         'category',
         'clienteles',
@@ -71,6 +69,11 @@ class Benevole extends FilterableModel
     public function disponibilites()
     {
         return $this->hasMany(Disponibilite::class);
+    }
+
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'notable');
     }
 
     public function addService($service)

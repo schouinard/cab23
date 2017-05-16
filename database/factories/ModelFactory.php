@@ -16,14 +16,28 @@ $factory->define(App\Disponibilite::class, function () {
 
     return [
         'benevole_id' => function () {
-            return factory(App\Benevole::class)->create();
+            return factory(App\Benevole::class)->create()->id;
         },
         'day_id' => function () {
             return \App\Day::inRandomOrder()->first()->id;
         },
-        'moment_id' => function() {
+        'moment_id' => function () {
             return \App\Moment::inRandomOrder()->first()->id;
-        }
+        },
+    ];
+});
+
+$factory->define(App\Note::class, function () {
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
+    return [
+        'date' => $faker->date(),
+        'text' => $faker->paragraph,
+        'title' => $faker->sentence,
+        'notable_id' => function () {
+            return factory(App\Benevole::class)->create()->id;
+        },
+        'notable_type' => App\Benevole::class,
     ];
 });
 
