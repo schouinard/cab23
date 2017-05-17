@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->integer('benevole_id')->index();
             $table->integer('beneficiaire_id')->index();
             $table->float('don')->nullable();
+            $table->float('heures')->default(0);
             $table->date('rendu_le');
             $table->timestamps();
             $table->softDeletes();

@@ -114,14 +114,21 @@
                 <h3>Services aux bénéficiaires</h3>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover datatable" width="100%">
+                        <table class="table table-bordered table-hover services-donne" width="100%">
                             <thead>
                             <tr>
                                 <td>Type</td>
                                 <td>Bénévole</td>
                                 <td>Rendu le</td>
+                                <td>Heures</td>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th colspan="3" style="text-align:right">Total:</th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             @foreach ($benevole->services as $service)
                                 <tr>
@@ -134,6 +141,9 @@
                                     </td>
                                     <td>
                                         {{ $service->rendu_le }}
+                                    </td>
+                                    <td>
+                                        {{$service->heures}}
                                     </td>
                                 </tr>
                             @endforeach

@@ -134,7 +134,7 @@
                 <h3>Services reçus</h3>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover datatable" width="100%">
+                        <table class="table table-bordered table-hover services-donne" width="100%">
                             <thead>
                             <tr>
                                 <td>Type</td>
@@ -143,6 +143,12 @@
                                 <td>Don</td>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th colspan="3" style="text-align:right">Total:</th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
                             <tbody>
                             @foreach ($beneficiaire->services as $service)
                                 <tr>

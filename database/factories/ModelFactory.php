@@ -163,6 +163,6 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         },
         'rendu_le' => $faker->date(),
         'don' => $faker->randomFloat(2, 0, 1000),
-
+        'heures' => $faker->randomFloat(2, 0, 1000),
     ];
 });
