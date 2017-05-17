@@ -185,7 +185,8 @@ class BeneficiaireTest extends TestCase
     function it_can_add_people()
     {
         $people = raw(Person::class, [
-            'beneficiaire_id' => null,
+            'contactable_id' => null,
+            'contactable_type' => null,
             'adress_id' => null,
             'adress' => raw
             (Adress::class),

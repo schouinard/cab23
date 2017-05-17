@@ -52,4 +52,11 @@ abstract class Filters
                 return $this->builder;
         }
     }
+
+    public function secteur($secteur)
+    {
+        return $this->builder->whereHas('Adress', function ($q) use ($secteur) {
+            $q->where('secteur_id', $secteur);
+        });
+    }
 }

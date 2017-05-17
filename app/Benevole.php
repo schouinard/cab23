@@ -3,9 +3,12 @@
 namespace App;
 
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Benevole extends FilterableModel
 {
+    use SoftDeletes;
+
     protected $appends = ['nom_complet'];
 
     protected $dates = [

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         $benevoles = factory(\App\Benevole::class, 50)->create();
         $beneficiaires = factory(\App\Beneficiaire::class, 50)->create();
+        $organismes = factory(\App\Organisme::class, 50)->create();
 
         foreach ($benevoles as $benevole) {
             factory(\App\Service::class)->create([
@@ -81,7 +82,8 @@ class DatabaseSeeder extends Seeder
                 3 => ['service_request_status_id' => 3],
             ]);
             $people = raw(Person::class, [
-                'beneficiaire_id' => null,
+                'contactable_id' => null,
+                'contactable_type' => null,
                 'adress_id' => null,
                 'adress' => raw
                 (Adress::class),
@@ -92,6 +94,32 @@ class DatabaseSeeder extends Seeder
                 'notable_id' => $beneficiaire->id,
                 'notable_type' => \App\Beneficiaire::class,
             ]);
+        }
+
+        foreach($organismes as $organisme)
+        {
+            factory(\App\Note::class, random_int(5, 10))->create([
+                'notable_id' => $organisme->id,
+                'notable_type' => \App\Organisme::class,
+            ]);
+            $president = raw(Person::class, [
+                'lien' => 'Président',
+                'contactable_id' => null,
+                'contactable_type' => null,
+                'adress_id' => null,
+                'adress' => raw
+                (Adress::class),
+            ]);
+            $employe = raw(Person::class, [
+                'lien' => 'Employé',
+                'contactable_id' => null,
+                'contactable_type' => null,
+                'adress_id' => null,
+                'adress' => raw
+                (Adress::class),
+            ]);
+
+            $organisme->addPeople([$president, $employe]);
         }
 
         factory('App\User')->create([

@@ -138,6 +138,19 @@ return [
             ],
         ],
         [
+            'text' => 'Organismes',
+            'submenu' => [
+                [
+                    'text' => 'Lister',
+                    'url' => 'organismes',
+                ],
+                [
+                    'text' => 'Ajouter',
+                    'url' => 'organismes/create',
+                ],
+            ],
+        ],
+        [
             'text' => 'Services rendus',
             'icon' => 'heart',
             'url' => 'services',
@@ -153,9 +166,9 @@ return [
                 ],
                 [
                     'text' => 'Ajouter',
-                    'url' => 'users/create'
-                ]
-            ]
+                    'url' => 'users/create',
+                ],
+            ],
         ],
     ],
 

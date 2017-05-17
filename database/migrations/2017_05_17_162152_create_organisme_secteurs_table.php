@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePeopleTable extends Migration
+class CreateOrganismeSecteursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreatePeopleTable extends Migration
      */
     public function up()
     {
-        Schema::create('people', function (Blueprint $table) {
+        Schema::create('organisme_secteurs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('contactable_id');
-            $table->string('contactable_type');
-            $table->unsignedInteger('adress_id')->nullable();
-            $table->string('nom')->nullable();
-            $table->string('lien')->nullable();
+            $table->string('nom');
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => OrganismeSecteurSeeder::class,
+        ]);
     }
 
     /**
@@ -31,6 +31,6 @@ class CreatePeopleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('people');
+        Schema::dropIfExists('organisme_secteurs');
     }
 }

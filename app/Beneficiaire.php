@@ -2,8 +2,12 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Beneficiaire extends FilterableModel
 {
+    use SoftDeletes;
+
     protected $appends = ['nom_complet'];
 
     protected $dates = [
@@ -70,7 +74,7 @@ class Beneficiaire extends FilterableModel
 
     public function people()
     {
-        return $this->hasMany(Person::class);
+        return $this->morphMany(Person::class, 'contactable');
     }
 
     public function getNomCompletAttribute()

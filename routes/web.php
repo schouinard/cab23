@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('users', 'UserController');
 
+    Route::resource('organismes', 'OrganismeController');
+
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
     Route::post('/beneficiaires/{beneficiaire}/services', 'ServiceController@store');
 

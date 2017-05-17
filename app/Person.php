@@ -13,4 +13,9 @@ class Person extends Model
     {
         return $this->belongsTo(Adress::class);
     }
+
+    public function contactable()
+    {
+        return $this->morphTo();
+    }
 }

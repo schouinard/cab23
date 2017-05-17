@@ -68,4 +68,16 @@ class NotesTest extends TestCase
         $this->get($beneficiaire->path())->assertSee($note->text);
     }
 
+    /** @test */
+    function un_organisme_a_des_notes()
+    {
+        $organisme = create(Organisme::class);
+        create(Note::class, [
+            'notable_id' => $organisme->id,
+            'notable_type' => Organisme::class,
+        ]);
+
+        $this->assertInstanceOf(Note::class, $organisme->notes->first());
+    }
+
 }

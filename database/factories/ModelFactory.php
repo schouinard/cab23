@@ -138,10 +138,10 @@ $factory->define(App\Person::class, function () {
     return [
         'nom' => $faker->name,
         'lien' => $faker->word,
-        'beneficiaire_id' => function () {
+        'contactable_id' => function () {
             return factory(App\Beneficiaire::class)->create()->id;
         },
-        'adress_id' => function () {
+        'contactable_type' => function () {
             return factory(App\Adress::class)->create()->id;
         },
     ];
@@ -159,10 +159,27 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
             return factory('App\Beneficiaire')->create()->id;
         },
         'service_type_id' => function () {
-            return App\ServiceType::inRandomOrder()->first();
+            return App\ServiceType::inRandomOrder()->first()->id;
         },
         'rendu_le' => $faker->date(),
         'don' => $faker->randomFloat(2, 0, 1000),
         'heures' => $faker->randomFloat(2, 0, 1000),
+    ];
+});
+
+$factory->define(App\Organisme::class, function () {
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
+    return [
+        'nom' => $faker->company,
+        'adress_id' => function () {
+            return factory('App\Adress')->create()->id;
+        },
+        'type_id' => function () {
+            return App\OrganismeType::inRandomOrder()->first()->id;
+        },
+        'secteur_id' => function () {
+            return App\OrganismeSecteur::inRandomOrder()->first()->id;
+        },
     ];
 });
