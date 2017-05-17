@@ -28,7 +28,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active row" id="tab_1">
-                @component("components.identification")
+                @component("components.identification", ['readonly' => $readonly, 'model' => $benevole])
                     @slot('additionalFields')
                         <!--- benevole_type_id form input ---->
                             <div class="form-group col-md-6">

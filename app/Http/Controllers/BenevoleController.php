@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Adress;
+use App\Beneficiaire;
 use App\Benevole;
 use App\Filters\BenevoleFilters;
 use App\Http\Requests\StorePerson;
@@ -30,7 +32,10 @@ class BenevoleController extends Controller
      */
     public function create()
     {
-        return view('benevole.create');
+        return view('benevole.create', [
+            'readonly' => false,
+            'benevole' => $this->initializeBenevoleForCreation(),
+        ]);
     }
 
     /**
@@ -62,6 +67,7 @@ class BenevoleController extends Controller
     public function show(Benevole $benevole)
     {
         $benevole->load('interets.category', 'competences.category', 'services.beneficiaire');
+
         return view('benevole.show', compact('benevole'));
     }
 
@@ -115,5 +121,12 @@ class BenevoleController extends Controller
             'nom',
             'prenom',
         ])->toJSON();
+    }
+
+    private function initializeBenevoleForCreation()
+    {
+        $benevole = new Benevole();
+        $benevole->adress = new Adress();
+        return $benevole;
     }
 }

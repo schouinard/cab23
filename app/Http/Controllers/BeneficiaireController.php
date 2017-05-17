@@ -31,7 +31,10 @@ class BeneficiaireController extends Controller
      */
     public function create()
     {
-        return view('beneficiaire.create');
+        return view('beneficiaire.create', [
+            'readonly' => false,
+            'beneficiaire' => $this->initializeBeneficiaireForCreation()
+        ]);
     }
 
     /**
@@ -49,7 +52,6 @@ class BeneficiaireController extends Controller
         $beneficiaire->save();
 
         $beneficiaire->handleRelationsOnStore($request->toArray());
-
 
         return redirect($beneficiaire->path())
             ->with('flash', 'Bénéficiaire créé avec succès.');
@@ -118,5 +120,19 @@ class BeneficiaireController extends Controller
             'nom',
             'prenom',
         ])->toJSON();
+    }
+
+    private function initializeBeneficiaireForCreation()
+    {
+        $beneficiaire = new Beneficiaire();
+        $beneficiaire->adress = new Adress();
+        $beneficiaire->facturation = new Adress();
+        for($i=0; $i<3; $i++)
+        {
+            $person = new Person();
+            $person->adress = new Adress();
+            $beneficiaire->people->add($person);
+        }
+        return $beneficiaire;
     }
 }

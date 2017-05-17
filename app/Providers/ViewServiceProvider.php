@@ -10,6 +10,7 @@ use App\Day;
 use App\EtatSante;
 use App\IncomeSource;
 use App\Moment;
+use App\OrganismeType;
 use App\Secteur;
 use App\ServiceRequestStatus;
 use App\ServiceType;
@@ -106,6 +107,13 @@ class ViewServiceProvider extends ServiceProvider
                 return Moment::all();
             });
             $view->with(['days' => $days, 'moments' => $moments]);
+        });
+
+        \View::composer(['organisme.partials.identification'], function($view){
+            $type = \Cache::rememberForever('organismeTypes', function () {
+                return OrganismeType::all();
+            });
+            $view->with(['type' => $type]);
         });
     }
 

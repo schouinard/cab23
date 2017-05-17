@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Beneficiaire;
 use App\Benevole;
 use App\Note;
+use App\Organisme;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

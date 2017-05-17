@@ -11,14 +11,31 @@ class Organisme extends FilterableModel
 
     protected $guarded = [];
 
+    protected $relationsToHandleOnStore = [
+        'adress',
+        'people',
+    ];
+
     public function path()
     {
-        return '/organismes/' . $this->id;
+        return '/organismes/'.$this->id;
     }
 
     public function people()
     {
         return $this->morphMany(Person::class, 'contactable');
+    }
+
+    public function getPresidentAttribute()
+    {
+        return $this->people->first();
+    }
+
+    public function getEmployeAttribute()
+    {
+        if (count($this->people) > 1) {
+            return $this->people[1];
+        }
     }
 
     public function adress()

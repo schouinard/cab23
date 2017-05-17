@@ -10,6 +10,11 @@ class Adress extends Model
 
     protected $with = ['secteur'];
 
+    protected $attributes = [
+        'ville' => 'Québec',
+        'province' => 'QC',
+    ];
+
     public function secteur()
     {
         return $this->belongsTo(Secteur::class);

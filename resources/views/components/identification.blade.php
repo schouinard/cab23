@@ -23,7 +23,7 @@
 {{ $additionalFields  }}
 
 <div class="col-md-12">
-    @include('partials.form.contact', ['adress' => 'adress'])
+    @include('partials.form.contact', ['adress' => 'adress', 'readonly' => $readonly, 'model' => $model->adress])
 </div>
 
 <div class="form-group col-md-12 {{ $errors->first('', 'has-error') }}">
