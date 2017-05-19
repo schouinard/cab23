@@ -1,12 +1,28 @@
 <!--- antecedents form input ---->
 <div class="form-group col-md-12 {{ $errors->first('antecedents', 'has-error') }}">
     {{ Form::label('antecedents', 'Antécédents judiciaires:') }}
-    {{ Form::textarea('antecedents', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
+    @if(isset($readonly))
+        <div class="readonly">
+            @if(isset($benevole))
+                {{$benevole->antecedents}}
+            @endif
+        </div>
+    @else
+        {{ Form::textarea('antecedents', null, array_merge($attributes, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%'])) }}
+    @endif
 </div>
 <!--- enquete_sociale form input ---->
 <div class="form-group col-md-12 {{ $errors->first('enquete_sociale', 'has-error') }}">
     {{ Form::label('enquete_sociale', 'Références pour enquête sociale:') }}
-    {{ Form::textarea('enquete_sociale', null, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%']) }}
+    @if(isset($readonly))
+        <div class="readonly">
+            @if(isset($benevole))
+                {{$benevole->enquete_sociale}}
+            @endif
+        </div>
+    @else
+        {{ Form::textarea('enquete_sociale', null, array_merge($attributes, ['class' => 'form-control textarea', 'row' => '20', 'width' => '100%'])) }}
+    @endif
 </div>
 <!--- inscription datepicker --->
 <div class="form-group col-md-6">
@@ -15,7 +31,7 @@
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        {{ Form::text('inscription', Carbon\Carbon::today()->toDateString(), ['class' => 'form-control pull-right']) }}
+        {{ Form::text('inscription', null, array_merge($attributes, ['class' => 'form-control pull-right'])) }}
     </div>
 </div>
 <div class="form-group col-md-6">
@@ -24,7 +40,7 @@
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        {{ Form::text('integration', null, ['class' => 'form-control pull-right']) }}
+        {{ Form::text('integration', null, array_merge($attributes, ['class' => 'form-control pull-right'])) }}
     </div>
 </div>
 <div class="form-group col-md-6">
@@ -33,7 +49,7 @@
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        {{ Form::text('suivi', null, ['class' => 'form-control pull-right']) }}
+        {{ Form::text('suivi', null, array_merge($attributes, ['class' => 'form-control pull-right'])) }}
     </div>
 </div>
 <div class="form-group col-md-6">
@@ -42,6 +58,6 @@
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        {{ Form::text('accepte_ca', null, ['class' => 'form-control pull-right']) }}
+        {{ Form::text('accepte_ca', null, array_merge($attributes, ['class' => 'form-control pull-right'])) }}
     </div>
 </div>

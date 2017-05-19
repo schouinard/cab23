@@ -6,9 +6,11 @@ use App\Autonomie;
 use App\BenevoleType;
 use App\Category;
 use App\Clientele;
+use App\Competence;
 use App\Day;
 use App\EtatSante;
 use App\IncomeSource;
+use App\Interet;
 use App\Moment;
 use App\OrganismeType;
 use App\Secteur;
@@ -42,10 +44,10 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['beneficiaire.partials.sante'], function ($view) {
             $etats = \Cache::rememberForever('etatsSante', function () {
-                return EtatSante::all();
+                return EtatSante::orderBy('nom')->get();
             });
             $autonomies = \Cache::rememberForever('autonomies', function () {
-                return Autonomie::all();
+                return Autonomie::orderBy('nom')->get();
             });
             $view->with('etatsSante', $etats)->with('autonomies', $autonomies);
         });
@@ -77,26 +79,32 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut'], function ($view) {
             $revenus = \Cache::rememberForever('revenus', function () {
-                return IncomeSource::all();
+                return IncomeSource::orderBy('nom')->get();
             });
             $view->with('revenus', $revenus);
         });
 
-        \View::composer(['benevole.create'], function ($view) {
+        \View::composer(['benevole.form'], function ($view) {
             $types = \Cache::rememberForever('benevoleTypes', function () {
-                return BenevoleType::all();
+                return BenevoleType::orderBy('nom')->get();
             });
             $view->with('benevoleTypes', $types);
         });
 
         \View::composer(['benevole.partials.interets'], function ($view) {
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
-                return Category::all();
+                return Category::orderBy('nom')->get();
+            });
+            $interests = \Cache::rememberForever('interests', function () {
+                return Interet::orderBy('nom')->get();
+            });
+            $competences = \Cache::rememberForever('competences', function () {
+                return Competence::orderBy('nom')->get();
             });
             $clienteles = \Cache::rememberForever('clienteles', function () {
-                return Clientele::all();
+                return Clientele::orderBy('nom')->get();
             });
-            $view->with(['interestGroups' => $interestGroups, 'clienteles' => $clienteles]);
+            $view->with(compact(['interestGroups', 'interests', 'competences', 'clienteles']));
         });
 
         \View::composer(['benevole.partials.disponibilites', 'benevole.show'], function ($view) {
@@ -111,7 +119,7 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['organisme.form', 'organisme.show'], function($view){
             $type = \Cache::rememberForever('organismeTypes', function () {
-                return OrganismeType::all();
+                return OrganismeType::orderBy('nom')->get();
             });
             $view->with(['type' => $type]);
         });

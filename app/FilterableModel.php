@@ -20,6 +20,8 @@ abstract class FilterableModel extends Model
 
     protected $guarded = [];
 
+    protected $dateFormat = 'Y-m-d';
+
     public static function scopeFilter($query, $filters = [])
     {
         return $filters->apply($query);

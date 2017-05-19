@@ -34,10 +34,7 @@ class BenevoleController extends Controller
      */
     public function create()
     {
-        return view('benevole.create', [
-            'readonly' => false,
-            'benevole' => $this->initializeBenevoleForCreation(),
-        ]);
+        return view('benevole.create');
     }
 
     /**
@@ -81,7 +78,8 @@ class BenevoleController extends Controller
      */
     public function edit(Benevole $benevole)
     {
-        //
+        $benevole = $benevole->load(['clienteles', 'interets', 'competences']);
+        return view('benevole.edit', compact('benevole'));
     }
 
     /**
@@ -91,8 +89,13 @@ class BenevoleController extends Controller
      * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Benevole $benevole)
+    public function update(StorePerson $request, $id)
     {
+        $benevole = Benevole::find($id);
+        $benevole->update(array_except($request->toArray(), $benevole->getRelationsToHandleOnStore()));
+
+        $benevole->handleRelationsOnUpdate($request->toArray());
+
         return redirect('/benevoles')
             ->with('flash', 'Bénévole modifié avec succès.');
     }
@@ -137,13 +140,5 @@ class BenevoleController extends Controller
             'nom',
             'prenom',
         ])->toJSON();
-    }
-
-    private function initializeBenevoleForCreation()
-    {
-        $benevole = new Benevole();
-        $benevole->adress = new Adress();
-
-        return $benevole;
     }
 }

@@ -10,11 +10,11 @@ class Category extends Model
 
     public function interets()
     {
-        return $this->hasMany(Interet::class);
+        return $this->hasMany(Interet::class)->orderBy('nom');
     }
 
     public function competences()
     {
-        return $this->hasMany(Competence::class);
+        return $this->hasMany(Competence::class)->orderBy('nom');
     }
 }
