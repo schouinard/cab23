@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['namespace' => 'Auth'],function(){
+Route::group(['namespace' => 'Auth'], function () {
     // Authentication Routes...
     Route::get('login', 'LoginController@showLoginForm')->name('login');
     Route::post('login', 'LoginController@login');
@@ -25,21 +25,28 @@ Route::group(['namespace' => 'Auth'],function(){
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function(){
+    Route::get('/', function () {
         return redirect('/benevoles');
     });
 
-    Route::resource('benevoles', 'BenevoleController');
     Route::put('benevoles', 'BenevoleController@index');
+    Route::post('benevoles/{benevole}/restore', 'BenevoleController@restore');
+    Route::resource('benevoles', 'BenevoleController');
 
-    Route::resource('beneficiaires', 'BeneficiaireController');
     Route::put('beneficiaires', 'BeneficiaireController@index');
+    Route::post('beneficiaires/{beneficiaire}/restore', 'BeneficiaireController@restore');
+    Route::resource('beneficiaires', 'BeneficiaireController');
 
-    Route::resource('services', 'ServiceController');
     Route::put('services', 'ServiceController@index');
+    Route::post('services/{service}/restore', 'ServiceController@restore');
+    Route::resource('services', 'ServiceController');
 
+    Route::put('users', 'UserController@index');
+    Route::post('users/{user}/restore', 'UserController@restore');
     Route::resource('users', 'UserController');
 
+    Route::put('organismes', 'OrganismeController@index');
+    Route::post('organismes/{organisme}/restore', 'OrganismeController@restore');
     Route::resource('organismes', 'OrganismeController');
 
     Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
@@ -47,6 +54,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
     Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');
-
 });
 

@@ -10,6 +10,8 @@ abstract class Filters
 
     protected $filters = [];
 
+    protected $sessionKey = 'filters';
+
     /**
      * Filters constructor.
      *
@@ -38,7 +40,14 @@ abstract class Filters
      */
     public function getFilters()
     {
-        return $this->request->intersect($this->filters);
+        if ($this->request->isMethod('PUT')) {
+            $filters = $this->request->intersect($this->filters);
+            $this->request->session()->put($this->sessionKey, $filters);
+
+            return $filters;
+        }
+
+        return $this->request->session()->get($this->sessionKey, []);
     }
 
     public function statut($statut)

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Secteur;
 use App\ServiceType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 
@@ -17,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        Blade::directive('datetime', function ($expression) {
+            return "<?php echo ($expression)->format('Y/m/d'); ?>";
+        });
     }
 
     /**

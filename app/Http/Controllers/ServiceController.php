@@ -28,7 +28,9 @@ class ServiceController extends Controller
     {
         $services = Service::filter($filters)->with(['benevole', 'beneficiaire'])->get();
 
-        return view('service.index', compact('services'));
+        $filters = $filters->getFilters();
+
+        return view('service.index', compact(['services', 'filters']));
     }
 
     public function destroy(Service $service)
@@ -42,6 +44,19 @@ class ServiceController extends Controller
             return response([], 204);
         }
 
-        return back();
+        return redirect('/services')
+            ->with('flash', 'Service supprimé avec succès.');
+    }
+
+    public function restore($id)
+    {
+        $service = Service::withTrashed()->find($id);
+        $service->restore();
+        if (request()->wantsJson()) {
+            return response([], 200);
+        }
+
+        return redirect('/services')
+            ->with('flash', 'Service restauré avec succès.');
     }
 }

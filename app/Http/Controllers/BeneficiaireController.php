@@ -21,7 +21,9 @@ class BeneficiaireController extends Controller
     {
         $beneficiaires = Beneficiaire::with('adress')->filter($filters)->get();
 
-        return view('beneficiaire.index', compact('beneficiaires'));
+        $filters = $filters->getFilters();
+
+        return view('beneficiaire.index', compact(['beneficiaires', 'filters']));
     }
 
     /**
@@ -33,7 +35,7 @@ class BeneficiaireController extends Controller
     {
         return view('beneficiaire.create', [
             'readonly' => false,
-            'beneficiaire' => $this->initializeBeneficiaireForCreation()
+            'beneficiaire' => $this->initializeBeneficiaireForCreation(),
         ]);
     }
 
@@ -90,7 +92,8 @@ class BeneficiaireController extends Controller
      */
     public function update(Request $request, Beneficiaire $beneficiaire)
     {
-        //
+        return redirect($beneficiaire->path())
+            ->with('flash', 'Bénéficiaire modifié avec succès.');
     }
 
     /**
@@ -110,7 +113,20 @@ class BeneficiaireController extends Controller
             return response([], 204);
         }
 
-        return redirect('/beneficiaires');
+        return redirect('/beneficiaires')
+            ->with('flash', 'Bénéficiaire supprimé avec succès.');
+    }
+
+    public function restore($id)
+    {
+        $beneficiaire = Beneficiaire::withTrashed()->find($id);
+        $beneficiaire->restore();
+        if (request()->wantsJson()) {
+            return response([], 200);
+        }
+
+        return redirect('/beneficiaires')
+            ->with('flash', 'Bénéficiaire restauré avec succès.');
     }
 
     public function listAllForAutocomplete()
@@ -127,12 +143,12 @@ class BeneficiaireController extends Controller
         $beneficiaire = new Beneficiaire();
         $beneficiaire->adress = new Adress();
         $beneficiaire->facturation = new Adress();
-        for($i=0; $i<3; $i++)
-        {
+        for ($i = 0; $i < 3; $i++) {
             $person = new Person();
             $person->adress = new Adress();
             $beneficiaire->people->add($person);
         }
+
         return $beneficiaire;
     }
 }

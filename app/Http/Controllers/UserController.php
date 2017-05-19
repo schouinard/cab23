@@ -23,7 +23,9 @@ class UserController extends Controller
         }
         $users = User::filter($filters)->get();
 
-        return view('users.index', compact('users'));
+        $filters = $filters->getFilters();
+
+        return view('users.index', compact(['users', 'filters']));
     }
 
     /**
@@ -70,7 +72,8 @@ class UserController extends Controller
             'isAdmin' => $request->input('isAdmin'),
         ]);
 
-        return redirect()->route('users.index')->with('flash', 'Utilisateur ajouté avec succès.');
+        return redirect()->route('users.index')
+            ->with('flash', 'Utilisateur ajouté avec succès.');
     }
 
     /**
@@ -166,6 +169,19 @@ class UserController extends Controller
             return response([], 204);
         }
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')
+            ->with('flash', 'Utilisateur supprimé avec succès.');
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->restore();
+        if (request()->wantsJson()) {
+            return response([], 200);
+        }
+
+        return redirect()->route('users.index')
+            ->with('flash', 'Utilisateur restauré avec succès.');
     }
 }

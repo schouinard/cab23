@@ -22,7 +22,7 @@ class FiltresBenevoleTest extends TestCase
         $bornInJanuary = create(Benevole::class, ['naissance' => Carbon::create(null, 1, 1)]);
         $bornInMarch = create(Benevole::class, ['naissance' => Carbon::create(null, 3, 1)]);
 
-        $this->get('benevoles?anniversaire=01')
+        $this->put('benevoles', ['anniversaire' => '01'])
              ->assertSee(webformat($bornInJanuary->nom))
              ->assertDontSee(webformat($bornInMarch->nom));
     }
@@ -38,7 +38,7 @@ class FiltresBenevoleTest extends TestCase
         $benevole = create(Benevole::class, ['adress_id' => $adress1->id]);
         $benevoleWithOtherSecteur = create(Benevole::class, ['adress_id' => $adress2->id]);
 
-        $this->get('benevoles?secteur=1')
+        $this->put('benevoles', ['secteur'=>'1'])
              ->assertSee(webformat($benevole->nom))
              ->assertDontSee(webformat($benevoleWithOtherSecteur->nom));
     }
@@ -51,7 +51,7 @@ class FiltresBenevoleTest extends TestCase
         $deletedItem = create(Benevole::class);
         $deletedItem->delete();
 
-        $this->get('benevoles?statut=Tous')
+        $this->put('benevoles', ['statut'=>'Tous'])
             ->assertSee(webformat($item->nom))
             ->assertSee(webformat($deletedItem->nom));
     }
@@ -64,7 +64,7 @@ class FiltresBenevoleTest extends TestCase
         $deletedItem = create(Benevole::class);
         $deletedItem->delete();
 
-        $this->get('benevoles?statut=Inactifs')
+        $this->put('benevoles', ['statut'=>'Inactifs'])
             ->assertDontSee(webformat($item->nom))
             ->assertSee(webformat($deletedItem->nom));
     }
@@ -76,7 +76,7 @@ class FiltresBenevoleTest extends TestCase
         $benevole = create(Benevole::class, ['inscription' => '1985-10-10']);
         $benevoleWithOtherYear = create(Benevole::class, ['inscription' => '1989-10-10']);
 
-        $this->get('benevoles?inscription=1985')
+        $this->put('benevoles', ['inscription'=>'1985'])
             ->assertSee($benevole->inscription->format('Y-m-d'))
             ->assertDontSee($benevoleWithOtherYear->inscription->format('Y-m-d'));
     }
@@ -88,11 +88,11 @@ class FiltresBenevoleTest extends TestCase
         $benevole = create(Benevole::class, ['accepte_ca' => '1985-10-10']);
         $benevoleProbation = create(Benevole::class, ['accepte_ca' => null]);
 
-        $this->get('benevoles?accepte_ca=accepte')
+        $this->put('benevoles', ['accepte_ca'=>'accepte'])
             ->assertSee($benevole->accepte_ca->format('Y-m-d'))
             ->assertDontSee(webformat($benevoleProbation->nom));
 
-        $this->get('benevoles?accepte_ca=probation')
+        $this->put('benevoles', ['accepte_ca'=>'probation'])
             ->assertSee(webformat($benevoleProbation->nom))
             ->assertDontSee(webformat($benevole->nom));
     }

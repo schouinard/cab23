@@ -109,7 +109,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with(['days' => $days, 'moments' => $moments]);
         });
 
-        \View::composer(['organisme.partials.identification'], function($view){
+        \View::composer(['organisme.form', 'organisme.show'], function($view){
             $type = \Cache::rememberForever('organismeTypes', function () {
                 return OrganismeType::all();
             });

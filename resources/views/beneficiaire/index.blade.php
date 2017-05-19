@@ -1,6 +1,6 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Dashboard')
+@section('title', 'Liste des bénéficiaires')
 
 @section('content_header')
     <h1>Bénéficiaires</h1>
@@ -8,101 +8,117 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Filtres</h3>
-                    <div class="box-tools pull-right">
-                        <!-- This will cause the box to collapse when clicked -->
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div><!-- /.box-tools -->
+        @component('components.filtres')
+            @slot('inputFilters')
+                <div class="form-group col-md-3">
+                    {{ Form::label('secteur', 'Secteur:') }}
+                    {{ Form::select('secteur', $secteurs->pluck('nom','id'),isset($filters['secteur']) ? $filters['secteur'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
-                <div class="box-body">
-                    <form action="" method="post">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
-                        <div class="form-group col-md-3">
-                            {{ Form::label('secteur', 'Secteur:') }}
-                            {{ Form::select('secteur', $secteurs->pluck('nom','id'),request('secteur'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ Form::label('type', 'Mois de naissance:') }}
-                            {{ Form::select('anniversaire', $months,request('anniversaire'), ['class' => 'form-control', 'placeholder' => 'Tous']) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ Form::label('statut', 'Statut:') }}
-                            {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],request('statut'), ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
-                        </div>
-                        <div class="form-group col-md-12">
-                            <input type="submit" class="btn btn-primary" value="Filtrer"/>
-                            <a href="/beneficiaires" class="btn btn-primary">Effacer les filtres</a>
-                        </div>
-                    </form>
+                <div class="form-group col-md-3">
+                    {{ Form::label('type', 'Mois de naissance:') }}
+                    {{ Form::select('anniversaire', $months, isset($filters['anniversaire']) ? $filters['anniversaire'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
-            </div>
-        </div>
+                <div class="form-group col-md-3">
+                    {{ Form::label('statut', 'Statut:') }}
+                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'], isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                </div>
+            @endslot
+        @endcomponent
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-body table-responsive">
-                    <table class="datatable table table-hover table-bordered">
-                        <thead>
+        @component('components.index', ['filters' => $filters])
+            @slot('datatable')
+                <table class="datatable table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Courriel</th>
+                        <th>Telephone</th>
+                        @if(request('secteur'))
+                            <th>Secteur</th>
+                        @endif
+                        @if(request('anniversaire'))
+                            <th>Anniversaire</th>
+                        @endif
+                        @if(request('statut'))
+                            <th>Statut</th>
+                        @endif
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($beneficiaires as $beneficiaire)
                         <tr>
-                            <th>Id</th>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Courriel</th>
-                            <th>Telephone</th>
+                            <td>{{ $beneficiaire->id }}</td>
+                            <td><a href="{{ $beneficiaire->path() }}">{{ $beneficiaire->nom }}</a></td>
+                            <td>{{ $beneficiaire->prenom }}</td>
+                            <td>{{ $beneficiaire->adress->email }}</td>
+                            <td>{{ $beneficiaire->adress->telephone }}</td>
                             @if(request('secteur'))
-                                <th>Secteur</th>
+                                <td>
+                                    @if($beneficiaire->adress->secteur_id)
+                                        {{$secteurs->where('id', $beneficiaire->adress->secteur_id)->first()->nom}}
+                                    @endif
+                                </td>
                             @endif
                             @if(request('anniversaire'))
-                                <th>Anniversaire</th>
+                                <td>
+                                    @if($beneficiaire->naissance)
+                                        {{ $beneficiaire->naissance->format('d M') }}
+                                    @endif
+                                </td>
                             @endif
                             @if(request('statut'))
-                                <th>Statut</th>
+                                <td>
+                                    {{ $beneficiaire->trashed() ? 'Inactif' : 'Actif' }}
+                                </td>
                             @endif
+                            <td>
+                                <a href="{{ route('beneficiaires.edit', $beneficiaire->id) }}" title="Modifier">
+                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"
+                                                                              aria-hidden="true"></i> Modifier
+                                    </button>
+                                </a>
+                                @can('can-delete')
+                                    @if($beneficiaire->trashed())
+                                        {!! Form::open([
+                                            'method'=>'POST',
+                                            'url' => ['/beneficiaires/' . $beneficiaire->id . '/restore'],
+                                            'style' => 'display:inline'
+                                        ]) !!}
+                                        {!! Form::button('<i class="fa fa-undo" aria-hidden="true"></i> Restaurer',
+                                        [
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-success btn-xs',
+                                                'title' => 'Restaurer le bénéficiaire',
+
+                                        ]) !!}
+                                        {!! Form::close() !!}
+                                    @else
+                                        {!! Form::open([
+                                            'method'=>'DELETE',
+                                            'url' => ['/beneficiaires', $beneficiaire->id],
+                                            'style' => 'display:inline'
+                                        ]) !!}
+                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer', array(
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-danger btn-xs',
+                                                'title' => 'Supprimer le bénéficiaire',
+                                                'onclick'=>'return confirm("Voulez-vous vraiment supprimer?")'
+                                        )) !!}
+                                        {!! Form::close() !!}
+                                    @endif
+                                @endcan
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($beneficiaires as $beneficiaire)
-                            <tr>
-                                <td>{{ $beneficiaire->id }}</td>
-                                <td><a href="{{ $beneficiaire->path() }}">{{ $beneficiaire->nom }}</a></td>
-                                <td>{{ $beneficiaire->prenom }}</td>
-                                <td>{{ $beneficiaire->adress->email }}</td>
-                                <td>{{ $beneficiaire->adress->telephone }}</td>
-                                @if(request('secteur'))
-                                    <td>
-                                        @if($beneficiaire->adress->secteur_id)
-                                            {{$secteurs->where('id', $beneficiaire->adress->secteur_id)->first()->nom}}
-                                        @endif
-                                    </td>
-                                @endif
-                                @if(request('anniversaire'))
-                                    <td>
-                                        @if($beneficiaire->naissance)
-                                            {{ $beneficiaire->naissance->format('d M') }}
-                                        @endif
-                                    </td>
-                                @endif
-                                @if(request('statut'))
-                                    <td>
-                                        {{ $beneficiaire->trashed() ? 'Inactif' : 'Actif' }}
-                                    </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot></tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
+                    @endforeach
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            @endslot
+        @endcomponent
     </div>
 @stop
 

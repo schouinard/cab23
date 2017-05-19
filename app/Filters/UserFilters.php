@@ -6,4 +6,6 @@ class UserFilters extends Filters
 {
     protected $filters = ['statut'];
 
+    protected $sessionKey = 'users.filters';
+
 }

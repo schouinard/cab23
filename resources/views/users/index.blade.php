@@ -1,6 +1,6 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Gestion des utilisateurs')
+@section('title', 'Liste des utilisateurs')
 
 @section('content_header')
     <h1>Utilisateurs</h1>
@@ -8,70 +8,88 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Filtres</h3>
-                    <div class="box-tools pull-right">
-                        <!-- This will cause the box to collapse when clicked -->
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div><!-- /.box-tools -->
+        @component('components.filtres')
+            @slot('inputFilters')
+                <div class="form-group col-md-3">
+                    {{ Form::label('statut', 'Statut:') }}
+                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
                 </div>
-                <div class="box-body">
-                    <form action="" method="get">
-                        <div class="form-group col-md-3">
-                            {{ Form::label('statut', 'Statut:') }}
-                            {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],request('statut'), ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
-                        </div>
-                        <div class="form-group col-md-12">
-                            <input type="submit" class="btn btn-primary" value="Filtrer"/>
-                            <a href="/benevoles" class="btn btn-primary">Effacer les filtres</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            @endslot
+        @endcomponent
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-body table-responsive">
-                    <table class="datatable table table-bordered table-hover">
-                        <thead>
+        @component('components.index', ['filters' => $filters])
+            @slot('datatable')
+                <table class="datatable table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Courriel</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($users as $user)
                         <tr>
-                            <th>Id</th>
-                            <th>Nom</th>
-                            <th>Courriel</th>
-                            <th>Rôle</th>
-                            <th>Statut</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->id }}</td>
-                                <td><a href="{{ $user->path() }}">{{ $user->name }}</a></td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    @if($user->isAdmin)
-                                        Admin
+                            <td>{{ $user->id }}</td>
+                            <td><a href="{{ $user->path() }}">{{ $user->name }}</a></td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                @if($user->isAdmin)
+                                    Admin
+                                @else
+                                    Accueil
+                                @endif
+                            </td>
+                            <td>
+                                {{ $user->trashed() ? 'Inactif' : 'Actif' }}
+                            </td>
+                            <td>
+                                <a href="{{ route('users.edit', $user->id) }}" title="Modifier">
+                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"
+                                                                              aria-hidden="true"></i> Modifier
+                                    </button>
+                                </a>
+                                @can('can-delete')
+                                    @if($user->trashed())
+                                        {!! Form::open([
+                                            'method'=>'POST',
+                                            'url' => ['/users/' . $user->id . '/restore'],
+                                            'style' => 'display:inline'
+                                        ]) !!}
+                                        {!! Form::button('<i class="fa fa-undo" aria-hidden="true"></i> Restaurer',
+                                        [
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-success btn-xs',
+                                                'title' => 'Restaurer l\'utilisateur',
+
+                                        ]) !!}
+                                        {!! Form::close() !!}
                                     @else
-                                        Accueil
+                                        {!! Form::open([
+                                            'method'=>'DELETE',
+                                            'url' => ['/users', $user->id],
+                                            'style' => 'display:inline'
+                                        ]) !!}
+                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer', array(
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-danger btn-xs',
+                                                'title' => 'Supprimer l\'utilisateur',
+                                                'onclick'=>'return confirm("Voulez-vous vraiment supprimer?")'
+                                        )) !!}
+                                        {!! Form::close() !!}
                                     @endif
-                                </td>
-                                <td>
-                                    {{ $user->trashed() ? 'Inactif' : 'Actif' }}
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot></tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
+                                @endcan
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            @endslot
+        @endcomponent
     </div>
 @stop

@@ -26,7 +26,7 @@ class ServicesTest extends TestCase
         $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
         $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
 
-        $this->get('services?type=1')
+        $this->put('services', ['type'=>'1'])
             ->assertSee($service->rendu_le)
             ->assertDontSee($otherService->rendu_le);
     }
@@ -38,7 +38,7 @@ class ServicesTest extends TestCase
         $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
         $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
 
-        $this->get('services?from=2009-01-01')
+        $this->put('services', ['from'=>'2009-01-01'])
             ->assertSee($otherService->rendu_le)
             ->assertDontSee($service->rendu_le);
     }
@@ -50,7 +50,7 @@ class ServicesTest extends TestCase
         $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
         $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
 
-        $this->get('services?to=2009-01-01')
+        $this->put('services', ['to'=>'2009-01-01'])
             ->assertSee($service->rendu_le)
             ->assertDontSee($otherService->rendu_le);
     }

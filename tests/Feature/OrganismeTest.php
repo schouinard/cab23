@@ -34,15 +34,31 @@ class OrganismeTest extends TestCase
     }
 
     /** @test */
-    function it_can_have_people()
+    function it_can_have_a_president()
     {
-        $person = create(Person::class, ['contactable_id' => $this->organisme->id, 'contactable_type' =>
-            Organisme::class]);
-        $person2 = create(Person::class, ['contactable_id' => $this->organisme->id, 'contactable_type' =>
-            Organisme::class]);
+        $person = create(Person::class, [
+            'contactable_id' => $this->organisme->id,
+            'contactable_type' =>
+                Organisme::class,
+            'lien' => 'Président',
+        ]);
 
-        $this->assertCount(2, $this->organisme->people);
-        $this->assertInstanceOf(Person::class, $this->organisme->people->first());
+        $this->assertEquals($person->nom, $this->organisme->president->nom);
+        $this->assertInstanceOf(Person::class, $this->organisme->president);
+    }
+
+    /** @test */
+    function it_can_have_a_employe()
+    {
+        $person = create(Person::class, [
+            'contactable_id' => $this->organisme->id,
+            'contactable_type' =>
+                Organisme::class,
+            'lien' => 'Employé',
+        ]);
+
+        $this->assertEquals($person->nom, $this->organisme->employe->nom);
+        $this->assertInstanceOf(Person::class, $this->organisme->employe);
     }
 
     /** @test */
@@ -67,20 +83,35 @@ class OrganismeTest extends TestCase
     }
 
     /** @test */
-    function it_can_add_people()
+    function it_can_add_president()
     {
-        $people = raw(Person::class, [
+        $person = raw(Person::class, [
             'contactable_id' => null,
             'contactable_type' => null,
             'adress_id' => null,
-            'adress' => raw
-            (Adress::class),
-        ], 3);
+            'adress' => raw(Adress::class),
+        ]);
 
-        $this->organisme->addPeople($people);
+        $this->organisme->addPresident($person);
 
-        $this->assertCount(3, $this->organisme->people);
-        $this->assertInstanceOf(Person::class, $this->organisme->people->first());
+        $this->assertEquals($person['nom'], $this->organisme->president->nom);
+        $this->assertInstanceOf(Person::class, $this->organisme->president);
+    }
+
+    /** @test */
+    function it_can_add_employe()
+    {
+        $person = raw(Person::class, [
+            'contactable_id' => null,
+            'contactable_type' => null,
+            'adress_id' => null,
+            'adress' => raw(Adress::class),
+        ]);
+
+        $this->organisme->addEmploye($person);
+
+        $this->assertEquals($person['nom'], $this->organisme->employe->nom);
+        $this->assertInstanceOf(Person::class, $this->organisme->employe);
     }
 
     /** @test */

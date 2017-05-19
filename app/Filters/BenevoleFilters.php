@@ -6,6 +6,8 @@ class BenevoleFilters extends Filters
 {
     protected $filters = ['anniversaire', 'secteur', 'statut', 'accepte_ca', 'inscription'];
 
+    protected $sessionKey = 'benevoles.filter';
+
     public function anniversaire($month)
     {
         return $this->builder->whereMonth('naissance', $month);

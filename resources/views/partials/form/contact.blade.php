@@ -1,9 +1,12 @@
-<?php
-$attributes = ["class" => "form-control"];
-if ($readonly) {
-    array_push($attributes, 'disabled');
-}
-?>
+@php
+    $attributes = ["class" => "form-control"];
+    if (isset($readonly)) {
+        array_push($attributes, 'disabled');
+    }
+
+    $model = isset($model) ? $model : new \App\Adress();
+    $adress = isset($adress) ? $adress : 'adress';
+@endphp
 
 <div class="row">
     <!--- adresse form input ---->
@@ -31,7 +34,7 @@ if ($readonly) {
     <!--- code_postal form input ---->
     <div class="form-group col-md-4 {{ $errors->first("{$adress}.code_postal", "has-error") }}">
         {{ Form::label("{$adress}[code_postal]", "Code postal (*):") }}
-        {{ Form::text("{$adress}[code_postal]", $model->code_postal, $attributes) }}
+        {{ Form::text("{$adress}[code_postal]", $model->code_postal, array_merge($attributes, ['class' => 'codepostal form-control'])) }}
     </div>
 </div>
 <div class="row">
@@ -40,7 +43,7 @@ if ($readonly) {
         {{ Form::label("{$adress}[telephone]", "Téléphone:") }}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-            {{ Form::text("{$adress}[telephone]", $model->telephone, $attributes) }}
+            {{ Form::text("{$adress}[telephone]", $model->telephone, array_merge($attributes, ['class' => 'telephone form-control'])) }}
         </div>
     </div>
     <!--- telephone2 form input ---->
@@ -48,7 +51,7 @@ if ($readonly) {
         {{ Form::label("{$adress}[telephone2]", "Autre téléphone:") }}
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-            {{ Form::text("{$adress}[telephone2]", $model->telephone2, $attributes) }}
+            {{ Form::text("{$adress}[telephone2]", $model->telephone2, array_merge($attributes, ['class' => 'telephone form-control'])) }}
         </div>
     </div>
 </div>
@@ -58,7 +61,7 @@ if ($readonly) {
         <label for="{$adress}[cellulaire]">Cellulaire:</label>
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-            {{ Form::text("{$adress}[cellulaire]", $model->cellulaire, $attributes) }}
+            {{ Form::text("{$adress}[cellulaire]", $model->cellulaire, array_merge($attributes, ['class' => 'telephone form-control'])) }}
         </div>
     </div>
     <!--- email form input ---->

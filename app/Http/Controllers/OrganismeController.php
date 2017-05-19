@@ -8,6 +8,7 @@ use App\Organisme;
 use App\OrganismeType;
 use App\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class OrganismeController extends Controller
 {
@@ -20,7 +21,9 @@ class OrganismeController extends Controller
     {
         $organismes = Organisme::with('adress')->filter($filters)->get();
 
-        return view('organisme.index', compact('organismes'));
+        $filters = $filters->getFilters();
+
+        return view('organisme.index', compact(['organismes', 'filters']));
     }
 
     /**
@@ -30,28 +33,7 @@ class OrganismeController extends Controller
      */
     public function create()
     {
-        $organisme = $this->initializeOrganismeForCreation();
-
-        return view('organisme.create', [
-            'readonly' => false,
-            'organisme' => $organisme,
-        ]);
-    }
-
-    public function initializeOrganismeForCreation()
-    {
-        $organisme = new Organisme();
-        $organisme->adress = new Adress();
-        $president = new Person();
-        $employe = new Person();
-        $president->adress = new Adress();
-        $president->lien = 'Président';
-        $employe->adress = new Adress();
-        $employe->lien = 'Employé';
-        $organisme->people->add($president);
-        $organisme->people->add($employe);
-
-        return $organisme;
+        return view('organisme.create');
     }
 
     /**
@@ -62,6 +44,11 @@ class OrganismeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'nom' => 'required',
+        ]);
+
         $organisme = new Organisme();
 
         $organisme->fill(array_except($request->toArray(), $organisme->getRelationsToHandleOnStore()));
@@ -93,9 +80,9 @@ class OrganismeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Organisme $organisme)
     {
-        //
+        return view('organisme.edit', compact(['organisme']));
     }
 
     /**
@@ -107,7 +94,17 @@ class OrganismeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nom' => 'required',
+        ]);
+
+        $organisme = Organisme::find($id);
+        $organisme->update(array_except($request->toArray(), $organisme->getRelationsToHandleOnStore()));
+
+        $organisme->handleRelationsOnUpdate($request->toArray());
+
+        return redirect($organisme->path())
+            ->with('flash', 'Organisme modifié avec succès.');
     }
 
     /**
@@ -116,8 +113,30 @@ class OrganismeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Organisme $organisme)
     {
-        //
+        if (Gate::denies('can-delete')) {
+            abort(403, 'Seuls les administrateurs peuvent supprimer des entrées.');
+        }
+
+        $organisme->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/organismes')
+            ->with('flash', 'Organisme supprimé avec succès.');
+    }
+
+    public function restore($id)
+    {
+        $organisme = Organisme::withTrashed()->find($id);
+        $organisme->restore();
+        if (request()->wantsJson()) {
+            return response([], 200);
+        }
+
+        return redirect('/organismes')
+            ->with('flash', 'Organisme restauré avec succès.');
     }
 }

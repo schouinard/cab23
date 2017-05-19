@@ -20,15 +20,15 @@ class DatabaseSeeder extends Seeder
 
     public function seedTestData()
     {
-        $benevoles = factory(\App\Benevole::class, 50)->create();
-        $beneficiaires = factory(\App\Beneficiaire::class, 50)->create();
-        $organismes = factory(\App\Organisme::class, 50)->create();
+        $benevoles = factory(\App\Benevole::class, 2000)->create();
+        $beneficiaires = factory(\App\Beneficiaire::class, 4000)->create();
+        $organismes = factory(\App\Organisme::class, 500)->create();
 
         foreach ($benevoles as $benevole) {
             factory(\App\Service::class)->create([
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
-                'beneficiaire_id' => random_int(1, 50),
+                'beneficiaire_id' => random_int(1, 4000),
             ]);
             $benevole->clienteles()->attach([1, 3, 5]);
             $benevole->interets()->sync([

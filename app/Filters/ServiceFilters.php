@@ -9,6 +9,8 @@ class ServiceFilters extends Filters
 
     protected $filters = ['type', 'from', 'to'];
 
+    protected $sessionKey = 'services.filters';
+
     /**
      * Filter the query by a given type
      *

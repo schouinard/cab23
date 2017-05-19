@@ -22,7 +22,9 @@ class BenevoleController extends Controller
     {
         $benevoles = Benevole::with(['adress'])->filter($filters)->get();
 
-        return view('benevole.index', compact('benevoles'));
+        $filters = $filters->getFilters();
+
+        return view('benevole.index', compact(['benevoles', 'filters']));
     }
 
     /**
@@ -91,7 +93,8 @@ class BenevoleController extends Controller
      */
     public function update(Request $request, Benevole $benevole)
     {
-        //
+        return redirect('/benevoles')
+            ->with('flash', 'Bénévole modifié avec succès.');
     }
 
     /**
@@ -111,7 +114,20 @@ class BenevoleController extends Controller
             return response([], 204);
         }
 
-        return redirect('/benevoles');
+        return redirect('/benevoles')
+            ->with('flash', 'Bénévole supprimé avec succès.');
+    }
+
+    public function restore($id)
+    {
+        $benevole = Benevole::withTrashed()->find($id);
+        $benevole->restore();
+        if (request()->wantsJson()) {
+            return response([], 200);
+        }
+
+        return redirect('/benevoles')
+            ->with('flash', 'Bénévole restauré avec succès.');
     }
 
     public function listAllForAutocomplete()
@@ -127,6 +143,7 @@ class BenevoleController extends Controller
     {
         $benevole = new Benevole();
         $benevole->adress = new Adress();
+
         return $benevole;
     }
 }
