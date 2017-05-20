@@ -50,9 +50,11 @@
     display: none;
 }
 
-.striped .col-xs-12:nth-child(even) {
+.striped .col-xs-12:nth-child(even), .striped .col-md-12:nth-child(even) {
     background: #eee;
 }
+
+
 
 .striped {
     margin-bottom: 20px;

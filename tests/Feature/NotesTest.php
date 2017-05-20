@@ -62,6 +62,8 @@ class NotesTest extends TestCase
     /** @test */
     function on_peut_voir_les_notes_sur_la_fiche_bénéficiaire()
     {
+        $this->signIn(User::find(1));
+
         $beneficiaire = create(Beneficiaire::class);
         $note = create(Note::class, [
             'notable_id' => $beneficiaire->id,

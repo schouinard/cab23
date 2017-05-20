@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Beneficiaire extends FilterableModel
@@ -82,6 +83,11 @@ class Beneficiaire extends FilterableModel
         return $this->prenom.' '.$this->nom;
     }
 
+    public function getNaissanceAttribute($value)
+    {
+        return Carbon::parse($value)->format($this->dateFormat);
+    }
+
     public function addEtatsSante($int)
     {
         $this->etatsSante()->sync($int);
@@ -114,6 +120,11 @@ class Beneficiaire extends FilterableModel
     public function addServiceRequests($requestId, $attributes = [])
     {
         $this->serviceRequests()->sync($requestId, $attributes);
+    }
+
+    public function isServiceRequested($id, $status)
+    {
+        return count($this->serviceRequests->where('pivot.service_request_status_id', $status)->where('id', $id));
     }
 
     public function updateServiceRequests($ids = [])

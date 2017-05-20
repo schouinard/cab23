@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Adress;
 use App\Beneficiaire;
+use App\Benevole;
 use App\Filters\BeneficiaireFilters;
 use App\Http\Requests\StorePerson;
 use App\Person;
@@ -62,8 +63,9 @@ class BeneficiaireController extends Controller
      * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
-    public function show(Beneficiaire $beneficiaire)
+    public function show($id)
     {
+        $beneficiaire = Beneficiaire::withTrashed()->find($id);
         $beneficiaire->load(['services.benevole']);
 
         return view('beneficiaire.show', compact('beneficiaire'));

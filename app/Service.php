@@ -8,12 +8,12 @@ class Service extends FilterableModel
 
     public function benevole()
     {
-        return $this->belongsTo(Benevole::class);
+        return $this->belongsTo(Benevole::class)->withTrashed();
     }
 
     public function beneficiaire()
     {
-        return $this->belongsTo(Beneficiaire::class);
+        return $this->belongsTo(Beneficiaire::class)->withTrashed();
     }
 
     public function type()

@@ -66,7 +66,7 @@
                             @if(request('anniversaire'))
                                 <td>
                                     @if($beneficiaire->naissance)
-                                        {{ $beneficiaire->naissance->format('d M') }}
+                                        {{ \Carbon\Carbon::parse($beneficiaire->naissance)->format('d M') }}
                                     @endif
                                 </td>
                             @endif

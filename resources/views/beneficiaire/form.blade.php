@@ -13,6 +13,11 @@
         <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
         <li><a href="#tab_5" data-toggle="tab" aria-expanded="false">Services</a></li>
         <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Facturation</a></li>
+        @if(isset($readonly))
+            @can('manage-confidential-fields')
+                <li><a href="#tab_7" data-toggle="tab" aria-expanded="false">Notes</a></li>
+            @endcan
+        @endif
     </ul>
     <div class="tab-content">
         <div class="tab-pane active row" id="tab_1">
@@ -73,18 +78,27 @@
             @for($i = 0; $i < 3; $i++)
                 <h3>Personne ressource {{$i + 1}}</h3>
                 <div class="row">
-                    @include('partials.form.resource', ['resource' => isset($beneficiaire) ? $beneficiaire->people[$i] : new \App\Person(), 'iterator' => $i, 'lien' => 'Lien'])
+                    @include('partials.form.resource', ['resource' => isset($beneficiaire->people[$i]) ? $beneficiaire->people[$i] : new \App\Person(), 'iterator' => $i, 'lien' => 'Lien'])
                 </div>
             @endfor
 
         </div>
-        <div class="tab-pane" id="tab_5">
+        <div class="tab-pane row" id="tab_5">
             @include('beneficiaire.partials.requests')
         </div>
         <div class="tab-pane" id="tab_6">
             <h3>Adresse de facturation</h3>
             @include('partials.form.contact', ['adress' => 'facturation', 'model' => isset($beneficiaire) ? $beneficiaire->facturation : new \App\Adress()])
         </div>
+        @if(isset($readonly))
+            @can('manage-confidential-fields')
+                <div class="tab-pane" id="tab_7">
+                    @foreach($beneficiaire->notes as $note)
+                        @include('partials.show.notes', ['note' => $note])
+                    @endforeach
+                </div>
+            @endcan
+        @endif
     </div>
     <!-- /.tab-content -->
 </div>

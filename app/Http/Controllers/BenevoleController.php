@@ -63,8 +63,9 @@ class BenevoleController extends Controller
      * @param  \App\Benevole $benevole
      * @return \Illuminate\Http\Response
      */
-    public function show(Benevole $benevole)
+    public function show($id)
     {
+        $benevole = Benevole::withTrashed()->find($id);
         $benevole->load('interets.category', 'competences.category', 'services.beneficiaire');
 
         return view('benevole.show', compact('benevole'));

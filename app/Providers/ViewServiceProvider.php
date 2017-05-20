@@ -79,7 +79,7 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut'], function ($view) {
             $revenus = \Cache::rememberForever('revenus', function () {
-                return IncomeSource::orderBy('nom')->get();
+                return IncomeSource::all();
             });
             $view->with('revenus', $revenus);
         });
