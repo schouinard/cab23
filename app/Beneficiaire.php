@@ -34,7 +34,7 @@ class Beneficiaire extends FilterableModel
 
     public function services()
     {
-        return $this->hasMany(Service::class);
+        return $this->morphMany(Service::class, 'serviceable');
     }
 
     public function serviceRequests()

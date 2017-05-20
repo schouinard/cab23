@@ -28,9 +28,9 @@ class ServiceTest extends TestCase
     }
 
     /** @test */
-    function it_has_a_beneficiaire()
+    function it_has_a_serviceable()
     {
-        $this->assertInstanceOf(Beneficiaire::class, $this->service->beneficiaire);
+        $this->assertNotNull($this->service->serviceable_id);
     }
 
     /** @test */

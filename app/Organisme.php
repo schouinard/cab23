@@ -52,6 +52,11 @@ class Organisme extends FilterableModel
         return $this->morphMany(Note::class, 'notable')->orderBy('date', 'DESC');
     }
 
+    public function services()
+    {
+        return $this->morphMany(Service::class, 'serviceable');
+    }
+
     public function addAdress($adress)
     {
         if (is_array($adress)) {

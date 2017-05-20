@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Beneficiaire;
+use App\Organisme;
+use App\Service;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -53,5 +56,17 @@ class ServicesTest extends TestCase
         $this->put('services', ['to'=>'2009-01-01'])
             ->assertSee($service->rendu_le)
             ->assertDontSee($otherService->rendu_le);
+    }
+
+    /** @test */
+    function un_organisme_ou_un_beneficiaire_peuvent_recevoir_des_services()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+        $organisme = create(Organisme::class);
+
+        $beneficiaire->services()->create(raw(Service::class, ['serviceable_id' => null, 'serviceable_type' => null]));
+        $organisme->services()->create(raw(Service::class), ['serviceable_id' => null, 'serviceable_type' => null]);
+
+        $this->assertCount(2, Service::all());
     }
 }

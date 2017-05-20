@@ -45,7 +45,8 @@ class BenevoleTest extends TestCase
         $benevole->addService([
             'service_type_id' => 1,
             'don' => 10,
-            'beneficiaire_id' => create(Beneficiaire::class)->id,
+            'serviceable_id' => create(Beneficiaire::class)->id,
+            'serviceable_type' => Beneficiaire::class,
             'rendu_le' => Carbon::now()->toDateTimeString(),
         ]);
 

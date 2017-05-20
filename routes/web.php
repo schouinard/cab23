@@ -49,9 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('organismes/{organisme}/restore', 'OrganismeController@restore');
     Route::resource('organismes', 'OrganismeController');
 
-    Route::post('/benevoles/{benevole}/services', 'ServiceController@store');
-    Route::post('/beneficiaires/{beneficiaire}/services', 'ServiceController@store');
-
     Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
     Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');
 });

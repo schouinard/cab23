@@ -81,8 +81,8 @@
                                     , {{ $service->benevole->prenom }}</a>
                             </td>
                             <td>
-                                <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}
-                                    , {{ $service->beneficiaire->prenom }}</a>
+                                <a href="{{ $service->serviceable->path() }}">{{ $service->serviceable->nom }}
+                                    , {{ $service->serviceable->prenom }}</a>
                             </td>
                             <td>
                                 {{ $service->rendu_le }}

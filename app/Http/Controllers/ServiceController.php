@@ -26,7 +26,7 @@ class ServiceController extends Controller
 
     public function index(ServiceFilters $filters)
     {
-        $services = Service::filter($filters)->with(['benevole', 'beneficiaire'])->get();
+        $services = Service::filter($filters)->with(['benevole', 'serviceable'])->get();
 
         $filters = $filters->getFilters();
 

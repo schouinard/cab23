@@ -32,11 +32,11 @@ class ServiceCreationValidationTest extends TestCase
 
         $overrides = array_merge($overrides, [
             'beneficiaire_id' => $this->beneficiaire->id,
-            'benevole_id' => $this->benevole->id,
+            'serviceable_id' => $this->benevole->id,
         ]);
         $service = make('App\Service', $overrides);
 
-        return $this->post($this->beneficiaire->path().'/services', $service->toArray());
+        return $this->post('/services', $service->toArray());
     }
 
     /** @test */

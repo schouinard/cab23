@@ -155,9 +155,10 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         'benevole_id' => function () {
             return factory('App\Benevole')->create()->id;
         },
-        'beneficiaire_id' => function () {
+        'serviceable_id' => function () {
             return factory('App\Beneficiaire')->create()->id;
         },
+        'serviceable_type' => App\Beneficiaire::class,
         'service_type_id' => function () {
             return App\ServiceType::inRandomOrder()->first()->id;
         },

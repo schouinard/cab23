@@ -11,9 +11,9 @@ class Service extends FilterableModel
         return $this->belongsTo(Benevole::class)->withTrashed();
     }
 
-    public function beneficiaire()
+    public function serviceable()
     {
-        return $this->belongsTo(Beneficiaire::class)->withTrashed();
+        return $this->morphTo()->withTrashed();
     }
 
     public function type()
@@ -23,6 +23,6 @@ class Service extends FilterableModel
 
     public static function latest()
     {
-        return Service::with(['benevole', 'beneficiaire'])->orderBy('created_at', 'desc')->limit(50)->get();
+        return Service::with(['benevole', 'serviceable'])->orderBy('created_at', 'desc')->limit(50)->get();
     }
 }
