@@ -27,18 +27,4 @@ class ChampsInteretsBenevoleTest extends TestCase
         $this->benevole->clienteles()->sync([1, 2]);
         $this->assertCount(2, $this->benevole->clienteles);
     }
-
-    /** @test */
-    function une_fiche_benevole_affiche_les_clienteles_associees()
-    {
-        $clientele = Clientele::find(1);
-
-        $this->get($this->benevole->path())
-            ->assertDontSee($clientele->nom);
-
-        $this->benevole->clienteles()->sync([$clientele->id]);
-
-        $this->get($this->benevole->path())
-            ->assertSee(webformat($clientele->nom));
-    }
 }

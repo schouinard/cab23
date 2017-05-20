@@ -80,17 +80,17 @@
                             @if(request('anniversaire'))
                                 <td>
                                     @if($benevole->naissance)
-                                        {{ $benevole->naissance->format('d M') }}
+                                        {{ $benevole->naissance }}
                                     @endif
                                 </td>
                             @endif
                             @if(request('accepte_ca') && $benevole->accepte_ca)
-                                <td>{{ $benevole->accepte_ca->format('Y-m-d') }}</td>
+                                <td>{{ $benevole->accepte_ca }}</td>
                             @elseif(request('accepte_ca'))
                                 <td>En probation</td>
                             @endif
                             @if(request('inscription') || request('accepte_ca'))
-                                <td>{{ $benevole->inscription->format('Y-m-d') }}</td>
+                                <td>{{ $benevole->inscription }}</td>
                             @endif
                             @if(request('statut'))
                                 <td>

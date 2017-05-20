@@ -87,6 +87,11 @@ class Beneficiaire extends FilterableModel
         $this->etatsSante()->sync($int);
     }
 
+    public function updateEtatsSante($int)
+    {
+        $this->addEtatsSante($int);
+    }
+
     public function addAdress($adress)
     {
         if (is_array($adress)) {
@@ -94,6 +99,11 @@ class Beneficiaire extends FilterableModel
         }
         $this->adress()->associate($adress);
         $this->save();
+    }
+
+    public function updateAdress($adress)
+    {
+        $this->adress()->update($adress);
     }
 
     public function addService($service)
@@ -106,18 +116,53 @@ class Beneficiaire extends FilterableModel
         $this->serviceRequests()->sync($requestId, $attributes);
     }
 
+    public function updateServiceRequests($ids = [])
+    {
+        $this->addServiceRequests($ids);
+    }
+
     public function addAutonomies($autonomies = [])
     {
         $this->autonomies()->sync($autonomies);
     }
 
-    public function addPeople($people)
+    public function updateAutonomies($autonomies = [])
+    {
+        $this->addAutonomies($autonomies);
+    }
+
+    public function addPeople($people = [])
+    {
+        if (! is_null($people)) {
+            foreach ($people as $person) {
+                $adress = Adress::create($person['adress']);
+                $person = new Person(array_except($person, ['adress']));
+                $person->adress()->associate($adress);
+                $this->people()->save($person);
+            }
+        }
+    }
+
+    public function updatePeople($people)
     {
         foreach ($people as $person) {
-            $adress = Adress::create($person['adress']);
-            $person = new Person(array_except($person, ['adress']));
-            $person->adress()->associate($adress);
-            $this->people()->save($person);
+            $oldPerson = Person::find($person['id']);
+            $oldPerson->adress()->update($person['adress']);
+            $oldPerson->update(array_except($person, ['adress']));
         }
+    }
+
+    public function addFacturation($adress)
+    {
+        if (is_array($adress)) {
+            $adress = Adress::create($adress);
+        }
+        $this->facturation()->associate($adress);
+        $this->save();
+    }
+
+    public function updateFacturation($adress)
+    {
+        $this->facturation()->update($adress);
     }
 }

@@ -1,12 +1,12 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Modifier bénévole - '. $benevole->nomComplet)
+@section('title', 'Modifier bénéficiaire - '. $beneficiaire->nomComplet)
 
 @section('content_header')
     <h1>
-        Modifier le bénévole - {{$benevole->nomComplet}}
+        Modifier le bénéficiaire - {{$beneficiaire->nomComplet}}
         <div class="pull-right">
-            <a href="{{ url('/benevoles') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Annuler la modification</button></a>
+            <a href="{{ url('/beneficiaires') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Annuler la modification</button></a>
         </div>
     </h1>
 @stop
@@ -22,12 +22,12 @@
             </ul>
         </div>
     @endif
-    {!! Form::model($benevole, [
+    {!! Form::model($beneficiaire, [
                             'method' => 'PATCH',
-                            'url' => ['benevoles', $benevole->id],
+                            'url' => ['beneficiaires', $beneficiaire->id],
                         ]) !!}
 
-    @include ('benevole.form', ['submitButtonText' => 'Enregistrer'])
+    @include ('beneficiaire.form', ['submitButtonText' => 'Enregistrer'])
 
     {!! Form::close() !!}
 

@@ -6,6 +6,7 @@ use App\Beneficiaire;
 use App\Benevole;
 use App\Note;
 use App\Organisme;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -34,8 +35,9 @@ class NotesTest extends TestCase
     }
 
     /** @test */
-    function on_peut_voir_les_notes_sur_la_fiche_bénévole()
+    function on_peut_voir_les_notes_sur_la_fiche_benevole_si_on_est_admin()
     {
+        $this->signIn(User::find(1));
         $benevole = create(Benevole::class);
         $note = create(Note::class, [
             'notable_id' => $benevole->id,

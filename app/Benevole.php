@@ -130,24 +130,24 @@ class Benevole extends FilterableModel
         $this->services()->create($service);
     }
 
-    public function addClienteles($int)
+    public function addClienteles($int = [])
     {
         $this->clienteles()->sync($int);
     }
 
-    public function updateClienteles($int)
+    public function updateClienteles($int = [])
     {
         $this->addClienteles($int);
     }
 
-    public function addInteret($interet, $attributes = [])
+    public function addInteret($interet = [])
     {
-        $this->interets()->sync($interet, $attributes);
+        $this->interets()->sync($interet);
     }
 
-    public function addCompetence($competence, $attributes = [])
+    public function addCompetence($competence = [])
     {
-        $this->competences()->sync($competence, $attributes);
+        $this->competences()->sync($competence);
     }
 
     public function addAdress($adress)
@@ -164,22 +164,29 @@ class Benevole extends FilterableModel
         $this->adress()->update($adress);
     }
 
-    public function addCategory($categoriesInterets)
+    public function addCategory($categoriesInterets = [])
     {
-        foreach ($categoriesInterets as $categoriesInteret) {
-            if (key_exists('interets', $categoriesInteret)) {
-                $this->addInteret($this->removeUninterested($categoriesInteret['interets']));
-            }
-            if (key_exists('competences', $categoriesInteret)) {
-                $this->addCompetence($this->removeUninterested($categoriesInteret['competences']));
+        $interets = [];
+        $competences = [];
+        if (! is_null($categoriesInterets)) {
+            foreach ($categoriesInterets as $categoriesInteret) {
+                if (key_exists('interets', $categoriesInteret)) {
+                    $interets = $interets + $this->removeUninterested($categoriesInteret['interets']);
+                }
+                if (key_exists('competences', $categoriesInteret)) {
+                    $competences = $competences + $this->removeUninterested
+                        ($categoriesInteret['competences']);
+                }
             }
         }
+        $this->addInteret($interets);
+        $this->addCompetence($competences);
     }
+
     public function updateCategory($categoriesInterets)
     {
         $this->addCategory($categoriesInterets);
     }
-
 
     /**
      * @param $categoriesInteret
@@ -187,9 +194,11 @@ class Benevole extends FilterableModel
      */
     public function removeUninterested($array)
     {
-        return array_where($array, function ($value, $key) {
+        $interested = array_where($array, function ($value, $key) {
             return $value['priority'] > 0;
         });
+
+        return $interested;
     }
 
     public function addDisponibilites($array = [])

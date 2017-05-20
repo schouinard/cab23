@@ -79,15 +79,4 @@ class BenevoleTest extends TestCase
         $this->publishService(['rendu_le' => null])->assertSessionHasErrors('rendu_le');
         $this->publishService(['rendu_le' => '1231231231231'])->assertSessionHasErrors('rendu_le');
     }
-
-    /** @test */
-    function it_shows_error_on_invalid_service()
-    {
-        $this->withExceptionHandling()->signIn();
-        $this->get($this->benevole->path())->assertDontSee('error-content');
-        $response = $this->publishService(['service_type_id' => null]);
-        $response->assertRedirect($this->benevole->path());
-
-        $this->followRedirects($response)->assertSee('error-content');
-    }
 }

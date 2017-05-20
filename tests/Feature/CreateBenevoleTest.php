@@ -28,6 +28,73 @@ class CreateBenevoleTest extends TestCase
     }
 
     /** @test */
+    function an_authenticated_user_can_update_benevole()
+    {
+        $this->signIn();
+        $benevole = create(Benevole::class);
+
+        $benevole->interets()->sync([
+            1 => ['priority' => 1],
+        ]);
+
+        $newData = raw(Benevole::class);
+
+        $newData = array_merge($newData, [
+            'adress' => raw(Adress::class),
+            'category' =>
+                [
+                    1 =>
+                        [
+                            'interets' => [
+                                1 => ['priority' => 0],
+                                2 => ['priority' => 1],
+                                3 => ['priority' => 1],
+                                4 => ['priority' => 1],
+                                5 => ['priority' => 1],
+                                6 => ['priority' => 1],
+                                7 => ['priority' => 0],
+                                8 => ['priority' => 0],
+                            ],
+                            'competences' => [
+                                1 => ['priority' => 1],
+                                2 => ['priority' => 1],
+                                3 => ['priority' => 1],
+                                4 => ['priority' => 1],
+                                5 => ['priority' => 1],
+                                6 => ['priority' => 1],
+                                7 => ['priority' => 0],
+                                8 => ['priority' => 0],
+                            ],
+                        ],
+                ],
+        ]);
+
+        $this->patch('/benevoles/'.$benevole->id, $newData);
+
+        $this->assertCount(5, $benevole->fresh()->interets);
+        $this->assertCount(6, $benevole->fresh()->competences);
+    }
+
+    /** @test */
+    function it_can_remove_uninterested_interets()
+    {
+        $benevole = create(Benevole::class);
+
+        $interets = [
+            1 => ['priority' => 3],
+            5 => ['priority' => 2],
+            18 => ['priority' => 0],
+            6 => ['priority' => 1],
+        ];
+
+        $this->assertEquals([
+            1 => ['priority' => 3],
+            5 => ['priority' => 2],
+            6 => ['priority' => 1],
+        ], $benevole->removeUninterested($interets));
+    }
+
+    /** @test */
     function it_must_have_a_prenom()
     {
         $this->publishBenevole(['prenom' => null])->assertSessionHasErrors('prenom');
@@ -42,25 +109,25 @@ class CreateBenevoleTest extends TestCase
     /** @test */
     function it_must_have_a_adresse()
     {
-        $this->publishBenevole([],['adress.adresse'])->assertSessionHasErrors('adress.adresse');
+        $this->publishBenevole([], ['adress.adresse'])->assertSessionHasErrors('adress.adresse');
     }
 
     /** @test */
     function it_must_have_a_ville()
     {
-        $this->publishBenevole([],['adress.ville'])->assertSessionHasErrors('adress.ville');
+        $this->publishBenevole([], ['adress.ville'])->assertSessionHasErrors('adress.ville');
     }
 
     /** @test */
     function it_must_have_a_province()
     {
-        $this->publishBenevole([],['adress.province'])->assertSessionHasErrors('adress.province');
+        $this->publishBenevole([], ['adress.province'])->assertSessionHasErrors('adress.province');
     }
 
     /** @test */
     function it_must_have_a_cp()
     {
-        $this->publishBenevole([],['adress.code_postal'])->assertSessionHasErrors('adress.code_postal');
+        $this->publishBenevole([], ['adress.code_postal'])->assertSessionHasErrors('adress.code_postal');
     }
 
     public function publishBenevole($overrides = [], $except = [])

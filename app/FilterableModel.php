@@ -39,9 +39,7 @@ abstract class FilterableModel extends Model
 
     public function handleRelation($relation, $method_name, $request)
     {
-        if (key_exists($relation, $request)) {
-            $this->$method_name(array_pull($request, $relation));
-        }
+        $this->$method_name(array_pull($request, $relation));
     }
 
     /**

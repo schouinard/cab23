@@ -33,10 +33,7 @@ class BeneficiaireController extends Controller
      */
     public function create()
     {
-        return view('beneficiaire.create', [
-            'readonly' => false,
-            'beneficiaire' => $this->initializeBeneficiaireForCreation(),
-        ]);
+        return view('beneficiaire.create');
     }
 
     /**
@@ -80,7 +77,7 @@ class BeneficiaireController extends Controller
      */
     public function edit(Beneficiaire $beneficiaire)
     {
-        //
+        return view('beneficiaire.edit', compact('beneficiaire'));
     }
 
     /**
@@ -90,8 +87,13 @@ class BeneficiaireController extends Controller
      * @param  \App\Beneficiaire $beneficiaire
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Beneficiaire $beneficiaire)
+    public function update(Request $request, $id)
     {
+        $beneficiaire = Beneficiaire::find($id);
+        $beneficiaire->update(array_except($request->toArray(), $beneficiaire->getRelationsToHandleOnStore()));
+
+        $beneficiaire->handleRelationsOnUpdate($request->toArray());
+
         return redirect($beneficiaire->path())
             ->with('flash', 'Bénéficiaire modifié avec succès.');
     }
@@ -136,19 +138,5 @@ class BeneficiaireController extends Controller
             'nom',
             'prenom',
         ])->toJSON();
-    }
-
-    private function initializeBeneficiaireForCreation()
-    {
-        $beneficiaire = new Beneficiaire();
-        $beneficiaire->adress = new Adress();
-        $beneficiaire->facturation = new Adress();
-        for ($i = 0; $i < 3; $i++) {
-            $person = new Person();
-            $person->adress = new Adress();
-            $beneficiaire->people->add($person);
-        }
-
-        return $beneficiaire;
     }
 }

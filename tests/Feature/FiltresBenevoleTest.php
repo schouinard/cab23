@@ -77,8 +77,8 @@ class FiltresBenevoleTest extends TestCase
         $benevoleWithOtherYear = create(Benevole::class, ['inscription' => '1989-10-10']);
 
         $this->put('benevoles', ['inscription'=>'1985'])
-            ->assertSee($benevole->inscription->format('Y-m-d'))
-            ->assertDontSee($benevoleWithOtherYear->inscription->format('Y-m-d'));
+            ->assertSee($benevole->inscription)
+            ->assertDontSee($benevoleWithOtherYear->inscription);
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class FiltresBenevoleTest extends TestCase
         $benevoleProbation = create(Benevole::class, ['accepte_ca' => null]);
 
         $this->put('benevoles', ['accepte_ca'=>'accepte'])
-            ->assertSee($benevole->accepte_ca->format('Y-m-d'))
+            ->assertSee($benevole->accepte_ca)
             ->assertDontSee(webformat($benevoleProbation->nom));
 
         $this->put('benevoles', ['accepte_ca'=>'probation'])

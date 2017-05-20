@@ -79,6 +79,7 @@ class BenevoleController extends Controller
     public function edit(Benevole $benevole)
     {
         $benevole = $benevole->load(['clienteles', 'interets', 'competences']);
+
         return view('benevole.edit', compact('benevole'));
     }
 
@@ -96,7 +97,7 @@ class BenevoleController extends Controller
 
         $benevole->handleRelationsOnUpdate($request->toArray());
 
-        return redirect('/benevoles')
+        return redirect($benevole->path())
             ->with('flash', 'Bénévole modifié avec succès.');
     }
 
