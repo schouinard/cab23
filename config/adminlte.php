@@ -116,6 +116,7 @@ return [
                 [
                     'text' => 'Lister',
                     'url' => 'benevoles',
+                    'active' => ['benevoles'],
                 ],
                 [
                     'text' => 'Ajouter',
@@ -130,6 +131,7 @@ return [
                 [
                     'text' => 'Lister',
                     'url' => 'beneficiaires',
+                    'active' => ['beneficiaires'],
                 ],
                 [
                     'text' => 'Ajouter',
@@ -143,6 +145,7 @@ return [
                 [
                     'text' => 'Lister',
                     'url' => 'organismes',
+                    'active' => ['organismes'],
                 ],
                 [
                     'text' => 'Ajouter',
@@ -153,7 +156,18 @@ return [
         [
             'text' => 'Services rendus',
             'icon' => 'heart',
-            'url' => 'services',
+            'submenu' => [
+                [
+
+                    'text' => 'Services bénéficiaires',
+                    'url' => 'services',
+                    'active' => ['services'],
+                ],
+                [
+                    'text' => 'Services aux organismes',
+                    'url' => 'services/organismes',
+                ],
+            ],
         ],
         [
             'text' => 'Utilisateurs',

@@ -27,6 +27,11 @@ class BenevoleController extends Controller
         return view('benevole.index', compact(['benevoles', 'filters']));
     }
 
+    public function home()
+    {
+        return redirect('/benevoles');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -66,7 +71,7 @@ class BenevoleController extends Controller
     public function show($id)
     {
         $benevole = Benevole::withTrashed()->find($id);
-        $benevole->load('interets.category', 'competences.category', 'services.beneficiaire');
+        $benevole->load('interets.category', 'competences.category', 'services.serviceable');
 
         return view('benevole.show', compact('benevole'));
     }

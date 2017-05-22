@@ -28,7 +28,14 @@ class DatabaseSeeder extends Seeder
             factory(\App\Service::class)->create([
                 'benevole_id' => $benevole->id,
                 'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
-                'beneficiaire_id' => random_int(1, 50),
+                'serviceable_id' => random_int(1, 50),
+                'serviceable_type' => App\Beneficiaire::class,
+            ]);
+            factory(\App\Service::class)->create([
+                'benevole_id' => $benevole->id,
+                'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
+                'serviceable_id' => random_int(1, 50),
+                'serviceable_type' => App\Organisme::class,
             ]);
             $benevole->clienteles()->attach([1, 3, 5]);
             $benevole->interets()->sync([
@@ -96,8 +103,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        foreach($organismes as $organisme)
-        {
+        foreach ($organismes as $organisme) {
             factory(\App\Note::class, random_int(5, 10))->create([
                 'notable_id' => $organisme->id,
                 'notable_type' => \App\Organisme::class,

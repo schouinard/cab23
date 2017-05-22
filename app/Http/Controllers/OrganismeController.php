@@ -139,4 +139,12 @@ class OrganismeController extends Controller
         return redirect('/organismes')
             ->with('flash', 'Organisme restauré avec succès.');
     }
+
+    public function listAllForAutocomplete()
+    {
+        return Benevole::get([
+            'id',
+            'nom',
+        ])->toJSON();
+    }
 }

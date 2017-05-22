@@ -83,6 +83,11 @@ class Beneficiaire extends FilterableModel
         return $this->prenom.' '.$this->nom;
     }
 
+    public function getDisplayNomAttribute()
+    {
+        return "{$this->nom}, {$this->prenom}";
+    }
+
     public function getNaissanceAttribute($value)
     {
         return Carbon::parse($value)->format($this->dateFormat);

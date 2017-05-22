@@ -18,10 +18,8 @@ class BenevoleFilters extends Filters
         switch ($accepte) {
             case 'accepte' :
                 return $this->builder->whereNotNull('accepte_ca');
-            case 'probation' :
-                return $this->builder->whereNull('accepte_ca');
             default :
-                return $this->builder;
+                return $this->builder->whereNull('accepte_ca');
         }
     }
 

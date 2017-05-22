@@ -22,6 +22,11 @@ class Organisme extends FilterableModel
         return '/organismes/'.$this->id;
     }
 
+    public function getDisplayNomAttribute()
+    {
+        return $this->nom;
+    }
+
     public function president()
     {
         return $this->morphOne(Person::class, 'contactable')->where('lien', 'Président');

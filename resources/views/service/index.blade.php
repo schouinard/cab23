@@ -21,8 +21,7 @@
                     </div><!-- /.box-tools -->
                 </div>
                 <div class="box-body">
-                    @component("components.addService", ['serviceTypes' => $serviceTypes, 'beneficiaireId' => null, 'benevoleId' => null, 'showBenevole' => true, 'showBeneficiaire' =>true])
-                    @endcomponent
+                    @include("components.addService", ['serviceTypes' => $serviceTypes])
                 </div>
             </div>
         </div>
@@ -61,13 +60,17 @@
                 <table class="table table-hover table-bordered services-rendus">
                     <thead>
                     <tr>
-                        <td>Type</td>
-                        <td>Bénévole</td>
-                        <td>Bénéficiaire</td>
-                        <td>Rendu le</td>
-                        <td>Don</td>
-                        <td>Durée</td>
-                        <td>Actions</td>
+                        <th>Type</th>
+                        <th>Bénévole</th>
+                        @if($serviceableType == \App\Beneficiaire::class)
+                            <th>Bénéficiaire</th>
+                        @else
+                            <th>Organisme</th>
+                        @endif
+                        <th>Rendu le</th>
+                        <th>Don</th>
+                        <th>Durée</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,8 +84,7 @@
                                     , {{ $service->benevole->prenom }}</a>
                             </td>
                             <td>
-                                <a href="{{ $service->serviceable->path() }}">{{ $service->serviceable->nom }}
-                                    , {{ $service->serviceable->prenom }}</a>
+                                <a href="{{ $service->serviceable->path() }}">{{ $service->serviceable->displayNom }}</a>
                             </td>
                             <td>
                                 {{ $service->rendu_le }}

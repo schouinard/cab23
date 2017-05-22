@@ -31,8 +31,8 @@ class ServiceCreationValidationTest extends TestCase
         $this->withExceptionHandling()->signIn();
 
         $overrides = array_merge($overrides, [
-            'beneficiaire_id' => $this->beneficiaire->id,
-            'serviceable_id' => $this->benevole->id,
+            'serviceable_id' => $this->beneficiaire->id,
+            'benevole_id' => $this->benevole->id,
         ]);
         $service = make('App\Service', $overrides);
 

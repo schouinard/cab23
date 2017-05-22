@@ -85,7 +85,7 @@
                         <thead>
                         <tr>
                             <td>Type</td>
-                            <td>Bénévole</td>
+                            <td>Bénéficiaire</td>
                             <td>Rendu le</td>
                             <td>Durée (h)</td>
                         </tr>
@@ -97,14 +97,13 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        @foreach ($benevole->services as $service)
+                        @foreach ($benevole->services->where('serviceable_type', \App\Beneficiaire::class) as $service)
                             <tr>
                                 <td>
                                     {{ $service->type->nom }}
                                 </td>
                                 <td>
-                                    <a href="{{ $service->beneficiaire->path() }}">{{ $service->beneficiaire->nom }}
-                                        , {{ $service->beneficiaire->prenom }}</a>
+                                    <a href="{{ $service->serviceable->path() }}">{{$service->serviceable->displayNom}}</a>
                                 </td>
                                 <td>
                                     {{ $service->rendu_le }}

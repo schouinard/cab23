@@ -25,9 +25,7 @@ Route::group(['namespace' => 'Auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return redirect('/benevoles');
-    });
+    Route::get('/', 'BenevoleController@home');
 
     Route::put('benevoles', 'BenevoleController@index');
     Route::post('benevoles/{benevole}/restore', 'BenevoleController@restore');
@@ -39,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('services', 'ServiceController@index');
     Route::post('services/{service}/restore', 'ServiceController@restore');
+    Route::get('services/organismes', 'ServiceController@indexOrganismes');
     Route::resource('services', 'ServiceController');
 
     Route::put('users', 'UserController@index');
@@ -51,5 +50,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
     Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');
+    Route::get('/list/organisme.json', 'OrganismeController@listAllForAutocomplete');
 });
 

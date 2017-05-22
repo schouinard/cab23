@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Adress;
 use App\Benevole;
+use App\IncomeSource;
 use App\Person;
 use App\Service;
 use App\Beneficiaire;
@@ -53,9 +54,9 @@ class BeneficiaireTest extends TestCase
     public function it_can_have_requested_services()
     {
         DB::table('service_requests')->insert([
-            'beneficiaire_id' => $this->beneficiaire->id,
             'service_type_id' => 1,
             'service_request_status_id' => 1,
+            'beneficiaire_id' => $this->beneficiaire->id,
         ]);
 
         $this->assertCount(1, $this->beneficiaire->serviceRequests);
@@ -151,6 +152,15 @@ class BeneficiaireTest extends TestCase
     }
 
     /** @test */
+    function it_can_update_etat_sante()
+    {
+        $this->beneficiaire->addEtatsSante([1,2,3]);
+        $this->beneficiaire->addEtatsSante([4,5]);
+
+        $this->assertCount(2, $this->beneficiaire->etatsSante);
+    }
+
+    /** @test */
     public function it_cannot_add_the_same_etat_sante_twice()
     {
         $this->beneficiaire->addEtatsSante(1);
@@ -196,5 +206,11 @@ class BeneficiaireTest extends TestCase
 
         $this->assertCount(3, $this->beneficiaire->people);
         $this->assertInstanceOf(Person::class, $this->beneficiaire->people->first());
+    }
+
+    /** @test */
+    function it_can_have_income_source()
+    {
+        $this->assertInstanceOf(IncomeSource::class, $this->beneficiaire->income_source);
     }
 }

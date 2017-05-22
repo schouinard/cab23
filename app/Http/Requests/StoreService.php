@@ -25,10 +25,13 @@ class StoreService extends FormRequest
     {
         return [
             'service_type_id' => 'bail|required|exists:service_types,id',
-            'beneficiaire_id' => 'bail|required|exists:beneficiaires,id',
+            'serviceable_type' => 'bail|required',
+            'organisme_id' => 'required_without:beneficiaire_id|exists:organismes,id',
+            'beneficiaire_id' => 'required_without:organisme_id|exists:beneficiaires,id',
             'rendu_le' => 'date',
             'benevole_id' => 'bail|required|exists:benevoles,id',
             'don' => 'nullable|numeric',
+            'heures' => 'nullable|numeric',
         ];
     }
 }
