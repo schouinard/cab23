@@ -6,17 +6,17 @@
     <h3 class="text-center">Centre d'action bénévole Aide 23 - Popote Roulante</h3>
     <h4 class="text-center">{{$title}}</h4>
     <div class="text-center">Cellulaire d'urgence: 418-998-8219</div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-print">
         <thead>
         <tr>
             <th colspan="7">{{$tournee->nom}} - Tel: {{$tournee->telephone}}</th>
             <th class="text-right">Semaine du 10-10-2016</th>
         </tr>
         <tr>
-            <th>#</th>
-            <th>Client</th>
+            <th width="5%">#</th>
+            <th width="15%">Client</th>
             @foreach($tournee->days as $day)
-                <th>{{$day->nom}}</th>
+                <th width="8%">{{$day->nom}}</th>
             @endforeach
             <th>Commentaires</th>
         </tr>

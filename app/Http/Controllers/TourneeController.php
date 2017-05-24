@@ -70,7 +70,7 @@ class TourneeController extends Controller
     public function printAlpha(Tournee $tournee)
     {
         $clients = $tournee->getAlphabeticalListing();
-        $pdf = App::make('dompdf.wrapper');
+        $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('print.tournee', [
             'tournee' => $tournee,
             'title' => 'Feuille de route - Copie du bureau',
@@ -83,19 +83,18 @@ class TourneeController extends Controller
     public function print(Tournee $tournee)
     {
         $clients = $tournee->getPriorityListing();
-        $pdf = App::make('dompdf.wrapper');
+        $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('print.tournee', [
             'tournee' => $tournee,
             'title' => 'Feuille de route',
             'clients' => $clients,
         ])->setPaper('a4', 'landscape');
-
-        return $pdf->stream();
+        return $pdf->inline();
     }
 
     public function printConducteur(Tournee $tournee)
     {
-        $pdf = App::make('dompdf.wrapper');
+        $pdf = App::make('snappy.pdf.wrapper');
         $clients = $tournee->getPriorityListing();
         $pdf->loadView('print.conducteur', [
             'tournee' => $tournee,
@@ -103,7 +102,7 @@ class TourneeController extends Controller
             'clients' => $clients,
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->stream();
+       return $pdf->inline();
 
     }
 

@@ -88,7 +88,7 @@ div.dataTables_wrapper div.dataTables_filter {
     border-bottom: 1px solid #000000;
 }
 
-.table-print>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+.table-print>thead>tr>th, .table-print>tbody>tr>th, .table-print>tfoot>tr>th, .table-print>thead>tr>td, .table-print>tbody>tr>td, .table-print>tfoot>tr>td {
     border: 1px solid #999;
 }
 .table-print{
@@ -98,3 +98,7 @@ div.dataTables_wrapper div.dataTables_filter {
 .page-break {
     page-break-after: always;
 }
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
