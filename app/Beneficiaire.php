@@ -20,6 +20,7 @@ class Beneficiaire extends FilterableModel
         'adress',
         'facturation',
         'people',
+        'days',
     ];
 
     public function path()
@@ -73,6 +74,31 @@ class Beneficiaire extends FilterableModel
         return $this->morphMany(Person::class, 'contactable');
     }
 
+    public function days()
+    {
+        return $this->belongsToMany(Day::class);
+    }
+
+    public function isPopoteDay($day_id)
+    {
+        return $this->days->contains('id', $day_id);
+    }
+
+    public function syncDays($ids)
+    {
+        $this->days()->sync($ids);
+    }
+
+    public function addDays($ids)
+    {
+        $this->syncDays($ids);
+    }
+
+    public function updateDays($ids)
+    {
+        $this->syncDays($ids);
+    }
+
     public function getNomCompletAttribute()
     {
         return $this->prenom.' '.$this->nom;
@@ -90,7 +116,7 @@ class Beneficiaire extends FilterableModel
 
     public function getAnniversaireAttribute()
     {
-        return Carbon::parse($this->naissance)->format('d/m');
+        return Carbon::parse($this->naissance)->format('d/m/Y');
     }
 
     public function addEtatsSante($int)

@@ -9,14 +9,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-primary">
+            <div class="box box-primary collapsed-box">
                 <div class="box-header">
                     <h3 class="box-title">Ajouter un nouveau service rendu</h3>
                     <div class="box-tools pull-right">
                         <!-- This will cause the box to collapse when clicked -->
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                            <i class="fa fa-minus"></i>
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div><!-- /.box-tools -->
                 </div>

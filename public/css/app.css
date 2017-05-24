@@ -54,8 +54,6 @@
     background: #eee;
 }
 
-
-
 .striped {
     margin-bottom: 20px;
 }
@@ -84,14 +82,15 @@ div.dataTables_wrapper div.dataTables_filter {
     color: #555;
 }
 
-.border-bottom{
+.border-bottom {
     border-bottom: 1px solid #999;
 }
 
-.table-print>thead>tr>th, .table-print>tbody>tr>th, .table-print>tfoot>tr>th, .table-print>thead>tr>td, .table-print>tbody>tr>td, .table-print>tfoot>tr>td {
+.table-print > thead > tr > th, .table-print > tbody > tr > th, .table-print > tfoot > tr > th, .table-print > thead > tr > td, .table-print > tbody > tr > td, .table-print > tfoot > tr > td {
     border: 1px solid #999;
 }
-.table-print{
+
+.table-print {
     border-color: #999;
 }
 
@@ -99,6 +98,18 @@ div.dataTables_wrapper div.dataTables_filter {
     page-break-after: always;
 }
 
-thead { display: table-header-group }
-tfoot { display: table-row-group }
-tr { page-break-inside: avoid }
+thead {
+    display: table-header-group
+}
+
+tfoot {
+    display: table-row-group
+}
+
+tr {
+    page-break-inside: avoid
+}
+
+legend {
+    margin-bottom: 10px;
+}

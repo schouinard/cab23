@@ -75,7 +75,8 @@ class TourneeController extends Controller
             'tournee' => $tournee,
             'title' => 'Feuille de route - Copie du bureau',
             'clients' => $clients,
-        ])->setPaper('a4', 'portrait');
+        ])->setPaper('letter', 'portrait')
+            ->setOption('margin-top', '5');
 
         return $pdf->stream();
     }
@@ -88,7 +89,9 @@ class TourneeController extends Controller
             'tournee' => $tournee,
             'title' => 'Feuille de route',
             'clients' => $clients,
-        ])->setPaper('a4', 'portrait');
+        ])->setPaper('letter', 'portrait')
+            ->setOption('margin-top', '5');
+
         return $pdf->inline();
     }
 
@@ -100,10 +103,11 @@ class TourneeController extends Controller
             'tournee' => $tournee,
             'title' => 'Feuille de route',
             'clients' => $clients,
-        ])->setPaper('a4', 'landscape');
+        ])
+            ->setPaper('letter', 'landscape')
+            ->setOption('margin-top', '5');
 
-       return $pdf->inline();
-
+        return $pdf->inline();
     }
 
     /**

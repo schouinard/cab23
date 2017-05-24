@@ -13,7 +13,6 @@
                 <table class="datatable table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Nom</th>
                         <th>Actions</th>
                     </tr>
@@ -21,20 +20,19 @@
                     <tbody>
                     @foreach($items as $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
                             <td><a href="{{ $item->path() }}">{{ $item->nom }}</a></td>
                             <td>
-                                <a href="{{$item->path() . '/print' }}" title="Imprimer">
+                                <a href="{{$item->path() . '/print' }}" target="_blank" title="Imprimer">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-print"
                                                                               aria-hidden="true"></i> Feuille de route
                                     </button>
                                 </a>
-                                <a href="{{$item->path() . '/printAlpha' }}" title="Imprimer">
+                                <a href="{{$item->path() . '/printAlpha' }}" target="_blank" title="Imprimer">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-print"
                                                                               aria-hidden="true"></i> Copie du bureau
                                     </button>
                                 </a>
-                                <a href="{{$item->path() . '/printConducteur' }}" title="Imprimer">
+                                <a href="{{$item->path() . '/printConducteur' }}" target="_blank" title="Imprimer">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-print"
                                                                               aria-hidden="true"></i> Feuille conducteur
                                     </button>

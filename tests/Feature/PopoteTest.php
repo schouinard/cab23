@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Beneficiaire;
 use App\Tournee;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -231,5 +232,43 @@ class PopoteTest extends TestCase
         $this->tournee->moveDown($beneficiaire1->id);
 
         $this->assertEquals(4, $beneficiaire1->fresh()->tournee_priorite);
+    }
+
+    /** @test */
+    function un_client_a_des_jours_de_popote()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+
+        DB::table('beneficiaire_day')->insert([
+            'beneficiaire_id' => $beneficiaire->id,
+            'day_id' => 2,
+        ]);
+
+        DB::table('beneficiaire_day')->insert([
+            'beneficiaire_id' => $beneficiaire->id,
+            'day_id' => 3,
+        ]);
+
+        $this->assertCount(2, $beneficiaire->days);
+    }
+
+    /** @test */
+    function un_client_peut_ajouter_des_journees_popote()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+        $beneficiaire->addDays([1, 2]);
+
+        $this->assertCount(2, $beneficiaire->days);
+    }
+
+    /** @test */
+    function un_client_peut_dire_si_on_est_sur_un_jour_popote()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+
+        $beneficiaire->addDays([1, 2]);
+
+        $this->assertTrue($beneficiaire->isPopoteDay(1));
+        $this->assertFalse($beneficiaire->isPopoteDay(5));
     }
 }

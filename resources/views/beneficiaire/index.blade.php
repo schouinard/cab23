@@ -28,7 +28,7 @@
     <div class="row">
         @component('components.index', ['filters' => $filters])
             @slot('datatable')
-                <table class="datatable table table-hover table-bordered">
+                <table id="benevoles" class=" table table-hover table-bordered">
                     <thead>
                     <tr>
                         <th>Id</th>

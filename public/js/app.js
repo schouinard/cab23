@@ -13,7 +13,7 @@ $('.datepicker-naissance').datepicker({
     }
 });
 
-var table = $('.datatable').DataTable({
+$('.datatable').DataTable({
     language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
     },
@@ -23,6 +23,8 @@ var table = $('.datatable').DataTable({
         'copy', 'csv', 'excel', 'pdf'
     ]
 });
+
+
 
 $('.services-rendus').DataTable({
     language: {
@@ -37,12 +39,23 @@ $('.services-rendus').DataTable({
 });
 
 $(document).ready(function() {
+    $('#benevoles').DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
+        },
+        stateSave: true,
+        "order": [[1, "asc"]],
+        dom: 'flrtiBp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+        ]
+    });
     $('.services-donne').DataTable( {
         language: {
             url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
         },
         stateSave: true,
-        "order": [[ 3, "desc" ]],
+        "order": [[ 2, "desc" ]],
         dom: 'flrtiBp',
         buttons: [
             'copy', 'csv', 'excel', 'pdf'

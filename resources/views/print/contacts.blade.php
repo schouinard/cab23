@@ -5,7 +5,7 @@
 @section('body')
     <h3 class="text-center">Centre d'action bénévole Aide 23 - Popote Roulante</h3>
     <h5>Signature des conducteurs et kilométrage</h5>
-    <div style="margin-bottom:25px" class="row">
+    <div style="margin-bottom:25px; line-height:30px;" class="row">
         <div class="col-xs-6">
             <div class="border-bottom">
                 Commentaires:
@@ -21,7 +21,7 @@
             @endforeach
         </div>
     </div>
-    <table class="table table-responsive table-print">
+    <table class="table table-responsive table-print table-condensed">
         <thead>
         <tr>
             <th>{{$tournee->nom}}</th>

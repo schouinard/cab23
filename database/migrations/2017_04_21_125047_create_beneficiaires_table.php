@@ -54,6 +54,12 @@ class CreateBeneficiairesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('beneficiaire_day', function (Blueprint $table) {
+            $table->unsignedInteger('day_id')->index();
+            $table->unsignedInteger('beneficiaire_id')->index();
+            $table->primary(['day_id', 'beneficiaire_id']);
+        });
     }
 
     /**
@@ -61,8 +67,10 @@ class CreateBeneficiairesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public
+    function down()
     {
         Schema::dropIfExists('beneficiaires');
+        Schema::dropIfExists('beneficiaire_day');
     }
 }

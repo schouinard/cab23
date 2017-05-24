@@ -56,7 +56,7 @@
     </div>
     <!--- heures form input ---->
     <div class="form-group col-md-1 {{ $errors->first('heures', 'has-error') }}">
-        {{ Form::label('heures', 'Durée (h):') }}
+        {{ Form::label('heures', 'Durée&nbsp;(h):') }}
         {{ Form::text('heures', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-md-12">
