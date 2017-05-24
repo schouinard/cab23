@@ -85,7 +85,7 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 .border-bottom{
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #999;
 }
 
 .table-print>thead>tr>th, .table-print>tbody>tr>th, .table-print>tfoot>tr>th, .table-print>thead>tr>td, .table-print>tbody>tr>td, .table-print>tfoot>tr>td {

@@ -13,10 +13,10 @@
             <th class="text-right">Semaine du 10-10-2016</th>
         </tr>
         <tr>
-            <th width="5%">#</th>
-            <th width="15%">Client</th>
+            <th width="3%">#</th>
+            <th width="30%">Client</th>
             @foreach($tournee->days as $day)
-                <th width="8%">{{$day->nom}}</th>
+                <th width="8%">{{substr($day->nom, 0,3)}}</th>
             @endforeach
             <th>Commentaires</th>
         </tr>
@@ -26,11 +26,11 @@
         @foreach($clients as $client)
             <tr>
                 <td>{{$client->tournee_priorite}}</td>
-                <td>{{$client->displayNom}}</td>
+                <td>{{$client->displayNom}} ({{$client->anniversaire}})<br>{{$client->adress->adresse}}</td>
                 @foreach($tournee->days as $day)
                     <td></td>
                 @endforeach
-                <td>{{$client->tournee_note}}</td>
+                <td style="font-size:8pt;">{{$client->tournee_note}}</td>
             </tr>
         @endforeach
         </tbody>

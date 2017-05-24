@@ -88,6 +88,11 @@ class Beneficiaire extends FilterableModel
         return Carbon::parse($value)->format($this->dateFormat);
     }
 
+    public function getAnniversaireAttribute()
+    {
+        return Carbon::parse($this->naissance)->format('d/m');
+    }
+
     public function addEtatsSante($int)
     {
         $this->etatsSante()->sync($int);

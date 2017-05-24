@@ -75,7 +75,7 @@ class TourneeController extends Controller
             'tournee' => $tournee,
             'title' => 'Feuille de route - Copie du bureau',
             'clients' => $clients,
-        ])->setPaper('a4', 'landscape');
+        ])->setPaper('a4', 'portrait');
 
         return $pdf->stream();
     }
@@ -88,15 +88,15 @@ class TourneeController extends Controller
             'tournee' => $tournee,
             'title' => 'Feuille de route',
             'clients' => $clients,
-        ])->setPaper('a4', 'landscape');
+        ])->setPaper('a4', 'portrait');
         return $pdf->inline();
     }
 
     public function printConducteur(Tournee $tournee)
     {
         $pdf = App::make('snappy.pdf.wrapper');
-        $clients = $tournee->getPriorityListing();
-        $pdf->loadView('print.conducteur', [
+        $clients = $tournee->getAlphabeticalListing();
+        $pdf->loadView('print.contacts', [
             'tournee' => $tournee,
             'title' => 'Feuille de route',
             'clients' => $clients,
