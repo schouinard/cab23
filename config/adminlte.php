@@ -117,10 +117,12 @@ return [
                     'text' => 'Lister',
                     'url' => 'benevoles',
                     'active' => ['benevoles'],
+                    'icon' => 'list',
                 ],
                 [
                     'text' => 'Ajouter',
                     'url' => 'benevoles/create',
+                    'icon' => 'plus',
                 ],
             ],
         ],
@@ -132,24 +134,29 @@ return [
                     'text' => 'Lister',
                     'url' => 'beneficiaires',
                     'active' => ['beneficiaires'],
+                    'icon' => 'list',
                 ],
                 [
                     'text' => 'Ajouter',
                     'url' => 'beneficiaires/create',
+                    'icon' => 'plus',
                 ],
             ],
         ],
         [
             'text' => 'Organismes',
+            'icon' => 'building',
             'submenu' => [
                 [
                     'text' => 'Lister',
                     'url' => 'organismes',
                     'active' => ['organismes'],
+                    'icon' => 'list',
                 ],
                 [
                     'text' => 'Ajouter',
                     'url' => 'organismes/create',
+                    'icon' => 'plus',
                 ],
             ],
         ],
@@ -162,10 +169,29 @@ return [
                     'text' => 'Services bénéficiaires',
                     'url' => 'services',
                     'active' => ['services'],
+                    'icon' => 'list',
                 ],
                 [
                     'text' => 'Services aux organismes',
                     'url' => 'services/organismes',
+                    'icon' => 'plus',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Popote roulante',
+            'icon' => 'truck',
+            'submenu' => [
+                [
+                    'text' => 'Liste des tournées',
+                    'url' => 'tournees',
+                    'active' => ['tournees'],
+                    'icon' => 'list',
+                ],
+                [
+                    'text' => 'Ajouter une tournée',
+                    'url' => 'tournees/create',
+                    'icon' => 'plus',
                 ],
             ],
         ],
@@ -177,10 +203,13 @@ return [
                 [
                     'text' => 'Lister',
                     'url' => 'users',
+                    'icon' => 'list',
+                    'active' => ['users'],
                 ],
                 [
                     'text' => 'Ajouter',
                     'url' => 'users/create',
+                    'icon' => 'plus',
                 ],
             ],
         ],

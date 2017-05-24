@@ -129,6 +129,18 @@ class DatabaseSeeder extends Seeder
             $organisme->addEmploye($employe);
         }
 
+        $tournees = factory(\App\Tournee::class, 4)->create();
+
+        foreach ($tournees as $tournee) {
+            $tournee->addDays([2,3,4,5,6]);
+
+            $beneficiaires = \App\Beneficiaire::where('tournee_id', null)->take(12)->get();
+
+            foreach ($beneficiaires as $beneficiaire) {
+                $tournee->addBeneficiaire($beneficiaire->id, 0, null, null);
+            }
+        }
+
         factory('App\User')->create([
             'name' => 'admin',
             'email' => 'admin@admin.com',

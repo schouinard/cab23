@@ -19,4 +19,9 @@ class Adress extends Model
     {
         return $this->belongsTo(Secteur::class);
     }
+
+    public function toHTML()
+    {
+        return $this->adresse."<br />".$this->ville.', '.$this->secteur->nom . "<br />" . $this->code_postal;
+    }
 }

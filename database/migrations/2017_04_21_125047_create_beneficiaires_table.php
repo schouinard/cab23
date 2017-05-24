@@ -45,6 +45,12 @@ class CreateBeneficiairesTable extends Migration
             // facturation
             $table->string('facturation_nom')->nullable();
 
+            // popotte roulante
+            $table->unsignedInteger('tournee_id')->nullable();
+            $table->unsignedInteger('tournee_priorite')->nullable()->index();
+            $table->boolean('tournee_payee')->nullable()->default(0);
+            $table->text('tournee_note')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,8 +20,9 @@ class CreateServicesTable extends Migration
             $table->integer('serviceable_id')->index();
             $table->string('serviceable_type')->nullable();
             $table->float('don')->nullable();
-            $table->float('heures')->default(0);
+            $table->float('heures')->nullable();
             $table->date('rendu_le');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

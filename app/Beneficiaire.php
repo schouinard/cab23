@@ -18,6 +18,8 @@ class Beneficiaire extends FilterableModel
         'naissance',
     ];
 
+    protected $casts = ['tournee_payee' => 'boolean'];
+
     protected $relationsToHandleOnStore = [
         'serviceRequests',
         'autonomies',

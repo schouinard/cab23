@@ -98,34 +98,19 @@
                                     </button>
                                 </a>
                                 @can('can-delete')
-                                    @if($service->trashed())
-                                        {!! Form::open([
-                                            'method'=>'POST',
-                                            'url' => ['/services/' . $service->id . '/restore'],
-                                            'style' => 'display:inline'
-                                        ]) !!}
-                                        {!! Form::button('<i class="fa fa-undo" aria-hidden="true"></i> Restaurer',
-                                        [
-                                                'type' => 'submit',
-                                                'class' => 'btn btn-success btn-xs',
-                                                'title' => 'Restaurer le service',
 
-                                        ]) !!}
-                                        {!! Form::close() !!}
-                                    @else
-                                        {!! Form::open([
-                                            'method'=>'DELETE',
-                                            'url' => ['/services', $service->id],
-                                            'style' => 'display:inline'
-                                        ]) !!}
-                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer', array(
-                                                'type' => 'submit',
-                                                'class' => 'btn btn-danger btn-xs',
-                                                'title' => 'Supprimer le service',
-                                                'onclick'=>'return confirm("Voulez-vous vraiment supprimer?")'
-                                        )) !!}
-                                        {!! Form::close() !!}
-                                    @endif
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/services', $service->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer', array(
+                                            'type' => 'submit',
+                                            'class' => 'btn btn-danger btn-xs',
+                                            'title' => 'Supprimer le service',
+                                            'onclick'=>'return confirm("Voulez-vous vraiment supprimer?")'
+                                    )) !!}
+                                    {!! Form::close() !!}
                                 @endcan
                             </td>
                         </tr>

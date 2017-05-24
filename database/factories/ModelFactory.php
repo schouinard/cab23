@@ -84,12 +84,12 @@ $factory->define(App\Adress::class, function () {
     $faker = Faker\Factory::create('fr_CA'); // create a French faker
 
     return [
-        'telephone' => $faker->phoneNumber,
-        'telephone2' => $faker->phoneNumber,
-        'cellulaire' => $faker->phoneNumber,
+        'telephone' => '(418) 555-5555',
+        'telephone2' => '(418) 555-5555 x1234',
+        'cellulaire' => '(418) 555-5555',
         'adresse' => $faker->streetAddress,
-        'ville' => $faker->city,
-        'province' => $faker->stateAbbr,
+        'ville' => 'Québec',
+        'province' => 'QC',
         'code_postal' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'secteur_id' => App\Secteur::inRandomOrder()->first()->id,
@@ -128,6 +128,8 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
             return factory('App\Adress')->create()->id;
         },
         'facturation_nom' => $faker->name,
+        'tournee_payee' => $faker->boolean(),
+        'tournee_note' => $faker->paragraph,
     ];
 });
 
@@ -137,7 +139,7 @@ $factory->define(App\Person::class, function () {
 
     return [
         'nom' => $faker->name,
-        'lien' => $faker->word,
+        'lien' => $faker->randomElement(['Fils', 'Fille', 'Soeur', 'Frère', 'Ami', 'Collègue', 'TS']),
         'contactable_id' => function () {
             return factory(App\Beneficiaire::class)->create()->id;
         },
@@ -182,5 +184,14 @@ $factory->define(App\Organisme::class, function () {
         'secteur_id' => function () {
             return App\OrganismeSecteur::inRandomOrder()->first()->id;
         },
+    ];
+});
+
+$factory->define(App\Tournee::class, function () {
+    $faker = Faker\Factory::create('fr_CA'); // create a French faker
+
+    return [
+        'nom' => $faker->streetName,
+        'telephone' => $faker->phoneNumber,
     ];
 });

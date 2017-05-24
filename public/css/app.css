@@ -83,3 +83,18 @@ div.dataTables_wrapper div.dataTables_filter {
     line-height: 1.42857143;
     color: #555;
 }
+
+.border-bottom{
+    border-bottom: 1px solid #000000;
+}
+
+.table-print>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1px solid #999;
+}
+.table-print{
+    border-color: #999;
+}
+
+.page-break {
+    page-break-after: always;
+}

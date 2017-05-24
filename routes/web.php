@@ -48,6 +48,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('organismes/{organisme}/restore', 'OrganismeController@restore');
     Route::resource('organismes', 'OrganismeController');
 
+    Route::get('tournees/{tournee}/moveUp/{beneficiaire}', 'TourneeController@moveUp');
+    Route::get('tournees/{tournee}/moveDown/{beneficiaire}', 'TourneeController@moveDown');
+    Route::get('tournees/{tournee}/printAlpha', 'TourneeController@printAlpha');
+    Route::get('tournees/{tournee}/print', 'TourneeController@print');
+    Route::get('tournees/{tournee}/printConducteur', 'TourneeController@printConducteur');
+
+
+    Route::resource('tournees', 'TourneeController');
+
     Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
     Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');
     Route::get('/list/organisme.json', 'OrganismeController@listAllForAutocomplete');

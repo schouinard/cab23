@@ -142,7 +142,7 @@ class OrganismeController extends Controller
 
     public function listAllForAutocomplete()
     {
-        return Benevole::get([
+        return Organisme::get([
             'id',
             'nom',
         ])->toJSON();
