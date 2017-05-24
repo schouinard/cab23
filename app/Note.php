@@ -9,10 +9,6 @@ class Note extends Model
 {
     protected $guarded = [];
 
-    protected $dates = [
-        'date',
-    ];
-
     protected $dateFormat = 'Y-m-d';
 
     public function notable()

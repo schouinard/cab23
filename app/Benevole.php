@@ -12,17 +12,6 @@ class Benevole extends FilterableModel
 
     protected $appends = ['nom_complet'];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'naissance',
-        'accepte_ca',
-        'inscription',
-        'suivi',
-        'integration',
-    ];
-
     protected $relationsToHandleOnStore = [
         'category',
         'clienteles',

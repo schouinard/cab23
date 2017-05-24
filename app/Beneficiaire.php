@@ -11,13 +11,6 @@ class Beneficiaire extends FilterableModel
 
     protected $appends = ['nom_complet'];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'naissance',
-    ];
-
     protected $casts = ['tournee_payee' => 'boolean'];
 
     protected $relationsToHandleOnStore = [

@@ -12,12 +12,6 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     /**
      * Send the password reset notification.
      *

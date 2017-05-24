@@ -10,12 +10,6 @@ abstract class FilterableModel extends Model
     use RecordsActivity;
     use SoftDeletes;
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     protected $relationsToHandleOnStore = [];
 
     protected $guarded = [];
