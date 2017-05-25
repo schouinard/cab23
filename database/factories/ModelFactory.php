@@ -67,14 +67,14 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'adress_id' => function () {
             return factory('App\Adress')->create()->id;
         },
-        'naissance' => $faker->dateTime,
-        'inscription' => $faker->dateTime,
-        'accepte_ca' => $faker->dateTime,
+        'naissance' => $faker->dateTime->format('Y-m-d'),
+        'inscription' => $faker->dateTime->format('Y-m-d'),
+        'accepte_ca' => $faker->dateTime->format('Y-m-d'),
         'remarque' => $faker->paragraph(2),
         'antecedents' => $faker->paragraph,
         'enquete_sociale' => $faker->paragraph,
-        'integration' => $faker->dateTime,
-        'suivi' => $faker->dateTime,
+        'integration' => $faker->dateTime->format('Y-m-d'),
+        'suivi' => $faker->dateTime->format('Y-m-d'),
         'benevole_type_id' => App\BenevoleType::inRandomOrder()->first(),
     ];
 });
@@ -103,7 +103,7 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
     return [
         'nom' => $faker->lastName,
         'prenom' => $faker->firstName,
-        'naissance' => $faker->dateTime,
+        'naissance' => $faker->dateTime->format('Y-m-d'),
         'conjoint' => $faker->name,
         'adress_id' => function () {
             return factory('App\Adress')->create()->id;

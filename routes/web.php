@@ -54,9 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tournees/{tournee}/printAlpha', 'TourneeController@printAlpha');
     Route::get('tournees/{tournee}/print', 'TourneeController@print');
     Route::get('tournees/{tournee}/printConducteur', 'TourneeController@printConducteur');
-
-
     Route::resource('tournees', 'TourneeController');
+
+    Route::resource('notes', 'NoteController');
 
     Route::get('/list/benevole.json', 'BenevoleController@listAllForAutocomplete');
     Route::get('/list/beneficiaire.json', 'BeneficiaireController@listAllForAutocomplete');

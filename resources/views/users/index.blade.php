@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        @component('components.filtres')
+        @component('components.filtres', ['filters' => $filters])
             @slot('inputFilters')
                 <div class="form-group col-md-3">
                     {{ Form::label('statut', 'Statut:') }}

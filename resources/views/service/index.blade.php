@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="row">
-        @component('components.filtres')
+        @component('components.filtres', ['filters' => $filters])
             @slot('inputFilters')
                 <div class="form-group col-md-6">
                     {{ Form::label('type', 'Type de service:') }}

@@ -12,7 +12,7 @@
     @if(isset($readonly))
         <div class="readonly">
             @if(isset($beneficiaire))
-                {{$beneficiaire->etat_sante_autre}}
+                {!!$beneficiaire->etat_sante_autre!!}
             @endif
         </div>
     @else
@@ -33,7 +33,7 @@
     @if(isset($readonly))
         <div class="readonly">
             @if(isset($beneficiaire))
-                {{$beneficiaire->autonomie_autre}}
+                {!!$beneficiaire->autonomie_autre!!}
             @endif
         </div>
     @else
@@ -46,7 +46,7 @@
     @if(isset($readonly))
         <div class="readonly">
             @if(isset($beneficiaire))
-                {{$beneficiaire->support_familial}}
+                {!!  $beneficiaire->support_familial!!}
             @endif
         </div>
     @else

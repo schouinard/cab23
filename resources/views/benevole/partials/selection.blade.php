@@ -4,7 +4,7 @@
     @if(isset($readonly))
         <div class="readonly">
             @if(isset($benevole))
-                {{$benevole->antecedents}}
+                {!! $benevole->antecedents !!}
             @endif
         </div>
     @else
@@ -17,7 +17,7 @@
     @if(isset($readonly))
         <div class="readonly">
             @if(isset($benevole))
-                {{$benevole->enquete_sociale}}
+                {!!$benevole->enquete_sociale!!}
             @endif
         </div>
     @else

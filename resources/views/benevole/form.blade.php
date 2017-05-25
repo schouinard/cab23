@@ -71,7 +71,7 @@
                         @endif
                     </div>
                 @else
-                    {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20']) }}
+                    {!! Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20'])  !!}
                 @endif
             </div>
         </div>
@@ -129,6 +129,8 @@
             </div>
             @can('manage-confidential-fields')
                 <div class="tab-pane" id="notes">
+                    @component('components.note', ['notableId' => $benevole->id, 'notableType' => \App\Benevole::class])
+                    @endcomponent
                     @foreach($benevole->notes as $note)
                         @include('partials.show.notes', ['note' => $note])
                     @endforeach

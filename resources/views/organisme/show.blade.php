@@ -21,13 +21,13 @@
     {{ Form::model($organisme, ['route' => ['organismes.update', $organisme]]) }}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Contacts</a></li>
-            <li><a href="#tab_3" data-toggle="tab" aria-expanded="false">Services</a></li>
-            <li><a href="#tab_4" data-toggle="tab" aria-expanded="false">Notes</a></li>
+            <li class="active"><a href="#identification" data-toggle="tab" aria-expanded="true">Identification</a></li>
+            <li class=""><a href="#contacts" data-toggle="tab" aria-expanded="false">Contacts</a></li>
+            <li><a href="#services" data-toggle="tab" aria-expanded="false">Services</a></li>
+            <li><a href="#notes" data-toggle="tab" aria-expanded="false">Notes</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active row" id="tab_1">
+            <div class="tab-pane active row" id="identification">
                 <!--- nom form input ---->
                 <div class="form-group col-md-6 {{ $errors->first('nom', 'has-error') }}">
                     {{ Form::label('nom', 'Nom de l\'organisme:') }}
@@ -42,7 +42,7 @@
                     @include('partials.form.contact')
                 </div>
             </div>
-            <div class="tab-pane row" id="tab_2">
+            <div class="tab-pane row" id="contacts">
                 <h3 class="col-md-12">Employé</h3>
                 <div class="form-group col-md-6 {{ $errors->first("employe[nom]", "has-error") }}">
                     {{ Form::label("employe[nom]", "Nom:") }}
@@ -63,11 +63,54 @@
                     @include("partials.form.contact", ["adress" => "president[adress]"])
                 </div>
             </div>
-            <div class="tab-pane" id="tab_3">
-                <h3>Services</h3>
+            <div class="tab-pane row" id="services">
+                <h3 class="col-md-12">Services reçus</h3>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover services-donne" width="100%">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>Bénévole</td>
+                            <td>Rendu le</td>
+                            <td>Don</td>
+                            <td>Durée</td>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($organisme->services as $service)
+                            <tr>
+                                <td>
+                                    {{ $service->type->nom }}
+                                </td>
+                                <td>
+                                    <a href="{{ $service->benevole->path() }}">{{ $service->benevole->nom }}
+                                        , {{ $service->benevole->prenom }}</a>
+                                </td>
+                                <td>
+                                    {{ $service->rendu_le }}
+                                </td>
+                                <td>
+                                    {{ $service->don }}
+                                </td>
+                                <td>{{$service->heures}}</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="3" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
             </div>
-            <div class="tab-pane" id="tab_4">
+            <div class="tab-pane" id="notes">
+                @component('components.note', ['notableId' => $organisme->id, 'notableType' => \App\Organisme::class])
+                @endcomponent
                 @foreach($organisme->notes as $note)
                     @include('partials.show.notes', ['note' => $note])
                 @endforeach

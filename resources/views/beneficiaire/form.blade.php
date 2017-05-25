@@ -4,23 +4,32 @@
         array_push($attributes, 'disabled');
     }
 @endphp
-
+@if (count($errors))
+    <div class="callout callout-danger">
+        <h4>Veuillez valider les points suivants avant de continuer.</h4>
+        <ul class="error-content">
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
-        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">État de santé</a></li>
-        <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Statut</a></li>
-        <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
-        <li><a href="#tab_5" data-toggle="tab" aria-expanded="false">Services</a></li>
-        <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Facturation</a></li>
+        <li class="active"><a href="#identification" data-toggle="tab" aria-expanded="true">Identification</a></li>
+        <li class=""><a href="#sante" data-toggle="tab" aria-expanded="false">État de santé</a></li>
+        <li class=""><a href="#statut" data-toggle="tab" aria-expanded="false">Statut</a></li>
+        <li class=""><a href="#contacts" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
+        <li><a href="#services" data-toggle="tab" aria-expanded="false">Services</a></li>
+        <li class=""><a href="#facturation" data-toggle="tab" aria-expanded="false">Facturation</a></li>
         @if(isset($readonly))
             @can('manage-confidential-fields')
-                <li><a href="#tab_7" data-toggle="tab" aria-expanded="false">Notes</a></li>
+                <li><a href="#notes" data-toggle="tab" aria-expanded="false">Notes</a></li>
             @endcan
         @endif
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active row" id="tab_1">
+        <div class="tab-pane active row" id="identification">
             <!--- prenom form input ---->
             <div class="form-group col-md-6 {{ $errors->first('prenom', 'has-error') }}">
                 {{ Form::label('prenom', 'Prénom (*):') }}
@@ -61,19 +70,19 @@
                         @endif
                     </div>
                 @else
-                    {{ Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20']) }}
+                    {!!  Form::textarea('remarque', null, ['class' => 'form-control textarea', 'row' => '20']) !!}
                 @endif
             </div>
         </div>
         <!-- /.tab-pane -->
-        <div class="tab-pane row" id="tab_2">
+        <div class="tab-pane row" id="sante">
             @include('beneficiaire.partials.sante')
         </div>
         <!-- /.tab-pane -->
-        <div class="tab-pane row" id="tab_3">
+        <div class="tab-pane row" id="statut">
             @include('beneficiaire.partials.statut')
         </div>
-        <div class="tab-pane" id="tab_4">
+        <div class="tab-pane" id="contacts">
 
             @for($i = 0; $i < 3; $i++)
                 <h3>Personne ressource {{$i + 1}}</h3>
@@ -83,16 +92,18 @@
             @endfor
 
         </div>
-        <div class="tab-pane row" id="tab_5">
+        <div class="tab-pane row" id="services">
             @include('beneficiaire.partials.requests')
         </div>
-        <div class="tab-pane" id="tab_6">
+        <div class="tab-pane" id="facturation">
             <h3>Adresse de facturation</h3>
             @include('partials.form.contact', ['adress' => 'facturation', 'model' => isset($beneficiaire) ? $beneficiaire->facturation : new \App\Adress()])
         </div>
         @if(isset($readonly))
             @can('manage-confidential-fields')
-                <div class="tab-pane" id="tab_7">
+                <div class="tab-pane" id="notes">
+                    @component('components.note', ['notableId' => $beneficiaire->id, 'notableType' => \App\Beneficiaire::class])
+                    @endcomponent
                     @foreach($beneficiaire->notes as $note)
                         @include('partials.show.notes', ['note' => $note])
                     @endforeach
