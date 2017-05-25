@@ -4,24 +4,33 @@
         array_push($attributes, 'disabled');
     }
 @endphp
-
+@if (count($errors))
+    <div class="callout callout-danger">
+        <h4>Veuillez valider les points suivants avant de continuer.</h4>
+        <ul class="error-content">
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Identification</a></li>
+        <li class="active"><a href="#identification" data-toggle="tab" aria-expanded="true">Identification</a></li>
         @can('manage-confidential-fields')
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Sélection</a></li>
+            <li class=""><a href="#selection" data-toggle="tab" aria-expanded="false">Sélection</a></li>
         @endcan
-        <li><a href="#tab_3" data-toggle="tab" aria-expanded="false">Intérêts</a></li>
-        <li><a href="#tab_4" data-toggle="tab" aria-expanded="false">Disponibilités</a></li>
+        <li><a href="#interets" data-toggle="tab" aria-expanded="false">Intérêts</a></li>
+        <li><a href="#disponibilites" data-toggle="tab" aria-expanded="false">Disponibilités</a></li>
         @if(isset($readonly))
-            <li><a href="#tab_5" data-toggle="tab" aria-expanded="false">Services</a></li>
+            <li><a href="#services" data-toggle="tab" aria-expanded="false">Services</a></li>
             @can('manage-confidential-fields')
-                <li><a href="#tab_6" data-toggle="tab" aria-expanded="false">Notes</a></li>
+                <li><a href="#notes" data-toggle="tab" aria-expanded="false">Notes</a></li>
             @endcan
         @endif
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active row" id="tab_1">
+        <div class="tab-pane active row" id="identification">
             <!--- prenom form input ---->
             <div class="form-group col-md-6 {{ $errors->first('prenom', 'has-error') }}">
                 {{ Form::label('prenom', 'Prénom (*):') }}
@@ -53,7 +62,7 @@
                 @include('partials.form.contact', ['adress' => 'adress'])
             </div>
 
-            <div class="form-group col-md-12 {{ $errors->first('', 'has-error') }}">
+            <div class="form-group col-md-12 {{ $errors->first('remarque', 'has-error') }}">
                 {{ Form::label('remarque', 'Remarques:') }}
                 @if(isset($readonly))
                     <div class="readonly">
@@ -67,18 +76,18 @@
             </div>
         </div>
         @can('manage-confidential-fields')
-            <div class="tab-pane row" id="tab_2">
+            <div class="tab-pane row" id="selection">
                 @include('benevole.partials.selection')
             </div>
         @endcan
-        <div class="tab-pane row" id="tab_3">
+        <div class="tab-pane row" id="interets">
             @include('benevole.partials.interets')
         </div>
-        <div class="tab-pane row" id="tab_4">
+        <div class="tab-pane row" id="disponibilites">
             @include('benevole.partials.disponibilites')
         </div>
         @if(isset($readonly))
-            <div class="tab-pane row" id="tab_5">
+            <div class="tab-pane row" id="services">
                 <h3 class="col-md-12">Services aux bénéficiaires</h3>
                 <div class="col-md-12">
                     <table class="table table-bordered table-hover services-donne" width="100%">
@@ -119,7 +128,7 @@
                 </div>
             </div>
             @can('manage-confidential-fields')
-                <div class="tab-pane" id="tab_6">
+                <div class="tab-pane" id="notes">
                     @foreach($benevole->notes as $note)
                         @include('partials.show.notes', ['note' => $note])
                     @endforeach

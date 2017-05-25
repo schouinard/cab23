@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        @component('components.filtres')
+        @component('components.filtres', ['filters' => $filters])
             @slot('inputFilters')
                 <div class="form-group col-md-3">
                     {{ Form::label('secteur', 'Secteur:') }}
@@ -30,6 +30,27 @@
                     {{ Form::label('inscription', 'Année d\'inscription:') }}
                     {{ Form::selectYear('inscription', 1980, Carbon\Carbon::now()->year, isset($filters['inscription']) ? $filters['inscription'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
+                <h4 class="col-md-12">Disponibilités</h4>
+                <div class="form-group col-md-3">
+                    {{ Form::label('dispojour', 'Jour:') }}
+                    {{ Form::select('dispojour',$days->pluck('nom','id'), isset($filters['dispojour']) ? $filters['dispojour'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ Form::label('dispomoment', 'Moment:') }}
+                    {{ Form::select('dispomoment',$moments->pluck('nom','id'), isset($filters['dispomoment']) ? $filters['dispomoment'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                </div>
+                <div class="form-group col-md-3">
+                    {{Form::label('isdispo', 'Est disponible le:')}}
+                    <div class="input-group date datepicker">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        {{ Form::text('isdispo', isset($filters['isdispo']) ? $filters['isdispo'] : null, array_merge(['class' => 'form-control pull-right'])) }}
+                    </div>
+                </div>
+
+
+
             @endslot
         @endcomponent
     </div>
@@ -44,19 +65,24 @@
                         <th>Prenom</th>
                         <th>Courriel</th>
                         <th>Telephone</th>
-                        @if(request('secteur'))
+                        @if(isset($filters['secteur']))
                             <th>Secteur</th>
                         @endif
-                        @if(request('anniversaire'))
-                            <th>Anniversaire</th>
+                        @if(isset($filters['anniversaire']))
+                            <th>Né le</th>
+                            <th>Mois</th>
+                            <th>Année</th>
                         @endif
-                        @if(request('accepte_ca'))
+                        @if(isset($filters['accepte_ca']))
                             <th>Accepté</th>
                         @endif
-                        @if(request('inscription') || request('accepte_ca'))
+                        @if(isset($filters['inscription']) || isset($filters['accepte_ca']))
                             <th>Inscription</th>
                         @endif
-                        @if(request('statut'))
+                        @if(isset($filters['dispojour']) || isset($filters['dispomoment']) || isset($filters['isdispo']))
+                            <th>Disponibilités</th>
+                        @endif
+                        @if(isset($filters['statut']))
                             <th>Statut</th>
                         @endif
                         <th>Actions</th>
@@ -70,29 +96,51 @@
                             <td>{{ $benevole->prenom }}</td>
                             <td>{{ $benevole->adress->email }}</td>
                             <td>{{ $benevole->adress->telephone }}</td>
-                            @if(request('secteur'))
+                            @if(isset($filters['secteur']))
                                 <td>
                                     @if($benevole->adress->secteur_id)
                                         {{$secteurs->where('id', $benevole->adress->secteur_id)->first()->nom}}
                                     @endif
                                 </td>
                             @endif
-                            @if(request('anniversaire'))
+                            @if(isset($filters['anniversaire']))
                                 <td>
                                     @if($benevole->naissance)
-                                        {{ $benevole->naissance }}
+                                        {{ \Carbon\Carbon::parse($benevole->naissance)->format('d') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($benevole->naissance)
+                                        {{ \Carbon\Carbon::parse($benevole->naissance)->format('m') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($benevole->naissance)
+                                        {{ \Carbon\Carbon::parse($benevole->naissance)->format('Y') }}
                                     @endif
                                 </td>
                             @endif
-                            @if(request('accepte_ca') && $benevole->accepte_ca)
+                            @if(isset($filters['accepte_ca']) && $benevole->accepte_ca)
                                 <td>{{ $benevole->accepte_ca }}</td>
-                            @elseif(request('accepte_ca'))
+                            @elseif(isset($filters['accepte_ca']))
                                 <td>En probation</td>
                             @endif
-                            @if(request('inscription') || request('accepte_ca'))
+                            @if(isset($filters['inscription']) || isset($filters['accepte_ca']))
                                 <td>{{ $benevole->inscription }}</td>
                             @endif
-                            @if(request('statut'))
+                            @if(isset($filters['dispojour']) || isset($filters['dispomoment']) || isset($filters['isdispo']))
+                                <td>
+                                    <ul class="list-unstyled">
+                                        @foreach($days as $day)
+                                            @if(count($benevole->disponibilites->where('day_id', $day->id)))
+                                                <li>{{$day->nom}}
+                                                    : {{$benevole->disponibilites->where('day_id', $day->id)->pluck(['moment'])->pluck('nom')->implode(', ')}}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            @endif
+                            @if(isset($filters['statut']))
                                 <td>
                                     {{ $benevole->trashed() ? 'Inactif' : 'Actif' }}
                                 </td>

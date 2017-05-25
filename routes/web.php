@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('benevoles', 'BenevoleController@index');
     Route::post('benevoles/{benevole}/restore', 'BenevoleController@restore');
+    Route::post('benevoles/{benevole}/indisponibilites', 'BenevoleController@addIndisponibilite');
     Route::resource('benevoles', 'BenevoleController');
 
     Route::put('beneficiaires', 'BeneficiaireController@index');

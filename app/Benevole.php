@@ -109,6 +109,21 @@ class Benevole extends FilterableModel
         return count($this->disponibilites->where('day_id', $dayId)->where('moment_id', $momentId));
     }
 
+    public function indisponibilites()
+    {
+        return $this->hasMany(Indisponibilite::class);
+    }
+
+    public function addIndisponibilite($from, $to)
+    {
+        $this->indisponibilites()->create(['from' => $from, 'to' => $to]);
+    }
+
+    public function removeIndisponibilite($id)
+    {
+        Indisponibilite::destroy($id);
+    }
+
     public function notes()
     {
         return $this->morphMany(Note::class, 'notable')->orderBy('date', 'DESC');

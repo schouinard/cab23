@@ -107,7 +107,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with(compact(['interestGroups', 'interests', 'competences', 'clienteles']));
         });
 
-        \View::composer(['benevole.partials.disponibilites', 'benevole.show'], function ($view) {
+        \View::composer(['benevole.partials.disponibilites', 'benevole.show', 'benevole.index'], function ($view) {
             $days = \Cache::rememberForever('days', function () {
                 return Day::all();
             });

@@ -166,4 +166,42 @@ class BenevoleTest extends TestCase
         );
         $this->assertCount(2, $this->benevole->competences);
     }
+
+    /** @test */
+    public function it_can_have_indisponibilites()
+    {
+        DB::table('indisponibilites')->insert([
+            'benevole_id' => $this->benevole->id,
+            'from' => Carbon::create(2017, 3, 10),
+            'to' => Carbon::create(2017, 3, 12),
+        ]);
+
+        DB::table('indisponibilites')->insert([
+            'benevole_id' => $this->benevole->id,
+            'from' => Carbon::create(2017, 4, 10),
+            'to' => Carbon::create(2017, 4, 12),
+        ]);
+
+        $this->assertCount(2, $this->benevole->indisponibilites);
+    }
+
+    /** @test */
+    public function it_can_add_indisponibilites()
+    {
+        $this->benevole->addIndisponibilite(Carbon::create(2017, 4, 10),
+            Carbon::create(2017, 4, 12));
+
+        $this->assertCount(1, $this->benevole->indisponibilites);
+    }
+
+    /** @test */
+    public function it_can_remove_indisponibilite()
+    {
+        $this->benevole->addIndisponibilite(Carbon::create(2017, 4, 10),
+            Carbon::create(2017, 4, 12));
+
+        $this->benevole->removeIndisponibilite($this->benevole->indisponibilites->first()->id);
+
+        $this->assertCount(0, $this->benevole->fresh()->indisponibilites);
+    }
 }

@@ -153,6 +153,8 @@ return [
         'adress.province' => 'Province',
         'adress.ville' => 'Ville',
         'confirm_password' => 'Confirmer le mot de passe',
+        'from' => 'Du',
+        'to' => 'Au',
     ],
 
 ];

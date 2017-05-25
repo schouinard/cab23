@@ -39,8 +39,10 @@
                         @if(request('secteur'))
                             <th>Secteur</th>
                         @endif
-                        @if(request('anniversaire'))
-                            <th>Anniversaire</th>
+                        @if(isset($filters['anniversaire']))
+                            <th>Né le</th>
+                            <th>Mois</th>
+                            <th>Année</th>
                         @endif
                         @if(request('statut'))
                             <th>Statut</th>
@@ -63,10 +65,20 @@
                                     @endif
                                 </td>
                             @endif
-                            @if(request('anniversaire'))
+                            @if(isset($filters['anniversaire']))
                                 <td>
                                     @if($beneficiaire->naissance)
-                                        {{ \Carbon\Carbon::parse($beneficiaire->naissance)->format('d M') }}
+                                        {{ \Carbon\Carbon::parse($beneficiaire->naissance)->format('d') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($beneficiaire->naissance)
+                                        {{ \Carbon\Carbon::parse($beneficiaire->naissance)->format('m') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($beneficiaire->naissance)
+                                        {{ \Carbon\Carbon::parse($beneficiaire->naissance)->format('Y') }}
                                     @endif
                                 </td>
                             @endif

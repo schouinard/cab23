@@ -1,11 +1,11 @@
 <div class="col-md-12">
-    <div class="box box-primary collapsed-box">
+    <div class="box box-primary @if(!count($filters)) collapsed-box @endif">
         <div class="box-header">
             <h3 class="box-title">Filtres</h3>
             <div class="box-tools pull-right">
                 <!-- This will cause the box to collapse when clicked -->
                 <button class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa @if(!count($filters)) fa-plus @else fa-minus @endif"></i>
                 </button>
             </div><!-- /.box-tools -->
         </div>
