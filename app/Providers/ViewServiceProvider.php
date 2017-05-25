@@ -27,14 +27,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index', 'beneficiaire.partials.requests'],
-            function ($view) {
-                $serviceTypes = \Cache::rememberForever('serviceTypes', function () {
-                    return ServiceType::orderBy('nom')->get();
-                });
-                $view->with('serviceTypes', $serviceTypes);
-            });
-
         \View::composer(['beneficiaire.partials.requests', 'beneficiaire.show'], function ($view) {
             $serviceRequestsStatus = \Cache::rememberForever('serviceRequestsStatus', function () {
                 return ServiceRequestStatus::all();
@@ -91,15 +83,15 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('benevoleTypes', $types);
         });
 
-        \View::composer(['benevole.partials.interets'], function ($view) {
+        \View::composer(['benevole.partials.interets', 'service.index', 'benevole.index'], function ($view) {
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
                 return Category::orderBy('nom')->get();
             });
             $interests = \Cache::rememberForever('interests', function () {
-                return Interet::orderBy('nom')->get();
+                return Competence::where('type', 'interet')->orderBy('nom')->get();
             });
             $competences = \Cache::rememberForever('competences', function () {
-                return Competence::orderBy('nom')->get();
+                return Competence::where('type', 'competence')->orderBy('nom')->get();
             });
             $clienteles = \Cache::rememberForever('clienteles', function () {
                 return Clientele::orderBy('nom')->get();
@@ -123,6 +115,15 @@ class ViewServiceProvider extends ServiceProvider
             });
             $view->with(['type' => $type]);
         });
+
+        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index', 'beneficiaire.partials.requests'],
+            function ($view) {
+                $serviceTypes = \Cache::rememberForever('serviceTypes', function () {
+                    return Competence::where('service_aux_personnes', 1)->orderBy('nom')->get();
+                });
+                $view->with('serviceTypes', $serviceTypes);
+            });
+
     }
 
     /**

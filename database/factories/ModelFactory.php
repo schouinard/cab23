@@ -161,8 +161,8 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
             return factory('App\Beneficiaire')->create()->id;
         },
         'serviceable_type' => App\Beneficiaire::class,
-        'service_type_id' => function () {
-            return App\ServiceType::inRandomOrder()->first()->id;
+        'competence_id' => function () {
+            return App\Competence::inRandomOrder()->first()->id;
         },
         'rendu_le' => $faker->date(),
         'don' => $faker->randomFloat(2, 0, 1000),

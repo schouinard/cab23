@@ -4,7 +4,7 @@ namespace App;
 
 class Service extends FilterableModel
 {
-    protected $with = ['type'];
+    protected $with = ['competence'];
 
     public function benevole()
     {
@@ -16,9 +16,9 @@ class Service extends FilterableModel
         return $this->morphTo()->withTrashed();
     }
 
-    public function type()
+    public function competence()
     {
-        return $this->belongsTo(ServiceType::class, 'service_type_id');
+        return $this->belongsTo(Competence::class);
     }
 
     public static function latest()

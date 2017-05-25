@@ -20,17 +20,12 @@
                 <td>Don</td>
             </tr>
             </thead>
-            <tfoot>
-            <tr>
-                <th colspan="3" style="text-align:right">Total:</th>
-                <th></th>
-            </tr>
-            </tfoot>
+
             <tbody>
             @foreach ($beneficiaire->services as $service)
                 <tr>
                     <td>
-                        {{ $service->type->nom }}
+                        {{ $service->competence->nom }}
                     </td>
                     <td>
                         <a href="{{ $service->benevole->path() }}">{{ $service->benevole->nom }}
@@ -46,6 +41,12 @@
             @endforeach
 
             </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="3" style="text-align:right">Total:</th>
+                <th></th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 @else

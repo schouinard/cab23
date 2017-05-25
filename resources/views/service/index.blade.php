@@ -20,7 +20,7 @@
                     </div><!-- /.box-tools -->
                 </div>
                 <div class="box-body">
-                    @include("components.addService", ['serviceTypes' => $serviceTypes])
+                    @include("components.addService", ['serviceTypes' => $serviceTypes, 'categories' => $interestGroups])
                 </div>
             </div>
         </div>
@@ -30,7 +30,24 @@
             @slot('inputFilters')
                 <div class="form-group col-md-6">
                     {{ Form::label('type', 'Type de service:') }}
-                    {{ Form::select('type', $serviceTypes->pluck('nom', 'id'),isset($filters['type']) ? $filters['type'] : null, ['class' => 'form-control', 'placeholder' => 'Tous les types']) }}
+                    @if($serviceableType == \App\Beneficiaire::class)
+                        {{ Form::select('type', $serviceTypes->pluck('nom', 'id'),isset($filters['type']) ? $filters['type'] : null, ['class' => 'form-control', 'placeholder' => 'Tous les types']) }}
+                    @else
+                        <select name="type" class="form-control">
+                            @foreach($interestGroups as $category)
+                                <option value="">Tous</option>
+                                <optgroup label="{{$category->nom}}">
+                                    @foreach($category->competences as $competence)
+                                        <option @if(isset($filters['type']))
+                                                @if($filters['type'] == $competence->id) selected
+                                                @endif
+                                                @endif
+                                                value="{{$competence->id}}">{{$competence->nom}}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('from', 'De:') }}
@@ -76,7 +93,7 @@
                     @foreach ($services as $service)
                         <tr>
                             <td>
-                                {{ $service->type->nom }}
+                                {{ $service->competence->nom }}
                             </td>
                             <td>
                                 <a href="{{$service->benevole->path()}}">{{$service->benevole->nom}}

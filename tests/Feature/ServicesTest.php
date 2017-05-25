@@ -26,8 +26,8 @@ class ServicesTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
-        $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
+        $service = create('App\Service', ['competence_id' => 1, 'rendu_le' => '1979-01-01']);
+        $otherService = create('App\Service', ['competence_id' => 2, 'rendu_le' => '2010-01-01']);
 
         $this->put('services', ['type'=>'1'])
             ->assertSee($service->rendu_le)
@@ -38,8 +38,8 @@ class ServicesTest extends TestCase
     function a_user_can_filter_by_from_date()
     {
         $this->signIn();
-        $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
-        $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
+        $service = create('App\Service', ['competence_id' => 1, 'rendu_le' => '1979-01-01']);
+        $otherService = create('App\Service', ['competence_id' => 2, 'rendu_le' => '2010-01-01']);
 
         $this->put('services', ['from'=>'2009-01-01'])
             ->assertSee($otherService->rendu_le)
@@ -50,8 +50,8 @@ class ServicesTest extends TestCase
     function a_user_can_filter_by_to_date()
     {
         $this->signIn();
-        $service = create('App\Service', ['service_type_id' => 1, 'rendu_le' => '1979-01-01']);
-        $otherService = create('App\Service', ['service_type_id' => 2, 'rendu_le' => '2010-01-01']);
+        $service = create('App\Service', ['competence_id' => 1, 'rendu_le' => '1979-01-01']);
+        $otherService = create('App\Service', ['competence_id' => 2, 'rendu_le' => '2010-01-01']);
 
         $this->put('services', ['to'=>'2009-01-01'])
             ->assertSee($service->rendu_le)

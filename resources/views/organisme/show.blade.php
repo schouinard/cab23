@@ -81,7 +81,7 @@
                         @foreach ($organisme->services as $service)
                             <tr>
                                 <td>
-                                    {{ $service->type->nom }}
+                                    {{ $service->competence->nom }}
                                 </td>
                                 <td>
                                     <a href="{{ $service->benevole->path() }}">{{ $service->benevole->nom }}

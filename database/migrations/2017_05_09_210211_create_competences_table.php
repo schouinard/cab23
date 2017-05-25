@@ -17,6 +17,8 @@ class CreateCompetencesTable extends Migration
             $table->increments('id');
             $table->string('nom');
             $table->unsignedInteger('category_id')->index();
+            $table->string('type');
+            $table->boolean('service_aux_personnes')->default(0);
             $table->timestamps();
         });
     }

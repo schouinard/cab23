@@ -35,7 +35,7 @@ class Beneficiaire extends FilterableModel
 
     public function serviceRequests()
     {
-        return $this->belongsToMany(ServiceType::class, 'service_requests', 'beneficiaire_id', 'service_type_id')
+        return $this->belongsToMany(Competence::class, 'service_requests', 'beneficiaire_id', 'competence_id')
             ->withPivot('service_request_status_id');
     }
 

@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Beneficiaire;
 use App\Benevole;
+use App\Competence;
 use Tests\TestCase;
 use App\Service;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -18,7 +19,7 @@ class ServiceTest extends TestCase
     function setUp()
     {
         parent::setUp();
-        $this->service = create('App\Service');
+        $this->service = create(Service::class);
     }
 
     /** @test */
@@ -36,14 +37,14 @@ class ServiceTest extends TestCase
     /** @test */
     function it_should_return_50_latest()
     {
-        factory('App\Service', 100)->create();
+        factory(Service::class, 100)->create();
         $this->assertCount(50, Service::latest());
     }
 
     /** @test */
     function it_has_a_servicetype()
     {
-        $this->assertInstanceOf('App\ServiceType', $this->service->type);
+        $this->assertInstanceOf(Competence::class, $this->service->competence);
     }
 }
 

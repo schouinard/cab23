@@ -80,7 +80,7 @@ class BenevoleController extends Controller
     public function show($id)
     {
         $benevole = Benevole::withTrashed()->find($id);
-        $benevole->load('interets.category', 'competences.category', 'services.serviceable');
+        $benevole->load('competences.category', 'services.serviceable');
 
         return view('benevole.show', compact('benevole'));
     }
@@ -93,7 +93,7 @@ class BenevoleController extends Controller
      */
     public function edit(Benevole $benevole)
     {
-        $benevole = $benevole->load(['clienteles', 'interets', 'competences']);
+        $benevole = $benevole->load(['clienteles', 'competences']);
 
         return view('benevole.edit', compact('benevole'));
     }

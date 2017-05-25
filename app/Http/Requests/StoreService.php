@@ -24,7 +24,7 @@ class StoreService extends FormRequest
     public function rules()
     {
         return [
-            'service_type_id' => 'bail|required|exists:service_types,id',
+            'competence_id' => 'bail|required|exists:competences,id',
             'serviceable_type' => 'bail|required',
             'organisme_id' => 'required_without:beneficiaire_id|exists:organismes,id',
             'beneficiaire_id' => 'required_without:organisme_id|exists:beneficiaires,id',

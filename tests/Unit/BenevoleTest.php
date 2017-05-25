@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Beneficiaire;
+use App\Competence;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Benevole;
@@ -43,7 +44,7 @@ class BenevoleTest extends TestCase
     {
         $benevole = create(Benevole::class);
         $benevole->addService([
-            'service_type_id' => 1,
+            'competence_id' => 1,
             'don' => 10,
             'serviceable_id' => create(Beneficiaire::class)->id,
             'serviceable_type' => Beneficiaire::class,
@@ -94,9 +95,9 @@ class BenevoleTest extends TestCase
     /** @test */
     public function it_can_have_interets()
     {
-        DB::table('benevole_interet')->insert([
+        DB::table('benevole_competence')->insert([
             'benevole_id' => $this->benevole->id,
-            'interet_id' => 1,
+            'competence_id' => Competence::where('type', 'interet')->get()->first()->id,
         ]);
 
         $this->assertCount(1, $this->benevole->interets);
@@ -105,25 +106,25 @@ class BenevoleTest extends TestCase
     /** @test */
     public function it_can_add_interet()
     {
-        $this->benevole->addInteret(1, ['priority' => 1]);
+        $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 1]);
         $this->assertCount(1, $this->benevole->interets);
     }
 
     /** @test */
     public function it_cannot_add_the_same_interet_twice()
     {
-        $this->benevole->addInteret(1, ['priority' => 1]);
-        $this->benevole->addInteret(1, ['priority' => 2]);
+        $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 1]);
+        $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 2]);
         $this->assertCount(1, $this->benevole->interets);
     }
 
     /** @test */
     public function it_can_add_multiple_interets_at_the_same_time()
     {
-        $this->benevole->addInteret(
+        $this->benevole->addCompetence(
             [
-                1 => ['priority' => 1],
-                2 => ['priority' => 1],
+                Competence::where('type', 'interet')->get()->first()->id => ['priority' => 1],
+                Competence::where('type', 'interet')->take(1)->skip(1)->first()->id => ['priority' => 1],
             ]
         );
         $this->assertCount(2, $this->benevole->interets);
@@ -134,7 +135,7 @@ class BenevoleTest extends TestCase
     {
         DB::table('benevole_competence')->insert([
             'benevole_id' => $this->benevole->id,
-            'competence_id' => 1,
+            'competence_id' => Competence::where('type', 'competence')->get()->first()->id,
         ]);
 
         $this->assertCount(1, $this->benevole->competences);
@@ -143,15 +144,15 @@ class BenevoleTest extends TestCase
     /** @test */
     public function it_can_add_competence()
     {
-        $this->benevole->addCompetence(1, ['priority' => 2]);
+        $this->benevole->addCompetence(Competence::where('type', 'competence')->get()->first()->id, ['priority' => 2]);
         $this->assertCount(1, $this->benevole->competences);
     }
 
     /** @test */
     public function it_cannot_add_the_same_competence_twice()
     {
-        $this->benevole->addCompetence(1, ['priority' => 2]);
-        $this->benevole->addCompetence(1, ['priority' => 4]);
+        $this->benevole->addCompetence(Competence::where('type', 'competence')->get()->first()->id, ['priority' => 2]);
+        $this->benevole->addCompetence(Competence::where('type', 'competence')->get()->first()->id, ['priority' => 4]);
         $this->assertCount(1, $this->benevole->competences);
     }
 
@@ -160,8 +161,8 @@ class BenevoleTest extends TestCase
     {
         $this->benevole->addCompetence(
             [
-                1 => ['priority' => 1],
-                2 => ['priority' => 2],
+                Competence::where('type', 'competence')->get()->first()->id => ['priority' => 1],
+                Competence::where('type', 'competence')->take(1)->skip(1)->first()->id => ['priority' => 2],
             ]
         );
         $this->assertCount(2, $this->benevole->competences);

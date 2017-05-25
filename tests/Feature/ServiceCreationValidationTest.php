@@ -40,11 +40,11 @@ class ServiceCreationValidationTest extends TestCase
     }
 
     /** @test */
-    function it_requires_a_valid_service_type()
+    function it_requires_a_valid_competence()
     {
-        $this->publishService(['service_type_id' => null])->assertSessionHasErrors('service_type_id');
+        $this->publishService(['competence_id' => null])->assertSessionHasErrors('competence_id');
 
-        $this->publishService(['service_type_id' => 999])->assertSessionHasErrors('service_type_id');
+        $this->publishService(['competence_id' => 999])->assertSessionHasErrors('competence_id');
     }
 
     /** @test */
@@ -55,11 +55,11 @@ class ServiceCreationValidationTest extends TestCase
     }
 
     /** @test */
-    function it_shows_error_on_invalid_service_type()
+    function it_shows_error_on_invalid_competence()
     {
         $this->withExceptionHandling()->signIn();
         $this->get('/services')->assertDontSee('error-content');
-        $response = $this->publishService(['service_type_id' => null]);
+        $response = $this->publishService(['competence_id' => null]);
         $response->assertRedirect('/services');
 
         $this->followRedirects($response)->assertSee('error-content');

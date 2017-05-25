@@ -99,17 +99,12 @@
                             <td>Durée (h)</td>
                         </tr>
                         </thead>
-                        <tfoot>
-                        <tr>
-                            <th colspan="3" style="text-align:right">Total:</th>
-                            <th></th>
-                        </tr>
-                        </tfoot>
+
                         <tbody>
                         @foreach ($benevole->services->where('serviceable_type', \App\Beneficiaire::class) as $service)
                             <tr>
                                 <td>
-                                    {{ $service->type->nom }}
+                                    {{ $service->competence->nom }}
                                 </td>
                                 <td>
                                     <a href="{{ $service->serviceable->path() }}">{{$service->serviceable->displayNom}}</a>
@@ -124,6 +119,51 @@
                         @endforeach
 
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="3" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <h3 class="col-md-12">Services aux organismes</h3>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover services-donne" width="100%">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>Organisme</td>
+                            <td>Rendu le</td>
+                            <td>Durée (h)</td>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($benevole->services->where('serviceable_type', \App\Organisme::class) as $service)
+                            <tr>
+                                <td>
+                                    {{ $service->competence->nom }}
+                                </td>
+                                <td>
+                                    <a href="{{ $service->serviceable->path() }}">{{$service->serviceable->displayNom}}</a>
+                                </td>
+                                <td>
+                                    {{ $service->rendu_le }}
+                                </td>
+                                <td>
+                                    {{ $service->heures }}
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="3" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

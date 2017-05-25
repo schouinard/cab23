@@ -19,7 +19,7 @@ class ServiceFilters extends Filters
      */
     public function type($type)
     {
-        return $this->builder->where('service_type_id', $type);
+        return $this->builder->where('competence_id', $type);
     }
 
     public function from($from)

@@ -41,7 +41,7 @@ class BeneficiaireTest extends TestCase
     function it_can_add_a_service()
     {
         $this->beneficiaire->addService([
-            'service_type_id' => 1,
+            'competence_id' => 1,
             'don' => 0,
             'benevole_id' => create(Benevole::class)->id,
             'rendu_le' => Carbon::now()->toDateTimeString(),
@@ -54,7 +54,7 @@ class BeneficiaireTest extends TestCase
     public function it_can_have_requested_services()
     {
         DB::table('service_requests')->insert([
-            'service_type_id' => 1,
+            'competence_id' => 1,
             'service_request_status_id' => 1,
             'beneficiaire_id' => $this->beneficiaire->id,
         ]);

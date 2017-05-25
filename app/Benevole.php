@@ -79,9 +79,9 @@ class Benevole extends FilterableModel
         return $this->belongsToMany(Clientele::class);
     }
 
-    public function interets()
+    public function getInteretsAttribute()
     {
-        return $this->belongsToMany(Interet::class)->withPivot('priority');
+        return $this->competences()->where('type', 'interet')->get();
     }
 
     public function isInterested($id, $priority)
@@ -92,6 +92,11 @@ class Benevole extends FilterableModel
     public function competences()
     {
         return $this->belongsToMany(Competence::class)->withPivot('priority');
+    }
+
+    public function getCompetencesAttribute()
+    {
+        return $this->competences()->where('type', 'competence')->get();
     }
 
     public function isCompetent($id, $priority)
@@ -144,11 +149,6 @@ class Benevole extends FilterableModel
         $this->addClienteles($int);
     }
 
-    public function addInteret($interet = [])
-    {
-        $this->interets()->sync($interet);
-    }
-
     public function addCompetence($competence = [])
     {
         $this->competences()->sync($competence);
@@ -170,12 +170,11 @@ class Benevole extends FilterableModel
 
     public function addCategory($categoriesInterets = [])
     {
-        $interets = [];
         $competences = [];
         if (! is_null($categoriesInterets)) {
             foreach ($categoriesInterets as $categoriesInteret) {
                 if (key_exists('interets', $categoriesInteret)) {
-                    $interets = $interets + $this->removeUninterested($categoriesInteret['interets']);
+                    $competences = $competences + $this->removeUninterested($categoriesInteret['interets']);
                 }
                 if (key_exists('competences', $categoriesInteret)) {
                     $competences = $competences + $this->removeUninterested
@@ -183,7 +182,6 @@ class Benevole extends FilterableModel
                 }
             }
         }
-        $this->addInteret($interets);
         $this->addCompetence($competences);
     }
 

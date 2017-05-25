@@ -27,26 +27,24 @@ class DatabaseSeeder extends Seeder
         foreach ($benevoles as $benevole) {
             factory(\App\Service::class)->create([
                 'benevole_id' => $benevole->id,
-                'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
+                'competence_id' => App\Competence::inRandomOrder()->first()->id,
                 'serviceable_id' => random_int(1, 50),
                 'serviceable_type' => App\Beneficiaire::class,
             ]);
             factory(\App\Service::class)->create([
                 'benevole_id' => $benevole->id,
-                'service_type_id' => App\ServiceType::inRandomOrder()->first()->id,
+                'competence_id' => App\Competence::inRandomOrder()->first()->id,
                 'serviceable_id' => random_int(1, 50),
                 'serviceable_type' => App\Organisme::class,
             ]);
             $benevole->clienteles()->attach([1, 3, 5]);
-            $benevole->interets()->sync([
-                1 => ['priority' => 1],
-                2 => ['priority' => 2],
-                3 => ['priority' => 3],
-            ]);
             $benevole->competences()->sync([
                 1 => ['priority' => 1],
                 2 => ['priority' => 2],
                 3 => ['priority' => 3],
+                12 => ['priority' => 1],
+                34 => ['priority' => 2],
+                23 => ['priority' => 3],
             ]);
             $benevole->disponibilites()->createMany([
                 [
@@ -132,7 +130,7 @@ class DatabaseSeeder extends Seeder
         $tournees = factory(\App\Tournee::class, 4)->create();
 
         foreach ($tournees as $tournee) {
-            $tournee->addDays([2,3,4,5,6]);
+            $tournee->addDays([2, 3, 4, 5, 6]);
 
             $beneficiaires = \App\Beneficiaire::where('tournee_id', null)->take(12)->get();
 

@@ -20,8 +20,20 @@
     {{ Form::hidden('benevole_id', null, ['id' => 'benevole_id']) }}
     {{ Form::hidden('serviceable_type', $serviceableType) }}
     <div class="{{ $errors->first('service_id', 'has-error') }} form-group col-md-4">
-        {{ Form::label('service_type_id', 'Type:') }}
-        {{ Form::select('service_type_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('competence_id', 'Type:') }}
+        @if($serviceableType == \App\Beneficiaire::class)
+            {{ Form::select('competence_id', $serviceTypes->pluck('nom', 'id'),null, ['class' => 'form-control', 'required' => 'required']) }}
+        @else
+            <select name="competence_id" class="form-control" required="required">
+                @foreach($categories as $category)
+                    <optgroup label="{{$category->nom}}">
+                        @foreach($category->competences as $competence)
+                            <option value="{{$competence->id}}">{{$competence->nom}}</option>
+                        @endforeach
+                    </optgroup>
+                @endforeach
+            </select>
+        @endif
     </div>
     <div class="{{ $errors->first('benevole_id', 'has-error') }} form-group col-md-2">
         {{Form::label('benevole', 'Donné par:')}}

@@ -16,7 +16,7 @@ class CreateServiceRequestsTable extends Migration
         Schema::create('service_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('beneficiaire_id')->index();
-            $table->unsignedInteger('service_type_id')->index();
+            $table->unsignedInteger('competence_id')->index();
             $table->unsignedInteger('service_request_status_id')->index()->default(1);
             $table->timestamps();
         });

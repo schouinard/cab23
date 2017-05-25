@@ -119,17 +119,17 @@ class InteretsCompetencesSeeder extends Seeder
             ],
             'Services aux personnes' => [
                 'Interets' => [
-                    'Accompagnement à la marche',
-                    'Gardiennage',
+                    ['nom' => 'Accompagnement à la marche', 'service_aux_personnes' => 1],
+                    ['nom' => 'Gardiennage', 'service_aux_personnes' => 1],
                     'Popote roulante conducteur',
                     'Remplaçant conducteur',
                     'Popote roulante baladeur',
                     'Remplaçant baladeur',
-                    'Dîner-rencontre',
-                    'Télé-bonjour',
-                    'Visite d\'amitié',
-                    'Aide individuelle/ intervention',
-                    'Écoute téléphonique',
+                    ['nom' => 'Dîner-rencontre', 'service_aux_personnes' => 1],
+                    ['nom' => 'Télé-bonjour', 'service_aux_personnes' => 1],
+                    ['nom' => 'Visite d\'amitié', 'service_aux_personnes' => 1],
+                    ['nom' => 'Aide individuelle/ intervention', 'service_aux_personnes' => 1],
+                    ['nom' => 'Écoute téléphonique', 'service_aux_personnes' => 1],
                 ],
                 'Competences' => [
                     'Travail individuel',
@@ -174,10 +174,18 @@ class InteretsCompetencesSeeder extends Seeder
         foreach ($groups as $key => $group) {
             $categorie = \App\Category::create(['nom' => $key]);
             foreach ($group['Interets'] as $interet) {
-                $categorie->interets()->create(['nom' => $interet]);
+                if (is_array($interet)) {
+                    $categorie->competences()->create([
+                        'nom' => $interet['nom'],
+                        'type' => 'interet',
+                        'service_aux_personnes' => $interet['service_aux_personnes'],
+                    ]);
+                } else {
+                    $categorie->competences()->create(['nom' => $interet, 'type' => 'interet']);
+                }
             }
             foreach ($group['Competences'] as $competence) {
-                $categorie->competences()->create(['nom' => $competence]);
+                $categorie->competences()->create(['nom' => $competence, 'type' => 'competence']);
             }
         }
     }

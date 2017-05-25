@@ -30,6 +30,24 @@
                     {{ Form::label('inscription', 'Année d\'inscription:') }}
                     {{ Form::selectYear('inscription', 1980, Carbon\Carbon::now()->year, isset($filters['inscription']) ? $filters['inscription'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
+                <!--- competence form input ---->
+                <div class="form-group col-md-6 {{ $errors->first('competence', 'has-error') }}">
+                    {{ Form::label('competence', 'Intérêt / Compétence:') }}
+                    <select name="type" class="form-control">
+                        @foreach($interestGroups as $category)
+                            <option value="">Tous</option>
+                            <optgroup label="{{$category->nom}}">
+                                @foreach($category->competences as $competence)
+                                    <option @if(isset($filters['competence']))
+                                            @if($filters['competence'] == $competence->id) selected
+                                            @endif
+                                            @endif
+                                            value="{{$competence->id}}">{{$competence->nom}}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                </div>
                 <h4 class="col-md-12">Disponibilités</h4>
                 <div class="form-group col-md-3">
                     {{ Form::label('dispojour', 'Jour:') }}

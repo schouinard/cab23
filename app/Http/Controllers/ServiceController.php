@@ -15,7 +15,7 @@ class ServiceController extends Controller
     public function store(StoreService $request)
     {
         Service::create([
-            'service_type_id' => request('service_type_id'),
+            'competence_id' => request('competence_id'),
             'serviceable_id' => request('beneficiaire_id') ? request('beneficiaire_id') : request('organisme_id'),
             'serviceable_type' => request('serviceable_type'),
             'rendu_le' => request('rendu_le'),
