@@ -109,7 +109,7 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $params = [
-                'title' => 'Edit User',
+                'title' => 'Modifier l\'utilisateur',
                 'user' => $user,
             ];
 
