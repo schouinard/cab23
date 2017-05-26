@@ -21,6 +21,7 @@
         <li class=""><a href="#statut" data-toggle="tab" aria-expanded="false">Statut</a></li>
         <li class=""><a href="#contacts" data-toggle="tab" aria-expanded="false">Personnes ressources</a></li>
         <li><a href="#services" data-toggle="tab" aria-expanded="false">Services</a></li>
+        <li><a href="#popote" data-toggle="tab" aria-expanded="false">Popote</a></li>
         <li class=""><a href="#facturation" data-toggle="tab" aria-expanded="false">Facturation</a></li>
         @if(isset($readonly))
             @can('manage-confidential-fields')
@@ -94,6 +95,53 @@
         </div>
         <div class="tab-pane row" id="services">
             @include('beneficiaire.partials.requests')
+        </div>
+        <div class="tab-pane row" id="popote">
+            <div class="form-group col-md-6">
+                <fieldset disabled>
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('tournee_id', null, true) }} Non abonné
+                        </label>
+                    </div>
+                    @foreach(\App\Tournee::orderBy('nom')->get() as $tournee)
+                        <div class="radio">
+                            <label>
+                                {{ Form::radio('tournee_id', $tournee->id) }} {{ $tournee->nom }}
+                            </label>
+                        </div>
+                    @endforeach
+
+                </fieldset>
+                <div class="checkbox" >
+                    {{ Form::hidden('tournee_payee', 0) }}
+                    <label>{{ Form::checkbox('tournee_payee', true, null, $attributes) }} A payé sa tournée</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <fieldset @isset($readonly) disabled @endisset>
+                    @foreach($days as $day)
+                        <div class="checkbox">
+                            <label>
+                                {{ Form::checkbox('days[]', $day->id) }} {{ $day->nom }}
+                            </label>
+                        </div>
+                    @endforeach
+                </fieldset>
+            </div>
+            <!--- tournee_note form input ---->
+            <div class="form-group col-md-12 {{ $errors->first('tournee_note', 'has-error') }}">
+                {{ Form::label('tournee_note', 'Notes / Restrictions alimentaires:') }}
+                @if(isset($readonly))
+                    <div class="readonly">
+                        @if(isset($beneficiaire))
+                            {{$beneficiaire->tournee_note}}
+                        @endif
+                    </div>
+                @else
+                    {!!  Form::textarea('tournee_note', null, ['class' => 'form-control textarea', 'row' => '20']) !!}
+                @endif
+            </div>
         </div>
         <div class="tab-pane" id="facturation">
             <h3>Adresse de facturation</h3>

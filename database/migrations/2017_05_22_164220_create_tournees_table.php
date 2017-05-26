@@ -18,6 +18,7 @@ class CreateTourneesTable extends Migration
             $table->string('nom');
             $table->string('telephone')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('day_tournee', function (Blueprint $table) {

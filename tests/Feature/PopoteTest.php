@@ -271,4 +271,23 @@ class PopoteTest extends TestCase
         $this->assertTrue($beneficiaire->isPopoteDay(1));
         $this->assertFalse($beneficiaire->isPopoteDay(5));
     }
+
+    /** @test */
+    function une_tournee_peut_retirer_un_client()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+        $beneficiaire2 = create(Beneficiaire::class);
+        $beneficiaire3 = create(Beneficiaire::class);
+
+        $this->tournee->addBeneficiaire($beneficiaire->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+
+        $this->tournee->removeBeneficiaire($beneficiaire2->id);
+
+        $this->assertCount(2, $this->tournee->fresh()->beneficiaires);
+        $this->assertEquals(2, $this->tournee->beneficiaires_count);
+        $this->assertEquals(1, $beneficiaire->fresh()->tournee_priorite);
+        $this->assertEquals(2, $beneficiaire3->fresh()->tournee_priorite);
+    }
 }

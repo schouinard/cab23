@@ -174,7 +174,7 @@ return [
                 [
                     'text' => 'Services aux organismes',
                     'url' => 'services/organismes',
-                    'icon' => 'plus',
+                    'icon' => 'list',
                 ],
             ],
         ],

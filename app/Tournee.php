@@ -2,11 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Tournee extends Model
+class Tournee extends FilterableModel
 {
     protected $guarded = [];
+
+    protected $with = ['beneficiaires'];
+
+    protected $withCount = ['beneficiaires'];
+
+    protected $relationsToHandleOnStore = ['days'];
 
     public function days()
     {
@@ -84,6 +88,21 @@ class Tournee extends Model
 
             $beneficiaire->update(['tournee_priorite' => $beneficiaire->tournee_priorite + 1]);
             $beneficiaireToMoveUp->update(['tournee_priorite' => $beneficiaireToMoveUp->tournee_priorite - 1]);
+        }
+    }
+
+    public function removeBeneficiaire($id)
+    {
+        $beneficiaire = $this->beneficiaires->where('id', $id)->first();
+        if ($beneficiaire) {
+            $beneficiairesToMoveUp = $this->beneficiaires->where('tournee_priorite', '>',
+                $beneficiaire->tournee_priorite);
+            foreach ($beneficiairesToMoveUp as $client) {
+                $client->tournee_priorite--;
+                $client->save();
+            }
+            $beneficiaire->update(['tournee_id' => null, 'tournee_priorite' => null]);
+            $this->beneficiaires_count--;
         }
     }
 }

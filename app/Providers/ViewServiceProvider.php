@@ -69,11 +69,21 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('months', array_flip($months));
         });
 
-        \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut'], function ($view) {
+        \View::composer(['beneficiaire.show', 'beneficiaire.partials.statut', 'beneficiaire.form'], function ($view) {
             $revenus = \Cache::rememberForever('revenus', function () {
                 return IncomeSource::all();
             });
-            $view->with('revenus', $revenus);
+            $days = \Cache::rememberForever('days', function () {
+                return Day::all();
+            });
+            $view->with(compact(['revenus', 'days']));
+        });
+
+        \View::composer(['tournee.form'], function ($view) {
+            $days = \Cache::rememberForever('days', function () {
+                return Day::all();
+            });
+            $view->with(compact(['days']));
         });
 
         \View::composer(['benevole.form'], function ($view) {
@@ -109,7 +119,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with(['days' => $days, 'moments' => $moments]);
         });
 
-        \View::composer(['organisme.form', 'organisme.show'], function($view){
+        \View::composer(['organisme.form', 'organisme.show'], function ($view) {
             $type = \Cache::rememberForever('organismeTypes', function () {
                 return OrganismeType::orderBy('nom')->get();
             });
@@ -123,7 +133,6 @@ class ViewServiceProvider extends ServiceProvider
                 });
                 $view->with('serviceTypes', $serviceTypes);
             });
-
     }
 
     /**

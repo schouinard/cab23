@@ -34,6 +34,11 @@ class ServiceController extends Controller
         return $this->listServices($filters, Beneficiaire::class);
     }
 
+    public function edit(Service $service)
+    {
+        return view('service.edit', compact('service'));
+    }
+
     public function indexOrganismes(ServiceFilters $filters)
     {
         return $this->listServices($filters, Organisme::class);

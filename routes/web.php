@@ -50,6 +50,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('organismes/{organisme}/restore', 'OrganismeController@restore');
     Route::resource('organismes', 'OrganismeController');
 
+    Route::delete('tournees/{tournee}/remove/{beneficiaire}', 'TourneeController@remove');
+    Route::post('tournees/{tournee}/add', 'TourneeController@add');
+    Route::put('tournees/{tournee}', 'TourneeController@update');
     Route::get('tournees/{tournee}/moveUp/{beneficiaire}', 'TourneeController@moveUp');
     Route::get('tournees/{tournee}/moveDown/{beneficiaire}', 'TourneeController@moveDown');
     Route::get('tournees/{tournee}/printAlpha', 'TourneeController@printAlpha');

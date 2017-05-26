@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Beneficiaire;
+use App\Http\Requests\AddClientRequest;
+use App\Http\Requests\TourneeRequest;
 use App\Tournee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TourneeController extends Controller
 {
@@ -26,7 +29,7 @@ class TourneeController extends Controller
      */
     public function create()
     {
-        //
+        return view('tournee.create');
     }
 
     /**
@@ -35,9 +38,18 @@ class TourneeController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TourneeRequest $request)
     {
-        //
+        $tournee = new Tournee();
+
+        $tournee->fill(array_except($request->toArray(), $tournee->getRelationsToHandleOnStore()));
+
+        $tournee->save();
+
+        $tournee->handleRelationsOnStore($request->toArray());
+
+        return redirect('/tournees')
+            ->with('flash', 'Tournée ajoutée.');
     }
 
     /**
@@ -65,6 +77,22 @@ class TourneeController extends Controller
         $tournee->moveDown($beneficiaire->id);
 
         return redirect($tournee->path());
+    }
+
+    public function remove(Tournee $tournee, Beneficiaire $beneficiaire)
+    {
+        $tournee->removeBeneficiaire($beneficiaire->id);
+
+        return back()
+            ->with('flash', 'Client retiré de la tournée');
+    }
+
+    public function add(AddClientRequest $request, Tournee $tournee)
+    {
+        $tournee->addBeneficiaire($request['beneficiaire_id']);
+
+        return back()
+            ->with('flash', 'Client ajouté.');
     }
 
     public function printAlpha(Tournee $tournee)
@@ -111,26 +139,18 @@ class TourneeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TourneeRequest $request, Tournee $tournee)
     {
-        //
+        $tournee->update($request->toArray());
+
+        return back()
+            ->with('flash', 'Tournée modifiée.');
     }
 
     /**
@@ -141,6 +161,14 @@ class TourneeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $beneficiaires = Beneficiaire::where('tournee_id', $id)->get();
+        foreach ($beneficiaires as $beneficiaire) {
+            $beneficiaire->update(['tournee_id' => null, 'tournee_payee' => false]);
+            $beneficiaire->days()->delete();
+        }
+        Tournee::destroy($id);
+
+        return back()
+            ->with('flash', 'Tournée supprimée');
     }
 }
