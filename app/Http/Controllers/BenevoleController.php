@@ -8,6 +8,7 @@ use App\Benevole;
 use App\Filters\BenevoleFilters;
 use App\Http\Requests\IndisponibiliteRequest;
 use App\Http\Requests\StorePerson;
+use App\Indisponibilite;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -67,8 +68,16 @@ class BenevoleController extends Controller
     {
         $benevole->addIndisponibilite($request['from'], $request['to']);
 
-        return redirect($benevole->path() . "#disponibilites")
+        return redirect($benevole->path()."#disponibilites")
             ->with('flash', 'Indisponibilité ajoutée.');
+    }
+
+    public function deleteIndisponibilite(Benevole $benevole, Indisponibilite $indisponibilite)
+    {
+        $benevole->removeIndisponibilite($indisponibilite->id);
+
+        return redirect($benevole->path()."#disponibilites")
+            ->with('flash', 'Indisponibilité retirée.');
     }
 
     /**

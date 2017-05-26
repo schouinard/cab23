@@ -79,11 +79,6 @@ class Benevole extends FilterableModel
         return $this->belongsToMany(Clientele::class);
     }
 
-    public function getInteretsAttribute()
-    {
-        return $this->competences()->where('type', 'interet')->get();
-    }
-
     public function isInterested($id, $priority)
     {
         return count($this->interets->where('id', $id)->where('pivot.priority', $priority));
@@ -92,11 +87,6 @@ class Benevole extends FilterableModel
     public function competences()
     {
         return $this->belongsToMany(Competence::class)->withPivot('priority');
-    }
-
-    public function getCompetencesAttribute()
-    {
-        return $this->competences()->where('type', 'competence')->get();
     }
 
     public function isCompetent($id, $priority)

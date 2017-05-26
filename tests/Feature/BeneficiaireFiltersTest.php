@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class FiltresBeneficiaireTest extends TestCase
+class BeneficiaireFiltersTest extends TestCase
 {
     use DatabaseMigrations;
 

@@ -14,26 +14,9 @@
                     {{ Form::label('secteur', 'Secteur:') }}
                     {{ Form::select('secteur', $secteurs->pluck('nom','id'),isset($filters['secteur']) ? $filters['secteur'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
-                <div class="form-group col-md-3">
-                    {{ Form::label('type', 'Mois de naissance:') }}
-                    {{ Form::select('anniversaire', $months,isset($filters['anniversaire']) ? $filters['anniversaire'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
-                </div>
-                <div class="form-group col-md-3">
-                    {{ Form::label('accepte_ca', 'Accepté au CA:') }}
-                    {{ Form::select('accepte_ca', ['accepte' => 'Accepté', 'probation' => 'Probation'],isset($filters['accepte_ca']) ? $filters['accepte_ca'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
-                </div>
-                <div class="form-group col-md-3">
-                    {{ Form::label('statut', 'Statut:') }}
-                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
-                </div>
-                <div class="form-group col-md-3">
-                    {{ Form::label('inscription', 'Année d\'inscription:') }}
-                    {{ Form::selectYear('inscription', 1980, Carbon\Carbon::now()->year, isset($filters['inscription']) ? $filters['inscription'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
-                </div>
-                <!--- competence form input ---->
-                <div class="form-group col-md-6 {{ $errors->first('competence', 'has-error') }}">
+                <div class="form-group col-md-6">
                     {{ Form::label('competence', 'Intérêt / Compétence:') }}
-                    <select name="type" class="form-control">
+                    <select name="competence" class="form-control">
                         @foreach($interestGroups as $category)
                             <option value="">Tous</option>
                             <optgroup label="{{$category->nom}}">
@@ -48,6 +31,12 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group col-md-3">
+                    {{ Form::label('statut', 'Statut:') }}
+                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                </div>
+
+
                 <h4 class="col-md-12">Disponibilités</h4>
                 <div class="form-group col-md-3">
                     {{ Form::label('dispojour', 'Jour:') }}
@@ -65,6 +54,19 @@
                         </div>
                         {{ Form::text('isdispo', isset($filters['isdispo']) ? $filters['isdispo'] : null, array_merge(['class' => 'form-control pull-right'])) }}
                     </div>
+                </div>
+                <h4 class="col-md-12">Autres</h4>
+                <div class="form-group col-md-3">
+                    {{ Form::label('type', 'Mois de naissance:') }}
+                    {{ Form::select('anniversaire', $months,isset($filters['anniversaire']) ? $filters['anniversaire'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ Form::label('accepte_ca', 'Accepté au CA:') }}
+                    {{ Form::select('accepte_ca', ['accepte' => 'Accepté', 'probation' => 'Probation'],isset($filters['accepte_ca']) ? $filters['accepte_ca'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ Form::label('inscription', 'Année d\'inscription:') }}
+                    {{ Form::selectYear('inscription', 1980, Carbon\Carbon::now()->year, isset($filters['inscription']) ? $filters['inscription'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
 
 
@@ -99,6 +101,10 @@
                         @endif
                         @if(isset($filters['dispojour']) || isset($filters['dispomoment']) || isset($filters['isdispo']))
                             <th>Disponibilités</th>
+                        @endif
+                        @if(isset($filters['competence']))
+                            <th>Compétence</th>
+                            <th>Priorité</th>
                         @endif
                         @if(isset($filters['statut']))
                             <th>Statut</th>
@@ -157,6 +163,10 @@
                                         @endforeach
                                     </ul>
                                 </td>
+                            @endif
+                            @if(isset($filters['competence']))
+                                <td>{{$benevole->competences->where('id', $filters['competence'])->first()->nom}}</td>
+                                <td>{{$benevole->competences->where('id', $filters['competence'])->first()->pivot->priority}}</td>
                             @endif
                             @if(isset($filters['statut']))
                                 <td>

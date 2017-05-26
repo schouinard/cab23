@@ -22,8 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            @include('benevole.partials.datatable', ['items' => $benevole->interets, 'type' => 'Intérêt'])
-            @include('benevole.partials.datatable', ['items' => $benevole->competences, 'type' => 'Compétence'])
+            @include('benevole.partials.datatable', ['items' => $benevole->competences])
             </tbody>
         </table>
     </div>

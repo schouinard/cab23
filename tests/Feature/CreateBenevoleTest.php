@@ -33,7 +33,7 @@ class CreateBenevoleTest extends TestCase
         $this->signIn();
         $benevole = create(Benevole::class);
 
-        $benevole->interets()->sync([
+        $benevole->competences()->sync([
             1 => ['priority' => 1],
         ]);
 
@@ -56,14 +56,14 @@ class CreateBenevoleTest extends TestCase
                                 8 => ['priority' => 0],
                             ],
                             'competences' => [
-                                1 => ['priority' => 1],
-                                2 => ['priority' => 1],
-                                3 => ['priority' => 1],
-                                4 => ['priority' => 1],
-                                5 => ['priority' => 1],
-                                6 => ['priority' => 1],
-                                7 => ['priority' => 0],
-                                8 => ['priority' => 0],
+                                9 => ['priority' => 1],
+                                10 => ['priority' => 1],
+                                11 => ['priority' => 1],
+                                12 => ['priority' => 1],
+                                13 => ['priority' => 1],
+                                14 => ['priority' => 1],
+                                15 => ['priority' => 0],
+                                16 => ['priority' => 0],
                             ],
                         ],
                 ],
@@ -71,8 +71,7 @@ class CreateBenevoleTest extends TestCase
 
         $this->patch('/benevoles/'.$benevole->id, $newData);
 
-        $this->assertCount(5, $benevole->fresh()->interets);
-        $this->assertCount(6, $benevole->fresh()->competences);
+        $this->assertCount(11, $benevole->fresh()->competences);
     }
 
     /** @test */

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class FiltresBenevoleTest extends TestCase
+class BenevoleFiltersTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -139,5 +139,19 @@ class FiltresBenevoleTest extends TestCase
         $this->put('benevoles', ['isdispo' => '2017-01-15'])
             ->assertSee($benevoledispo->nom)
             ->assertDontSee($benevole_pas_dispo->nom);
+    }
+
+    /** @test */
+    public function a_user_can_filter_by_a_competence()
+    {
+        $this->signIn();
+        $benevoleCompetent = create(Benevole::class);
+        $benevoleCompetent->addCompetence(1);
+
+        $benevolePasCompetent = create(Benevole::class);
+
+        $this->put('benevoles', ['competence' => 1])
+            ->assertSee($benevoleCompetent->nom)
+            ->assertDontSee($benevolePasCompetent->nom);
     }
 }

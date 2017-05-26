@@ -15,6 +15,7 @@ class BenevoleFilters extends Filters
         'dispojour',
         'dispomoment',
         'isdispo',
+        'competence',
     ];
 
     protected $sessionKey = 'benevoles.filter';
@@ -57,6 +58,13 @@ class BenevoleFilters extends Filters
     {
         return $this->builder->whereDoesntHave('indisponibilites', function ($q) use ($date) {
             $q->where('from', '<=', $date)->where('to', '>=', $date);
+        });
+    }
+
+    public function competence($competence)
+    {
+        return $this->builder->whereHas('competences', function ($q) use ($competence) {
+            $q->where('competence_id', $competence);
         });
     }
 }

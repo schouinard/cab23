@@ -100,14 +100,14 @@ class BenevoleTest extends TestCase
             'competence_id' => Competence::where('type', 'interet')->get()->first()->id,
         ]);
 
-        $this->assertCount(1, $this->benevole->interets);
+        $this->assertCount(1, $this->benevole->competences);
     }
 
     /** @test */
     public function it_can_add_interet()
     {
         $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 1]);
-        $this->assertCount(1, $this->benevole->interets);
+        $this->assertCount(1, $this->benevole->competences);
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class BenevoleTest extends TestCase
     {
         $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 1]);
         $this->benevole->addCompetence(Competence::where('type', 'interet')->get()->first()->id, ['priority' => 2]);
-        $this->assertCount(1, $this->benevole->interets);
+        $this->assertCount(1, $this->benevole->competences);
     }
 
     /** @test */
@@ -127,7 +127,7 @@ class BenevoleTest extends TestCase
                 Competence::where('type', 'interet')->take(1)->skip(1)->first()->id => ['priority' => 1],
             ]
         );
-        $this->assertCount(2, $this->benevole->interets);
+        $this->assertCount(2, $this->benevole->competences);
     }
 
     /** @test */
