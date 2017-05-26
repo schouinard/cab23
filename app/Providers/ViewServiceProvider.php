@@ -85,7 +85,7 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['benevole.partials.interets', 'service.index', 'benevole.index'], function ($view) {
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
-                return Category::orderBy('nom')->get();
+                return Category::with('competences')->orderBy('nom')->get();
             });
             $interests = \Cache::rememberForever('interests', function () {
                 return Competence::where('type', 'interet')->orderBy('nom')->get();

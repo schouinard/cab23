@@ -22,7 +22,8 @@ class BenevoleController extends Controller
      */
     public function index(BenevoleFilters $filters)
     {
-        $benevoles = Benevole::with(['adress'])->filter($filters)->get();
+        $benevoles = Benevole::with(['adress', 'competences', 'disponibilites', 'indisponibilites'])->filter($filters)
+            ->get();
 
         $filters = $filters->getFilters();
 
@@ -142,7 +143,7 @@ class BenevoleController extends Controller
             return response([], 204);
         }
 
-        return redirect('/benevoles')
+        return back()
             ->with('flash', 'Bénévole supprimé avec succès.');
     }
 
@@ -154,7 +155,7 @@ class BenevoleController extends Controller
             return response([], 200);
         }
 
-        return redirect('/benevoles')
+        return back()
             ->with('flash', 'Bénévole restauré avec succès.');
     }
 

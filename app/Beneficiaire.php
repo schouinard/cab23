@@ -101,12 +101,16 @@ class Beneficiaire extends FilterableModel
 
     public function getNomCompletAttribute()
     {
-        return $this->prenom.' '.$this->nom;
+        $nom = "{$this->prenom} {$this->nom}";
+
+        return $this->trashed() ? $nom." (INACTIF)" : $nom;
     }
 
     public function getDisplayNomAttribute()
     {
-        return "{$this->nom}, {$this->prenom}";
+        $nom = "{$this->nom}, {$this->prenom}";
+
+        return $this->trashed() ? $nom." (INACTIF)" : $nom;
     }
 
     public function getNaissanceAttribute($value)

@@ -67,8 +67,9 @@ class OrganismeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Organisme $organisme)
+    public function show($id)
     {
+        $organisme = Organisme::withTrashed()->with('services.benevole')->find($id);
         $readonly = true;
 
         return view('organisme.show', compact(['organisme', 'readonly']));
@@ -136,7 +137,7 @@ class OrganismeController extends Controller
             return response([], 200);
         }
 
-        return redirect('/organismes')
+        return back()
             ->with('flash', 'Organisme restauré avec succès.');
     }
 

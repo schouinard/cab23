@@ -65,7 +65,7 @@ class BeneficiaireController extends Controller
      */
     public function show($id)
     {
-        $beneficiaire = Beneficiaire::withTrashed()->find($id);
+        $beneficiaire = Beneficiaire::withTrashed()->with(['adress', 'people.adress'])->find($id);
         $beneficiaire->load(['services.benevole']);
 
         return view('beneficiaire.show', compact('beneficiaire'));
@@ -117,7 +117,7 @@ class BeneficiaireController extends Controller
             return response([], 204);
         }
 
-        return redirect('/beneficiaires')
+        return back()
             ->with('flash', 'Bénéficiaire supprimé avec succès.');
     }
 
@@ -129,7 +129,7 @@ class BeneficiaireController extends Controller
             return response([], 200);
         }
 
-        return redirect('/beneficiaires')
+        return back()
             ->with('flash', 'Bénéficiaire restauré avec succès.');
     }
 

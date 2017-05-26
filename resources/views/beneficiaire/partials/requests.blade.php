@@ -14,10 +14,12 @@
         <table class="table table-bordered table-hover services-donne" width="100%">
             <thead>
             <tr>
-                <td>Type</td>
-                <td>Bénévole</td>
-                <td>Rendu le</td>
-                <td>Don</td>
+                <th>Type</th>
+                <th>Bénévole</th>
+                <th>Rendu le</th>
+                <th>Don</th>
+                <th>Durée</th>
+                <th>Note</th>
             </tr>
             </thead>
 
@@ -37,6 +39,35 @@
                     <td>
                         {{ $service->don }}
                     </td>
+                    <td>{{$service->heures}}</td>
+                    <td>
+                        @if($service->note)
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                    data-target="#myModal{{$service->id}}">
+                                Note
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal{{$service->id}}" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Note</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {!! $service->note !!}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
 
@@ -44,6 +75,7 @@
             <tfoot>
             <tr>
                 <th colspan="3" style="text-align:right">Total:</th>
+                <th></th>
                 <th></th>
             </tr>
             </tfoot>

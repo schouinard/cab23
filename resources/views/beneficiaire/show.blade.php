@@ -4,7 +4,23 @@
 
 @section('content_header')
     <div class="pull-right">
-        <a class="btn btn-primary" href="{{ route('beneficiaires.edit', $beneficiaire) }}">Modifier</a>
+        @if($beneficiaire->trashed())
+            {!! Form::open([
+                'method'=>'POST',
+                'url' => ['/beneficiaires/' . $beneficiaire->id . '/restore'],
+                'style' => 'display:inline'
+            ]) !!}
+            {!! Form::button('<i class="fa fa-undo" aria-hidden="true"></i> Restaurer',
+            [
+                    'type' => 'submit',
+                    'class' => 'btn btn-success',
+                    'title' => 'Restaurer le bénéficiaire',
+
+            ]) !!}
+            {!! Form::close() !!}
+        @else
+            <a class="btn btn-primary" href="{{ route('beneficiaires.edit', $beneficiaire) }}">Modifier</a>
+        @endif
     </div>
     <h1>
         Bénéficiaire - {{$beneficiaire->nomComplet}}

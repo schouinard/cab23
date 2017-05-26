@@ -22,6 +22,7 @@ class ServiceController extends Controller
             'benevole_id' => request('benevole_id'),
             'don' => request('don'),
             'heures' => request('heures'),
+            'note' => request('note'),
         ]);
 
         return back()
@@ -61,19 +62,7 @@ class ServiceController extends Controller
             return response([], 204);
         }
 
-        return redirect('/services')
+        return back()
             ->with('flash', 'Service supprimé avec succès.');
-    }
-
-    public function restore($id)
-    {
-        $service = Service::withTrashed()->find($id);
-        $service->restore();
-        if (request()->wantsJson()) {
-            return response([], 200);
-        }
-
-        return redirect('/services')
-            ->with('flash', 'Service restauré avec succès.');
     }
 }

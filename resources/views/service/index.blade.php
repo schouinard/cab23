@@ -86,6 +86,7 @@
                         <th>Rendu le</th>
                         <th>Don</th>
                         <th>Durée</th>
+                        <th>Note</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -96,8 +97,7 @@
                                 {{ $service->competence->nom }}
                             </td>
                             <td>
-                                <a href="{{$service->benevole->path()}}">{{$service->benevole->nom}}
-                                    , {{ $service->benevole->prenom }}</a>
+                                <a href="{{$service->benevole->path()}}">{{$service->benevole->displayNom}}</a>
                             </td>
                             <td>
                                 <a href="{{ $service->serviceable->path() }}">{{ $service->serviceable->displayNom }}</a>
@@ -107,6 +107,30 @@
                             </td>
                             <td>{{ $service->don }}</td>
                             <td>{{ $service->heures }}</td>
+                            <td>
+                                @if($service->note)
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal{{$service->id}}">
+                                        Note
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal{{$service->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Note</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! $service->note !!}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('services.edit', $service->id) }}" title="Modifier">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"
@@ -132,8 +156,16 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="4" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
                 </table>
             @endslot
         @endcomponent
     </div>
+
 @stop

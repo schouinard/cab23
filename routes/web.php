@@ -39,7 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('services', 'ServiceController@index');
     Route::put('services/organismes', 'ServiceController@indexOrganismes');
-    Route::post('services/{service}/restore', 'ServiceController@restore');
     Route::get('services/organismes', 'ServiceController@indexOrganismes');
     Route::resource('services', 'ServiceController');
 

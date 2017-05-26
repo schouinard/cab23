@@ -51,7 +51,16 @@ class Benevole extends FilterableModel
 
     public function getNomCompletAttribute()
     {
-        return $this->prenom.' '.$this->nom;
+        $nom = "{$this->prenom} {$this->nom}";
+
+        return $this->trashed() ? $nom." (INACTIF)" : $nom;
+    }
+
+    public function getDisplayNomAttribute()
+    {
+        $nom = "{$this->nom}, {$this->prenom}";
+
+        return $this->trashed() ? $nom." (INACTIF)" : $nom;
     }
 
     public function getSelectedClientelesAttribute()

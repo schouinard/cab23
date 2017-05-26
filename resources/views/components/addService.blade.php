@@ -71,6 +71,11 @@
         {{ Form::label('heures', 'Durée&nbsp;(h):') }}
         {{ Form::text('heures', null, ['class' => 'form-control']) }}
     </div>
+    <!--- note form input ---->
+    <div class="form-group col-md-12 {{ $errors->first('note', 'has-error') }}">
+    	{{ Form::label('note', 'Note:') }}
+        {!! Form::textarea('note', null, ['class' => 'form-control textarea', 'row' => '20'])  !!}
+    </div>
     <div class="col-md-12">
         <button type="submit" class="btn btn-primary">Ajouter</button>
     </div>

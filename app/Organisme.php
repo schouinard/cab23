@@ -27,6 +27,11 @@ class Organisme extends FilterableModel
         return $this->nom;
     }
 
+    public function getNomAttribute($value)
+    {
+        return $this->trashed() ? $value." (INACTIF)" : $value;
+    }
+
     public function president()
     {
         return $this->morphOne(Person::class, 'contactable')->where('lien', 'Président');

@@ -2,9 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Service extends FilterableModel
 {
     protected $with = ['competence'];
+
+    use SoftDeletes;
 
     public function benevole()
     {
