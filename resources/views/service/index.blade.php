@@ -20,7 +20,11 @@
                     </div><!-- /.box-tools -->
                 </div>
                 <div class="box-body">
+                    <form method="POST" action="/services">
+
+                    {{ csrf_field() }}
                     @include("components.addService", ['serviceTypes' => $serviceTypes, 'categories' => $interestGroups])
+                    </form>
                 </div>
             </div>
         </div>

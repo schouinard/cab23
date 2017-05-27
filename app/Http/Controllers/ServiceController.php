@@ -29,6 +29,25 @@ class ServiceController extends Controller
             ->with('flash', 'Service ajouté avec succès.');
     }
 
+    public function update(StoreService $request, Service $service)
+    {
+        $service->update([
+            'competence_id' => request('competence_id'),
+            'serviceable_id' => request('beneficiaire_id') ? request('beneficiaire_id') : request('organisme_id'),
+            'serviceable_type' => request('serviceable_type'),
+            'rendu_le' => request('rendu_le'),
+            'benevole_id' => request('benevole_id'),
+            'don' => request('don'),
+            'heures' => request('heures'),
+            'note' => request('note'),
+        ]);
+
+        $url = request('beneficiaire_id') ? '/services' : '/services/organismes';
+
+        return redirect($url)
+            ->with('flash', 'Service modifié avec succès.');
+    }
+
     public function index(ServiceFilters $filters)
     {
         return $this->listServices($filters, Beneficiaire::class);

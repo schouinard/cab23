@@ -67,7 +67,6 @@ class SoftDeletionTest extends TestCase
             'benevoles' => create(Benevole::class),
             'users' => create(User::class),
             'beneficiaires' => create(Beneficiaire::class),
-            'services' => create(Service::class),
             'organismes' => create(Organisme::class),
         ];
 

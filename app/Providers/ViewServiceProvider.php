@@ -93,7 +93,14 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('benevoleTypes', $types);
         });
 
-        \View::composer(['benevole.partials.interets', 'service.index', 'benevole.index'], function ($view) {
+        \View::composer([
+            'benevole.partials.interets',
+            'service.index',
+            'service.edit',
+            'benevole.index',
+        ], function (
+            $view
+        ) {
             $interestGroups = \Cache::rememberForever('interestGroups', function () {
                 return Category::with('competences')->orderBy('nom')->get();
             });
@@ -126,7 +133,13 @@ class ViewServiceProvider extends ServiceProvider
             $view->with(['type' => $type]);
         });
 
-        \View::composer(['beneficiaire.show', 'benevole.show', 'service.index', 'beneficiaire.partials.requests'],
+        \View::composer([
+            'beneficiaire.show',
+            'benevole.show',
+            'service.index',
+            'service.edit',
+            'beneficiaire.partials.requests',
+        ],
             function ($view) {
                 $serviceTypes = \Cache::rememberForever('serviceTypes', function () {
                     return Competence::where('service_aux_personnes', 1)->orderBy('nom')->get();
