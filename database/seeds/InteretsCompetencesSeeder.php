@@ -45,7 +45,7 @@ class InteretsCompetencesSeeder extends Seeder
             ],
             'Travail de bureau' => [
                 'Interets' => [
-                    'Service téléphonique',
+                    'Accueil téléphonique',
                     'Secrétariat',
                     'Classement',
                     'Envois postaux',
@@ -68,7 +68,7 @@ class InteretsCompetencesSeeder extends Seeder
                     'Soutien technique',
                     'Développement Web',
                     'Gestion site internet',
-                    'Saisies de données',
+                    'Saisie de données',
                 ],
             ],
             'Communication et marketing' => [
@@ -85,7 +85,7 @@ class InteretsCompetencesSeeder extends Seeder
                     'Français oral',
                     'Français écrit',
                     'Graphisme',
-                    'infographie',
+                    'Infographie',
                     'Prise de parole en public',
                 ],
             ],
@@ -130,6 +130,10 @@ class InteretsCompetencesSeeder extends Seeder
                     ['nom' => 'Visite d\'amitié', 'service_aux_personnes' => 1],
                     ['nom' => 'Aide individuelle/ intervention', 'service_aux_personnes' => 1],
                     ['nom' => 'Écoute téléphonique', 'service_aux_personnes' => 1],
+                    'Accompagnement transport',
+                    'Accueil téléphonique',
+                    'Dépannage',
+                    'Soutien scolaire',
                 ],
                 'Competences' => [
                     'Travail individuel',
@@ -156,7 +160,7 @@ class InteretsCompetencesSeeder extends Seeder
                     'Cuisine',
                     'Travaux manuels',
                     'Friperie',
-                    'Aide au formulaire',
+                    'Aide aux formulaires',
                     'Photographie',
                     'Vidéo',
                     'Distribution alimentaire',

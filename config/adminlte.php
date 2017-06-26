@@ -111,7 +111,7 @@ return [
         'MENU PRINCIPAL',
         [
             'text' => 'Bénévoles',
-            'icon' => 'user',
+            'icon' => 'handshake-o',
             'submenu' => [
                 [
                     'text' => 'Lister',
@@ -197,7 +197,7 @@ return [
         ],
         [
             'text' => 'Utilisateurs',
-            'icon' => 'user',
+            'icon' => 'key',
             'can' => 'manage-users',
             'submenu' => [
                 [

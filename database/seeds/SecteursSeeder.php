@@ -13,7 +13,7 @@ class SecteursSeeder extends Seeder
     {
         $secteurs = [
             'Ile d\'Orléans',
-            'Côte de Beauport',
+            'Côte de Beaupré',
             'Ville de Québec',
             'Charlesbourg',
             'Limoilou',

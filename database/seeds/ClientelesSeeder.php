@@ -12,7 +12,7 @@ class ClientelesSeeder extends Seeder
     public function run()
     {
         $clienteles = [
-            'Famille/couple',
+            'Familles/couples',
             'Handicap physique',
             'Dépendance',
             'Femmes',
@@ -20,10 +20,10 @@ class ClientelesSeeder extends Seeder
             'Services aux organismes',
             'Hommes',
             'Santé mentale',
-            'Adolescent',
-            'Problème de santé',
+            'Adolescents',
+            'Problèmes de santé',
             'Enfants',
-            'Immigrant',
+            'Immigrants',
             'Ainé(e)s',
             'Pauvreté et exclusion',
         ];
