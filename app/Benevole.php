@@ -90,7 +90,7 @@ class Benevole extends FilterableModel
 
     public function isInterested($id, $priority)
     {
-        return count($this->interets->where('id', $id)->where('pivot.priority', $priority));
+        return count($this->competences->where('id', $id)->where('pivot.priority', $priority));
     }
 
     public function competences()

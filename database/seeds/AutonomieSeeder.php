@@ -20,6 +20,7 @@ class AutonomieSeeder extends Seeder
             'Problème d\'élocution',
             'Troubles cognitifs',
             'Besoin d\'accompagnement',
+            'Déambulateur',
         ];
         foreach ($autonomies as $autonomy) {
             \App\Autonomie::create(['nom' => $autonomy]);

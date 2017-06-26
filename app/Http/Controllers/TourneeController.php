@@ -145,9 +145,13 @@ class TourneeController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TourneeRequest $request, Tournee $tournee)
+    public function update(TourneeRequest $request, $id)
     {
-        $tournee->update($request->toArray());
+        /** @var Tournee $tournee */
+        $tournee = Tournee::find($id);
+        $tournee->update(array_except($request->toArray(), $tournee->getRelationsToHandleOnStore()));
+
+        $tournee->handleRelationsOnUpdate($request->toArray());
 
         return back()
             ->with('flash', 'Tournée modifiée.');

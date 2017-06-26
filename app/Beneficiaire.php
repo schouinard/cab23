@@ -79,6 +79,11 @@ class Beneficiaire extends FilterableModel
         return $this->belongsToMany(Day::class);
     }
 
+    public function getSelectedDaysAttribute()
+    {
+        return $this->days->pluck('id')->toArray();
+    }
+
     public function isPopoteDay($day_id)
     {
         return $this->days->contains('id', $day_id);

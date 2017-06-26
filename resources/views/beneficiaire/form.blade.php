@@ -123,7 +123,7 @@
                     @foreach($days as $day)
                         <div class="checkbox">
                             <label>
-                                {{ Form::checkbox('days[]', $day->id) }} {{ $day->nom }}
+                                {{ Form::checkbox('days[]', $day->id, isset($beneficiaire) ? in_array($day->id, $beneficiaire->selectedDays) : null) }} {{ $day->nom }}
                             </label>
                         </div>
                     @endforeach

@@ -22,10 +22,19 @@ class Tournee extends FilterableModel
         return $this->hasMany(Beneficiaire::class)->with(['adress', 'people']);
     }
 
-    //
-    public function addDays($array)
+    public function syncDays($ids)
     {
-        $this->days()->sync($array);
+        $this->days()->sync($ids);
+    }
+
+    public function addDays($ids)
+    {
+        $this->syncDays($ids);
+    }
+
+    public function updateDays($ids)
+    {
+        $this->syncDays($ids);
     }
 
     public function addBeneficiaire($id, $priority = 0, $paye = false, $note = '')

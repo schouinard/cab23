@@ -117,6 +117,7 @@ class BenevoleController extends Controller
      */
     public function update(StorePerson $request, $id)
     {
+        /** @var Benevole $benevole */
         $benevole = Benevole::find($id);
         $benevole->update(array_except($request->toArray(), $benevole->getRelationsToHandleOnStore()));
 
