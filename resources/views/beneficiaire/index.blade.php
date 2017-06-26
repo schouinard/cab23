@@ -12,7 +12,7 @@
             @slot('inputFilters')
                 <div class="form-group col-md-3">
                     {{ Form::label('secteur', 'Secteur:') }}
-                    {{ Form::select('secteur', $secteurs->pluck('nom','id'),isset($filters['secteur']) ? $filters['secteur'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                    @include('components.select', ['name' => 'secteur', 'items' => $secteurs])
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('type', 'Mois de naissance:') }}
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('statut', 'Statut:') }}
-                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'], isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                    {{ Form::select('statut', ['Actifs' => 'Actifs', 'Inactifs' => 'Inactifs', 'Tous' => 'Tous'], isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
                 </div>
             @endslot
         @endcomponent

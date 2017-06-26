@@ -22,8 +22,8 @@
                 <div class="box-body">
                     <form method="POST" action="/services">
 
-                    {{ csrf_field() }}
-                    @include("components.addService", ['serviceTypes' => $serviceTypes, 'categories' => $interestGroups])
+                        {{ csrf_field() }}
+                        @include("components.addService", ['serviceTypes' => $serviceTypes, 'categories' => $interestGroups])
                     </form>
                 </div>
             </div>
@@ -35,11 +35,11 @@
                 <div class="form-group col-md-6">
                     {{ Form::label('type', 'Type de service:') }}
                     @if($serviceableType == \App\Beneficiaire::class)
-                        {{ Form::select('type', $serviceTypes->pluck('nom', 'id'),isset($filters['type']) ? $filters['type'] : null, ['class' => 'form-control', 'placeholder' => 'Tous les types']) }}
+                        @include('components.select', ['name' => 'type', 'items' => $serviceTypes])
                     @else
                         <select name="type" class="form-control">
+                            <option value="">Tous</option>
                             @foreach($interestGroups as $category)
-                                <option value="">Tous</option>
                                 <optgroup label="{{$category->nom}}">
                                     @foreach($category->competences as $competence)
                                         <option @if(isset($filters['type']))
@@ -113,22 +113,28 @@
                             <td>{{ $service->heures }}</td>
                             <td>
                                 @if($service->note)
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal{{$service->id}}">
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                            data-target="#myModal{{$service->id}}">
                                         Note
                                     </button>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="myModal{{$service->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal fade" id="myModal{{$service->id}}" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
                                                     <h4 class="modal-title" id="myModalLabel">Note</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     {!! $service->note !!}
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        Close
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

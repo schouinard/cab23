@@ -53,6 +53,7 @@ class ViewServiceProvider extends ServiceProvider
 
         \View::composer(['benevole.index', 'beneficiaire.index'], function ($view) {
             $months = [
+                'Tous' => '',
                 'Janvier' => 1,
                 'Février' => 2,
                 'Mars' => 3,

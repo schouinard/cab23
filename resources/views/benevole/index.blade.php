@@ -12,13 +12,13 @@
             @slot('inputFilters')
                 <div class="form-group col-md-3">
                     {{ Form::label('secteur', 'Secteur:') }}
-                    {{ Form::select('secteur', $secteurs->pluck('nom','id'),isset($filters['secteur']) ? $filters['secteur'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                    @include('components.select', ['name' => 'secteur', 'items' => $secteurs])
                 </div>
                 <div class="form-group col-md-6">
                     {{ Form::label('competence', 'Intérêt / Compétence:') }}
                     <select name="competence" class="form-control">
+                        <option value="">Tous</option>
                         @foreach($interestGroups as $category)
-                            <option value="">Tous</option>
                             <optgroup label="{{$category->nom}}">
                                 @foreach($category->competences as $competence)
                                     <option @if(isset($filters['competence']))
@@ -33,18 +33,18 @@
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('statut', 'Statut:') }}
-                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                    {{ Form::select('statut', ['Actifs' => 'Actifs', 'Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
                 </div>
 
 
                 <h4 class="col-md-12">Disponibilités</h4>
                 <div class="form-group col-md-3">
                     {{ Form::label('dispojour', 'Jour:') }}
-                    {{ Form::select('dispojour',$days->pluck('nom','id'), isset($filters['dispojour']) ? $filters['dispojour'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                    @include('components.select', ['name' => 'dispojour', 'items' => $days])
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('dispomoment', 'Moment:') }}
-                    {{ Form::select('dispomoment',$moments->pluck('nom','id'), isset($filters['dispomoment']) ? $filters['dispomoment'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                    @include('components.select', ['name' => 'dispomoment', 'items' => $moments])
                 </div>
                 <div class="form-group col-md-3">
                     {{Form::label('isdispo', 'Est disponible le:')}}
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('accepte_ca', 'Accepté au CA:') }}
-                    {{ Form::select('accepte_ca', ['accepte' => 'Accepté', 'probation' => 'Probation'],isset($filters['accepte_ca']) ? $filters['accepte_ca'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
+                    {{ Form::select('accepte_ca', ['tous' => 'Tous', 'accepte' => 'Accepté', 'probation' => 'Probation'],isset($filters['accepte_ca']) ? $filters['accepte_ca'] : null, ['class' => 'form-control', 'placeholder' => 'Tous']) }}
                 </div>
                 <div class="form-group col-md-3">
                     {{ Form::label('inscription', 'Année d\'inscription:') }}

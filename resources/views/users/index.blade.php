@@ -12,7 +12,7 @@
             @slot('inputFilters')
                 <div class="form-group col-md-3">
                     {{ Form::label('statut', 'Statut:') }}
-                    {{ Form::select('statut', ['Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
+                    {{ Form::select('statut', ['Actifs' => 'Actifs', 'Inactifs' => 'Inactifs', 'Tous' => 'Tous'],isset($filters['statut']) ? $filters['statut'] : null, ['class' => 'form-control', 'placeholder' => 'Actifs']) }}
                 </div>
             @endslot
         @endcomponent
