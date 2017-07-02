@@ -76,6 +76,7 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'integration' => $faker->dateTime->format('Y-m-d'),
         'suivi' => $faker->dateTime->format('Y-m-d'),
         'benevole_type_id' => App\BenevoleType::inRandomOrder()->first(),
+        'sexe' => $faker->randomElement(['Homme', 'Femme']),
     ];
 });
 
@@ -87,7 +88,7 @@ $factory->define(App\Adress::class, function () {
         'telephone' => '(418) 555-5555',
         'telephone2' => '(418) 555-5555 x1234',
         'cellulaire' => '(418) 555-5555',
-        'adresse' => $faker->numberBetween(3, 2999) . ' ' . $faker->streetName,
+        'adresse' => $faker->numberBetween(3, 2999).' '.$faker->streetName,
         'ville' => 'Québec',
         'province' => 'QC',
         'code_postal' => $faker->postcode,
@@ -130,6 +131,7 @@ $factory->define(App\Beneficiaire::class, function (Faker\Generator $faker) {
         'facturation_nom' => $faker->name,
         'tournee_payee' => $faker->boolean(),
         'tournee_note' => $faker->sentence(),
+        'sexe' => $faker->randomElement(['Homme', 'Femme']),
     ];
 });
 

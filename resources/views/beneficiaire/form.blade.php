@@ -32,14 +32,28 @@
     <div class="tab-content">
         <div class="tab-pane active row" id="identification">
             <!--- prenom form input ---->
-            <div class="form-group col-md-6 {{ $errors->first('prenom', 'has-error') }}">
+            <div class="form-group col-md-4 {{ $errors->first('prenom', 'has-error') }}">
                 {{ Form::label('prenom', 'Prénom (*):') }}
                 {{ Form::text('prenom', null, array_merge($attributes, ['class' => 'form-control'])) }}
             </div>
             <!--- nom form input ---->
-            <div class="form-group  col-md-6 {{ $errors->first('nom', 'has-error') }}">
+            <div class="form-group  col-md-4 {{ $errors->first('nom', 'has-error') }}">
                 {{ Form::label('nom', 'Nom (*):') }}
                 {{ Form::text('nom', null, array_merge($attributes, ['class' => 'form-control'])) }}
+            </div>
+            <!--- sexe form input ---->
+            <div class="form-group col-md-4 {{ $errors->first('sexe', 'has-error') }}">
+                <fieldset @isset($readonly) disabled @endisset>
+                    {{ Form::label('sexe', 'Sexe:') }}
+                    <div>
+                        <label class="radio-inline">
+                            {{Form::radio('sexe', 'Homme')}} Homme
+                        </label>
+                        <label class="radio-inline">
+                            {{Form::radio('sexe', 'Femme')}} Femme
+                        </label>
+                    </div>
+                </fieldset>
             </div>
 
             <!--- naissance datepicker --->
@@ -113,7 +127,7 @@
                     @endforeach
 
                 </fieldset>
-                <div class="checkbox" >
+                <div class="checkbox">
                     {{ Form::hidden('tournee_payee', 0) }}
                     <label>{{ Form::checkbox('tournee_payee', true, null, $attributes) }} A payé sa tournée</label>
                 </div>

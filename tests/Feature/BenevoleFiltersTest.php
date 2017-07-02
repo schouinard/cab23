@@ -57,19 +57,6 @@ class BenevoleFiltersTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_and_get_only_trashed()
-    {
-        $this->signIn();
-        $item = create(Benevole::class);
-        $deletedItem = create(Benevole::class);
-        $deletedItem->delete();
-
-        $this->put('benevoles', ['statut' => 'Inactifs'])
-            ->assertDontSee(webformat($item->nom))
-            ->assertSee(webformat($deletedItem->nom));
-    }
-
-    /** @test */
     public function a_user_can_filter_by_inscription_year()
     {
         $this->signIn();
