@@ -114,8 +114,12 @@ legend {
     margin-bottom: 10px;
 }
 
-.form-control.inline{
-    display:inline;
-    width:auto;
-    margin-top:-5px;
+.form-control.inline {
+    display: inline;
+    width: auto;
+    margin-top: -5px;
+}
+
+.dropdown-menu {
+    z-index: 10000;
 }

@@ -69,11 +69,20 @@ class InteretsCompetencesSeeder extends Seeder
                     'Développement Web',
                     'Gestion site internet',
                     'Saisie de données',
+                    'Word',
+                    'Excel',
+                    'Powerpoint',
+                    'Access',
+                    'Publisher',
+                    'Illustrator',
+                    'Photoshop',
+                    'Facebook',
+                    'Twitter',
                 ],
             ],
             'Communication et marketing' => [
                 'Interets' => [
-                    'Bulletin de liaison le Cabotin / bon Appétit',
+                    'Cabotin ou autres',
                     'Rédaction/ révision de textes',
                     'Entrevues et rédactions',
                     'Tenue de kiosques',
@@ -95,7 +104,6 @@ class InteretsCompetencesSeeder extends Seeder
                     'Animation de groupe',
                     'Animation d\'Activités',
                     'Coaching individuel',
-                    'Aide aux devoirs',
                     'Lecteur/lectrice (Lire et faire lire)',
                 ],
                 'Competences' => [
@@ -151,7 +159,6 @@ class InteretsCompetencesSeeder extends Seeder
                 ],
                 'Competences' => [
                     'Habiletés relationnelle',
-                    'Assurance auto valide',
                 ],
             ],
             'Divers' => [
