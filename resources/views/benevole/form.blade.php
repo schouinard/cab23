@@ -76,6 +76,47 @@
                 @include('partials.form.contact', ['adress' => 'adress'])
             </div>
 
+            <div class="col-md-6">
+                <fieldset @isset($readonly) disabled @endisset>
+                    <legend>Permis de conduire</legend>
+                    <!--- no_permis form input ---->
+                    <div class="form-group col-md-6 {{ $errors->first('no_permis', 'has-error') }}">
+                    	{{ Form::label('no_permis', 'Numéro:') }}
+                    	{{ Form::text('no_permis', null, ['class' => 'form-control']) }}
+                    </div>
+                    <!--- exp_permis form input ---->
+                    <div class="form-group col-md-6 {{ $errors->first('exp_permis', 'has-error') }}">
+                    	{{ Form::label('exp_permis', 'Expiration:') }}
+                        <div class="input-group date datepicker">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            {{ Form::text('exp_permis', null, ['class' => 'form-control pull-right']) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset @isset($readonly) disabled @endisset>
+                    <legend>Assurance auto</legend>
+                    <!--- no_permis form input ---->
+                    <div class="form-group col-md-6 {{ $errors->first('no_permis', 'has-error') }}">
+                        {{ Form::label('no_police', 'Numéro:') }}
+                        {{ Form::text('no_police', null, ['class' => 'form-control']) }}
+                    </div>
+                    <!--- exp_permis form input ---->
+                    <div class="form-group col-md-6 {{ $errors->first('exp_permis', 'has-error') }}">
+                        {{ Form::label('exp_police', 'Expiration:') }}
+                        <div class="input-group date datepicker">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            {{ Form::text('exp_police', null, ['class' => 'form-control pull-right']) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
             <div class="form-group col-md-12 {{ $errors->first('remarque', 'has-error') }}">
                 {{ Form::label('remarque', 'Remarques:') }}
                 @if(isset($readonly))

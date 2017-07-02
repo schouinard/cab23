@@ -77,6 +77,10 @@ $factory->define(App\Benevole::class, function (Faker\Generator $faker) {
         'suivi' => $faker->dateTime->format('Y-m-d'),
         'benevole_type_id' => App\BenevoleType::inRandomOrder()->first(),
         'sexe' => $faker->randomElement(['Homme', 'Femme']),
+        'no_permis' => $faker->randomNumber(5),
+        'no_police' => $faker->randomNumber(5),
+        'exp_permis' => $faker->dateTime->format('Y-m-d'),
+        'exp_police' => $faker->dateTime->format('Y-m-d'),
     ];
 });
 
