@@ -18,7 +18,7 @@
                 <th>Catégorie</th>
                 <th>Nom</th>
                 <th>Type</th>
-                <th>Priorité</th>
+                <th>Intérêt / Force</th>
             </tr>
             </thead>
             <tbody>
@@ -27,47 +27,56 @@
         </table>
     </div>
 @else
-    @foreach($interestGroups as $category)
-        <h3 class="col-md-12">{{ $category->nom }}</h3>
-        <fieldset class="col-md-12 striped">
-            <legend class="col-xs-8" style="padding-left:30px;">Intérêts</legend>
-            <div class="small col-xs-1">Pas intéressé</div>
-            <div class="small col-xs-1">Peu intéressé</div>
-            <div class="small col-xs-1">Intéressé</div>
-            <div class="small col-xs-1">Très intéressé</div>
-            @forelse($interests->where('category_id', $category->id) as $interet)
-                <div class="col-xs-12">
-                    <div class="col-xs-8" style="padding-left:45px;">{{ $interet->nom }}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 0, true)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 3, isset($benevole) ? $benevole->isInterested($interet->id, 3) : null)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 2, isset($benevole) ? $benevole->isInterested($interet->id, 2) : null)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 1, isset($benevole) ? $benevole->isInterested($interet->id, 1) : null)}}</div>
-                </div>
-            @empty
-                <div class="col-xs-12">
-                    Aucun intérêt dans cette catégorie.
-                </div>
-            @endforelse
-        </fieldset>
-        <fieldset class="col-md-12 striped">
-            <legend class="col-xs-8" style="padding-left:30px;">Compétences</legend>
-            <div class="small col-xs-1">Pas intéressé</div>
-            <div class="small col-xs-1">Peu intéressé</div>
-            <div class="small col-xs-1">Intéressé</div>
-            <div class="small col-xs-1">Très intéressé</div>
-            @forelse($competences->where('category_id', $category->id) as $competence)
-                <div class="col-xs-12">
-                    <div class="col-xs-8" style="padding-left:45px;">{{ $competence->nom }}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 0, true)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 3, isset($benevole) ? $benevole->isCompetent($competence->id, 3) : null)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 2, isset($benevole) ? $benevole->isCompetent($competence->id, 2) : null)}}</div>
-                    <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 1, isset($benevole) ? $benevole->isCompetent($competence->id, 1) : null)}}</div>
-                </div>
-            @empty
-                <div class="col-xs-12">
-                    Aucune compétence dans cette catégorie.
-                </div>
-            @endforelse
-        </fieldset>
-    @endforeach
+    <div id="accordion">
+        @foreach($interestGroups as $category)
+            <h3 class="col-md-12">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{$category->id}}" aria-expanded="false"
+                   class="collapsed">
+                    {{ $category->nom }}
+                </a>
+            </h3>
+            <div id="{{$category->id}}" class="panel-collapse collapse" aria-expanded="false">
+                <fieldset class="col-md-12 striped">
+                    <legend class="col-xs-8" style="padding-left:30px;">Intérêts</legend>
+                    <div class="small col-xs-1">Pas intéressé</div>
+                    <div class="small col-xs-1">Peu intéressé</div>
+                    <div class="small col-xs-1">Intéressé</div>
+                    <div class="small col-xs-1">Très intéressé</div>
+                    @forelse($interests->where('category_id', $category->id) as $interet)
+                        <div class="col-xs-12">
+                            <div class="col-xs-8" style="padding-left:45px;">{{ $interet->nom }}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 0, true)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 3, isset($benevole) ? $benevole->isInterested($interet->id, 3) : null)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 2, isset($benevole) ? $benevole->isInterested($interet->id, 2) : null)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][interets][' . $interet->id . '][priority]', 1, isset($benevole) ? $benevole->isInterested($interet->id, 1) : null)}}</div>
+                        </div>
+                    @empty
+                        <div class="col-xs-12">
+                            Aucun intérêt dans cette catégorie.
+                        </div>
+                    @endforelse
+                </fieldset>
+                <fieldset class="col-md-12 striped">
+                    <legend class="col-xs-8" style="padding-left:30px;">Compétences</legend>
+                    <div class="small col-xs-1">Aucune</div>
+                    <div class="small col-xs-1">Faible</div>
+                    <div class="small col-xs-1">Moyenne</div>
+                    <div class="small col-xs-1">Forte</div>
+                    @forelse($competences->where('category_id', $category->id) as $competence)
+                        <div class="col-xs-12">
+                            <div class="col-xs-8" style="padding-left:45px;">{{ $competence->nom }}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 0, true)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 3, isset($benevole) ? $benevole->isCompetent($competence->id, 3) : null)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 2, isset($benevole) ? $benevole->isCompetent($competence->id, 2) : null)}}</div>
+                            <div class="text-center col-xs-1">{{Form::radio('category['. $category->id . '][competences][' . $competence->id . '][priority]', 1, isset($benevole) ? $benevole->isCompetent($competence->id, 1) : null)}}</div>
+                        </div>
+                    @empty
+                        <div class="col-xs-12">
+                            Aucune compétence dans cette catégorie.
+                        </div>
+                    @endforelse
+                </fieldset>
+            </div>
+        @endforeach
+    </div>
 @endif
