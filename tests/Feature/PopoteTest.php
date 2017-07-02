@@ -79,6 +79,7 @@ class PopoteTest extends TestCase
         $this->assertTrue($beneficiaire->fresh()->tournee_payee);
     }
 
+    /** @test */
     function on_peut_ajouter_une_note_pour_un_beneficiaire()
     {
         $beneficiaire = create(Beneficiaire::class);
@@ -158,6 +159,15 @@ class PopoteTest extends TestCase
         $this->tournee->addBeneficiaire($beneficiaire5->id);
 
         $this->assertEquals(5, $beneficiaire5->fresh()->tournee_priorite);
+    }
+
+    /** @test */
+    function quand_on_ajoute_un_beneficiaire_il_est_ajouté_du_lundi_au_vendredi_par_defaut()
+    {
+        $beneficiaire1 = create(Beneficiaire::class, ['nom' => 'Tremblay']);
+        $this->tournee->addBeneficiaire($beneficiaire1->id, 1);
+
+        $this->assertCount(5, $beneficiaire1->days);
     }
 
     /** @test */

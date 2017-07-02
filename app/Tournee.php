@@ -37,7 +37,7 @@ class Tournee extends FilterableModel
         $this->syncDays($ids);
     }
 
-    public function addBeneficiaire($id, $priority = 0, $paye = false, $note = '')
+    public function addBeneficiaire($id, $priority = 0, $paye = false, $note = '', $days = [2, 3, 4, 5, 6])
     {
         $beneficiaire = Beneficiaire::find($id);
         $this->beneficiaires_count++;
@@ -57,6 +57,8 @@ class Tournee extends FilterableModel
                 'tournee_note' => $note,
             ]
         );
+
+        $beneficiaire->addDays($days);
     }
 
     public function getAlphabeticalListing()
