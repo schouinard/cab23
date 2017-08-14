@@ -92,7 +92,7 @@ $factory->define(App\Adress::class, function () {
         'telephone' => '(418) 555-5555',
         'telephone2' => '(418) 555-5555 x1234',
         'cellulaire' => '(418) 555-5555',
-        'adresse' => $faker->numberBetween(3, 2999).' '.$faker->streetName,
+        'adresse' => $faker->numberBetween(3, 2999) . ' ' . $faker->streetName,
         'ville' => 'Québec',
         'province' => 'QC',
         'code_postal' => $faker->postcode,
@@ -187,9 +187,10 @@ $factory->define(App\Organisme::class, function () {
         'type_id' => function () {
             return App\OrganismeType::inRandomOrder()->first()->id;
         },
-        'secteur_id' => function () {
-            return App\OrganismeSecteur::inRandomOrder()->first()->id;
+        'mission_id' => function () {
+            return App\Mission::inRandomOrder()->first()->id;
         },
+        'mission_desc' => $faker->paragraph,
     ];
 });
 

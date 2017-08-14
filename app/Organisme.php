@@ -13,8 +13,8 @@ class Organisme extends FilterableModel
 
     protected $relationsToHandleOnStore = [
         'adress',
-        'employe',
-        'president',
+        'people',
+        'regroupements'
     ];
 
     public function path()
@@ -32,14 +32,9 @@ class Organisme extends FilterableModel
         return $this->trashed() ? $value." (INACTIF)" : $value;
     }
 
-    public function president()
+    public function people()
     {
-        return $this->morphOne(Person::class, 'contactable')->where('lien', 'Président');
-    }
-
-    public function employe()
-    {
-        return $this->morphOne(Person::class, 'contactable')->where('lien', 'Employé');
+        return $this->morphMany(Person::class, 'contactable');
     }
 
     public function adress()
@@ -52,9 +47,14 @@ class Organisme extends FilterableModel
         return $this->belongsTo(OrganismeType::class);
     }
 
-    public function secteur()
+    public function mission()
     {
-        return $this->belongsTo(OrganismeSecteur::class);
+        return $this->belongsTo(Mission::class);
+    }
+
+    public function regroupements()
+    {
+        return $this->belongsToMany(Regroupement::class);
     }
 
     public function notes()
@@ -81,39 +81,34 @@ class Organisme extends FilterableModel
         $this->adress()->update($adress);
     }
 
-    public function addPresident($person)
+    public function addPeople($people = [])
     {
-        $adress = Adress::create($person['adress']);
-        $this->president()->create([
-            'nom' => $person['nom'],
-            'lien' => 'Président',
-            'adress_id' => $adress->id,
-        ]);
+        if (! is_null($people)) {
+            foreach ($people as $person) {
+                $adress = Adress::create($person['adress']);
+                $person = new Person(array_except($person, ['adress']));
+                $person->adress()->associate($adress);
+                $this->people()->save($person);
+            }
+        }
     }
 
-    public function updatePresident($person)
+    public function updatePeople($people)
     {
-        $this->president->adress()->update($person['adress']);
-        $this->president()->update([
-            'nom' => $person['nom'],
-        ]);
+        foreach ($people as $person) {
+            $oldPerson = Person::find($person['id']);
+            $oldPerson->adress()->update($person['adress']);
+            $oldPerson->update(array_except($person, ['adress']));
+        }
     }
 
-    public function addEmploye($person)
+    public function addRegroupements($regroupements)
     {
-        $adress = Adress::create($person['adress']);
-        $this->employe()->create([
-            'nom' => $person['nom'],
-            'lien' => 'Employé',
-            'adress_id' => $adress->id,
-        ]);
+        $this->regroupements()->sync($regroupements);
     }
 
-    public function updateEmploye($person)
+    public function updateRegroupements($regroupements)
     {
-        $this->employe->adress()->update($person['adress']);
-        $this->employe()->update([
-            'nom' => $person['nom'],
-        ]);
+        $this->regroupements()->sync($regroupements);
     }
 }

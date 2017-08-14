@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganismeSecteursTable extends Migration
+class CreateOrganismeRegroupementTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateOrganismeSecteursTable extends Migration
      */
     public function up()
     {
-        Schema::create('organisme_secteurs', function (Blueprint $table) {
+        Schema::create('organisme_regroupement', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nom');
+            $table->unsignedInteger('organisme_id')->index();
+            $table->unsignedInteger('regroupement_id')->index();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateOrganismeSecteursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organisme_secteurs');
+        Schema::dropIfExists('organisme_regroupement');
     }
 }

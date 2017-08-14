@@ -11,8 +11,10 @@ use App\Day;
 use App\EtatSante;
 use App\IncomeSource;
 use App\Interet;
+use App\Mission;
 use App\Moment;
 use App\OrganismeType;
+use App\Regroupement;
 use App\Secteur;
 use App\ServiceRequestStatus;
 use App\ServiceType;
@@ -131,7 +133,13 @@ class ViewServiceProvider extends ServiceProvider
             $type = \Cache::rememberForever('organismeTypes', function () {
                 return OrganismeType::orderBy('nom')->get();
             });
-            $view->with(['type' => $type]);
+            $mission = \Cache::rememberForever('missions', function () {
+                return Mission::orderBy('nom')->get();
+            });
+            $regroupement = \Cache::rememberForever('regroupements', function () {
+                return Regroupement::orderBy('nom')->get();
+            });
+            $view->with(['type' => $type, 'mission' => $mission, 'regroupement' => $regroupement]);
         });
 
         \View::composer([

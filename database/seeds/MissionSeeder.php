@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class OrganismeSecteurSeeder extends Seeder
+class MissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,15 +12,16 @@ class OrganismeSecteurSeeder extends Seeder
     public function run()
     {
         $items = [
-            'Culture',
-            'Loisirs communautaires',
-            'Sociaux-communautaire',
+            'Sociocommunautaire',
             'Sport et plein air',
-            'Autre',
+            'Loisirs',
+            'Culture',
+            'Éducation',
+            'Autre'
         ];
 
         foreach ($items as $item) {
-            App\OrganismeSecteur::create(['nom' => $item]);
+            App\Mission::create(['nom' => $item]);
         }
     }
 }

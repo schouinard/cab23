@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganismeSecteursTable extends Migration
+class ModifyOrganismesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateOrganismeSecteursTable extends Migration
      */
     public function up()
     {
-        Schema::create('organisme_secteurs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nom');
-            $table->timestamps();
+        Schema::table('organismes', function (Blueprint $table) {
+            $table->text('mission_desc')->nullable();
         });
+
+
     }
 
     /**
@@ -27,6 +27,8 @@ class CreateOrganismeSecteursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organisme_secteurs');
+        Schema::table('organismes', function (Blueprint $table) {
+            $table->dropColumn('mission_desc');
+        });
     }
 }

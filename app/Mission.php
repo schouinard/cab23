@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrganismeSecteur extends Model
+class Mission extends Model
 {
     //
 }
