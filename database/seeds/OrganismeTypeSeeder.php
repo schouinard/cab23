@@ -12,8 +12,9 @@ class OrganismeTypeSeeder extends Seeder
     public function run()
     {
         $items = [
-            'CAB',
-            'Milieu',
+            'Organisme membre du CAB',
+            'Organisme du milieu',
+            'Organisme partenaire'
         ];
 
         foreach ($items as $item) {
