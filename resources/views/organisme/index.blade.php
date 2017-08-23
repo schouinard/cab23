@@ -31,6 +31,7 @@
                         <th>Nom</th>
                         <th>Courriel</th>
                         <th>Telephone</th>
+                        <th>Adresse</th>
                         @if(request('secteur'))
                             <th>Secteur</th>
                         @endif
@@ -47,6 +48,7 @@
                             <td><a href="{{ $organisme->path() }}">{{ $organisme->nom }}</a></td>
                             <td>{{ $organisme->adress->email }}</td>
                             <td>{{ $organisme->adress->telephone }}</td>
+                            <td>{!! $organisme->adress->toHTML() !!}</td>
                             @if(request('secteur'))
                                 <td>
                                     @if($organisme->adress->secteur_id)

@@ -41,4 +41,10 @@ class BenevoleTest extends TestCase
 
         $this->get($this->benevole->path())->assertSeeText($service->rendu_le);
     }
+
+    /** @test */
+    function a_user_can_see_adress_on_listing_page()
+    {
+        $this->get('/benevoles')->assertSee(webformat($this->benevole->adress->adresse));
+    }
 }

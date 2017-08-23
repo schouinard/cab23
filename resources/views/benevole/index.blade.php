@@ -85,6 +85,7 @@
                         <th>Prenom</th>
                         <th>Courriel</th>
                         <th>Telephone</th>
+                        <th>Adresse</th>
                         @if(isset($filters['secteur']))
                             <th>Secteur</th>
                         @endif
@@ -120,6 +121,7 @@
                             <td>{{ $benevole->prenom }}</td>
                             <td>{{ $benevole->adress->email }}</td>
                             <td>{{ $benevole->adress->telephone }}</td>
+                            <td>{!! $benevole->adress->toHTML() !!}</td>
                             @if(isset($filters['secteur']))
                                 <td>
                                     @if($benevole->adress->secteur_id)

@@ -36,6 +36,7 @@
                         <th>Prenom</th>
                         <th>Courriel</th>
                         <th>Telephone</th>
+                        <th>Adresse</th>
                         @if(request('secteur'))
                             <th>Secteur</th>
                         @endif
@@ -58,6 +59,7 @@
                             <td>{{ $beneficiaire->prenom }}</td>
                             <td>{{ $beneficiaire->adress->email }}</td>
                             <td>{{ $beneficiaire->adress->telephone }}</td>
+                            <td>{!! $beneficiaire->adress->toHTML() !!}</td>
                             @if(request('secteur'))
                                 <td>
                                     @if($beneficiaire->adress->secteur_id)

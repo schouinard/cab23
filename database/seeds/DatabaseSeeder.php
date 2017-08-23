@@ -106,25 +106,15 @@ class DatabaseSeeder extends Seeder
                 'notable_id' => $organisme->id,
                 'notable_type' => \App\Organisme::class,
             ]);
-            $president = raw(Person::class, [
-                'lien' => 'Président',
+            $people = raw(Person::class, [
                 'contactable_id' => null,
                 'contactable_type' => null,
                 'adress_id' => null,
                 'adress' => raw
                 (Adress::class),
-            ]);
-            $employe = raw(Person::class, [
-                'lien' => 'Employé',
-                'contactable_id' => null,
-                'contactable_type' => null,
-                'adress_id' => null,
-                'adress' => raw
-                (Adress::class),
-            ]);
+            ], 3);
 
-            $organisme->addPresident($president);
-            $organisme->addEmploye($employe);
+            $organisme->addPeople($people);
         }
 
         $tournees = factory(\App\Tournee::class, 4)->create();

@@ -81,4 +81,10 @@ class OrganismeTest extends TestCase
         $this->assertCount(2, $this->organisme->regroupements);
     }
 
+    /** @test */
+    function a_user_can_see_adress_on_listing()
+    {
+        $this->get('/organismes')->assertSee($this->organisme->adress->adresse);
+    }
+
 }

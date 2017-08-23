@@ -43,4 +43,10 @@ class BeneficiaireTest extends TestCase
 
         $this->get($this->beneficiaire->path())->assertSee($service->rendu_le);
     }
+
+    /** @test */
+    function a_user_can_see_postal_adress_on_listing()
+    {
+        $this->get('/beneficiaires')->assertSee(webformat($this->beneficiaire->adress->adresse));
+    }
 }
