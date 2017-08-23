@@ -36,6 +36,7 @@ class Beneficiaire extends FilterableModel
     public function serviceRequests()
     {
         return $this->belongsToMany(Competence::class, 'service_requests', 'beneficiaire_id', 'competence_id')
+            ->orderBy('nom')
             ->withPivot('service_request_status_id');
     }
 
