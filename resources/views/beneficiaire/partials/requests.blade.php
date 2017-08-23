@@ -2,7 +2,7 @@
     <h3 class="col-md-12">Services demandés</h3>
     <div class="col-md-12">
         <ul>
-            @foreach($beneficiaire->serviceRequests as $serviceRequest)
+            @foreach($beneficiaire->serviceRequests->where('pivot.service_request_status_id', '!=', 1) as $serviceRequest)
                 <li>{{$serviceRequest->nom}}
                     <strong>({{$serviceRequestStatuses->where('id', $serviceRequest->pivot->service_request_status_id)->first()->nom}}
                         )</strong></li>
