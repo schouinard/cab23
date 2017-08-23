@@ -22,6 +22,7 @@ class Adress extends Model
 
     public function toHTML()
     {
-        return $this->adresse."<br />".$this->secteur->nom.', '.$this->ville . "<br />" . $this->code_postal;
+        $secteur = isset($this->secteur) ? $this->secteur->nom .', ': "";
+        return $this->adresse."<br />".$secteur.$this->ville . "<br />" . $this->code_postal;
     }
 }
