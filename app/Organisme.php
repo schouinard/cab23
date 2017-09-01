@@ -95,10 +95,22 @@ class Organisme extends FilterableModel
 
     public function updatePeople($people)
     {
-        foreach ($people as $person) {
-            $oldPerson = Person::find($person['id']);
-            $oldPerson->adress()->update($person['adress']);
-            $oldPerson->update(array_except($person, ['adress']));
+        if (! is_null($people)) {
+            foreach ($people as $person) {
+                $oldPerson = Person::find($person['id']);
+                if($oldPerson)
+                {
+                    $oldPerson->adress()->update($person['adress']);
+                    $oldPerson->update(array_except($person, ['adress']));
+                }
+                else
+                {
+                    $adress = Adress::create($person['adress']);
+                    $person = new Person(array_except($person, ['adress']));
+                    $person->adress()->associate($adress);
+                    $this->people()->save($person);
+                }
+            }
         }
     }
 

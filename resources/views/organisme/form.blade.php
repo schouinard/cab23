@@ -71,6 +71,7 @@
         </div>
         @if(isset($readonly))
             <div class="tab-pane" id="notes">
+                {{Form::close()}}
                 @component('components.note', ['notableId' => $organisme->id, 'notableType' => \App\Organisme::class])
                 @endcomponent
                 @foreach($organisme->notes as $note)

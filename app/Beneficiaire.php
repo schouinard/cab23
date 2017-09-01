@@ -57,7 +57,7 @@ class Beneficiaire extends FilterableModel
 
     public function notes()
     {
-        return $this->morphMany(Note::class, 'notable');
+        return $this->morphMany(Note::class, 'notable')->orderBy('date', 'DESC');;
     }
 
     public function adress()

@@ -164,6 +164,7 @@
         @if(isset($readonly))
             @can('manage-confidential-fields')
                 <div class="tab-pane" id="notes">
+                    {{Form::close()}}
                     @component('components.note', ['notableId' => $beneficiaire->id, 'notableType' => \App\Beneficiaire::class])
                     @endcomponent
                     @foreach($beneficiaire->notes as $note)
