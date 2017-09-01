@@ -10,7 +10,7 @@
         <thead>
         <tr>
             <th colspan="7">{{$tournee->nom}} - Tel: {{$tournee->telephone}}</th>
-            <th class="text-right">Semaine du 10-10-2016</th>
+            <th class="text-right">Semaine du {{Carbon\Carbon::now()->startOfWeek()->format('Y/m/d')}}</th>
         </tr>
         <tr>
             <th width="3%">#</th>
