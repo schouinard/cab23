@@ -41,7 +41,7 @@
                                 @if($user->isAdmin)
                                     Admin
                                 @else
-                                    Accueil
+                                    Bénévole
                                 @endif
                             </td>
                             <td>
