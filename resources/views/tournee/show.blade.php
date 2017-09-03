@@ -74,10 +74,10 @@
                                             class="fa fa-arrow-down" aria-hidden="true"></i></a>
                             @endif
                         </td>
-                        <td>{{$beneficiaire->tournee_priorite}}</td>
+                        <td>{{$beneficiaire->pivot->priorite}}</td>
                         <td><a href="{{$beneficiaire->path()}}/edit#popote">{{$beneficiaire->nom_complet }}</a></td>
-                        <td>@if($beneficiaire->tournee_payee) Oui @else Non @endif</td>
-                        <td>{{$beneficiaire->tournee_note}}</td>
+                        <td>@if($beneficiaire->pivot->payee) Oui @else Non @endif</td>
+                        <td>{{$beneficiaire->pivot->note}}</td>
                     </tr>
                 @endforeach
                 </tbody>

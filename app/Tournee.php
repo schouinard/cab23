@@ -8,8 +8,6 @@ class Tournee extends FilterableModel
 
     protected $with = ['beneficiaires'];
 
-    protected $withCount = ['beneficiaires'];
-
     protected $relationsToHandleOnStore = ['days'];
 
     public function days()
@@ -19,7 +17,9 @@ class Tournee extends FilterableModel
 
     public function beneficiaires()
     {
-        return $this->hasMany(Beneficiaire::class)->with(['adress', 'people']);
+        return $this->belongsToMany(Beneficiaire::class)
+            ->with(['adress', 'people'])
+            ->withPivot('priorite', 'payee', 'note');
     }
 
     public function syncDays($ids)
@@ -37,28 +37,18 @@ class Tournee extends FilterableModel
         $this->syncDays($ids);
     }
 
-    public function addBeneficiaire($id, $priority = 0, $paye = false, $note = '', $days = [2, 3, 4, 5, 6])
+    public function addBeneficiaire($id, $priorite = null, $paye = false, $note = '')
     {
         $beneficiaire = Beneficiaire::find($id);
-        $this->beneficiaires_count++;
-        if (is_null($paye)) {
-            $paye = $beneficiaire->tournee_paye;
-        }
-        if (is_null($note)) {
-            $note = $beneficiaire->tournee_note;
-        }
-        if (! $priority) {
-            $priority = $this->beneficiaires_count;
-        }
-        $beneficiaire->update([
-                'tournee_id' => $this->id,
-                'tournee_priorite' => $priority,
-                'tournee_payee' => $paye,
-                'tournee_note' => $note,
-            ]
-        );
 
-        $beneficiaire->addDays($days);
+        if($priorite == null)
+        {
+            $priorite = $this->fresh()->beneficiaires->count();
+        }
+
+        $this->beneficiaires()->attach($id, ['priorite' => $priorite, 'payee' => $paye, 'note' => $note]);
+
+        $beneficiaire->addDays($this->days);
     }
 
     public function getAlphabeticalListing()
@@ -68,7 +58,7 @@ class Tournee extends FilterableModel
 
     public function getPriorityListing()
     {
-        return $this->beneficiaires()->orderBy('tournee_priorite')->get();
+        return $this->beneficiaires()->orderBy('pivot_priorite')->get();
     }
 
     public function path()
@@ -78,33 +68,36 @@ class Tournee extends FilterableModel
 
     public function moveUp($id)
     {
-        $beneficiaire = Beneficiaire::find($id);
-        if ($beneficiaire->tournee_priorite > 1) {
-            $beneficiaireToMoveDown = Beneficiaire::where('tournee_id', $this->id)
-                ->where('tournee_priorite', $beneficiaire->tournee_priorite - 1)
+        $beneficiaire = $this->beneficiaires->where('pivot.beneficiaire_id', $id)->first();
+        if($beneficiaire->pivot->priorite > 0)
+        {
+            $beneficiaireToMoveDown = $this->beneficiaires
+                ->where('pivot.priorite', $beneficiaire->pivot->priorite - 1)
                 ->first();
-
-            $beneficiaire->update(['tournee_priorite' => $beneficiaire->tournee_priorite - 1]);
-            $beneficiaireToMoveDown->update(['tournee_priorite' => $beneficiaireToMoveDown->tournee_priorite + 1]);
+            $beneficiaire->tournees()->updateExistingPivot($this->id, ['priorite' => $beneficiaire->pivot->priorite - 1]);
+            $beneficiaireToMoveDown->tournees()->updateExistingPivot($this->id, ['priorite' => $beneficiaireToMoveDown->pivot->priorite + 1]);
         }
     }
 
     public function moveDown($id)
     {
-        $beneficiaire = Beneficiaire::find($id);
-        if ($beneficiaire->tournee_priorite < $this->beneficiaires_count) {
-            $beneficiaireToMoveUp = Beneficiaire::where('tournee_id', $this->id)
-                ->where('tournee_priorite', $beneficiaire->tournee_priorite + 1)
+        $beneficiaire = $this->beneficiaires->where('pivot.beneficiaire_id', $id)->first();
+        if($beneficiaire->pivot->priorite < $this->beneficiaires->count())
+        {
+            $beneficiaireToMoveUp = $this->beneficiaires
+                ->where('pivot.priorite', $beneficiaire->pivot->priorite + 1)
                 ->first();
-
-            $beneficiaire->update(['tournee_priorite' => $beneficiaire->tournee_priorite + 1]);
-            $beneficiaireToMoveUp->update(['tournee_priorite' => $beneficiaireToMoveUp->tournee_priorite - 1]);
+            $beneficiaire->tournees()->updateExistingPivot($this->id, ['priorite' => $beneficiaire->pivot->priorite + 1]);
+            $beneficiaireToMoveUp->tournees()->updateExistingPivot($this->id, ['priorite' => $beneficiaireToMoveUp->pivot->priorite - 1]);
         }
     }
 
     public function removeBeneficiaire($id)
     {
-        $beneficiaire = $this->beneficiaires->where('id', $id)->first();
+
+        $this->beneficiaires()->detach($id);
+        $this->reorderPriorities();
+        /* $beneficiaire = $this->beneficiaires->where('id', $id)->first();
         if ($beneficiaire) {
             $beneficiairesToMoveUp = $this->beneficiaires->where('tournee_priorite', '>',
                 $beneficiaire->tournee_priorite);
@@ -113,7 +106,16 @@ class Tournee extends FilterableModel
                 $client->save();
             }
             $beneficiaire->update(['tournee_id' => null, 'tournee_priorite' => null]);
-            $this->beneficiaires_count--;
+        } */
+    }
+
+    public function reorderPriorities()
+    {
+        $beneficiaires = $this->getPriorityListing();
+
+        for($x = 0; $x < count($beneficiaires); $x++)
+        {
+            $beneficiaires[$x]->tournees()->updateExistingPivot($this->id, ['priorite' => $x]);
         }
     }
 }

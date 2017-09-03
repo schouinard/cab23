@@ -165,11 +165,6 @@ class TourneeController extends Controller
      */
     public function destroy($id)
     {
-        $beneficiaires = Beneficiaire::where('tournee_id', $id)->get();
-        foreach ($beneficiaires as $beneficiaire) {
-            $beneficiaire->update(['tournee_id' => null, 'tournee_payee' => false]);
-            $beneficiaire->days()->delete();
-        }
         Tournee::destroy($id);
 
         return back()

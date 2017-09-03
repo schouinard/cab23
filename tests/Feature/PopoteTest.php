@@ -59,24 +59,15 @@ class PopoteTest extends TestCase
         $this->assertCount(10, $this->tournee->fresh()->beneficiaires);
     }
 
-    /** @test */
-    function on_peut_donner_une_priorite_en_ajoutant_un_beneficiaire()
-    {
-        $beneficiaire = create(Beneficiaire::class);
-
-        $this->tournee->addBeneficiaire($beneficiaire->id, 3);
-
-        $this->assertEquals(3, $beneficiaire->fresh()->tournee_priorite);
-    }
 
     /** @test */
     function on_peut_indiquer_si_un_beneficiaire_a_payé()
     {
         $beneficiaire = create(Beneficiaire::class);
 
-        $this->tournee->addBeneficiaire($beneficiaire->id, null, true);
+        $this->tournee->addBeneficiaire($beneficiaire->id, null,true);
 
-        $this->assertTrue($beneficiaire->fresh()->tournee_payee);
+        $this->assertEquals(1, $this->tournee->beneficiaires[0]->pivot->payee);
     }
 
     /** @test */
@@ -86,9 +77,19 @@ class PopoteTest extends TestCase
 
         $note = 'Allergique aux poissons.';
 
-        $this->tournee->addBeneficiaire($beneficiaire->id, null, false, $note);
+        $this->tournee->addBeneficiaire($beneficiaire->id, null,false, $note);
 
-        $this->assertEquals($note, $beneficiaire->fresh()->tournee_note);
+        $this->assertEquals($note, $this->tournee->beneficiaires[0]->pivot->note);
+    }
+
+    /** @test */
+    function on_peut_specifier_la_priorite_a_lajout()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+
+        $this->tournee->addBeneficiaire($beneficiaire->id, 5);
+
+        $this->assertEquals(5, $beneficiaire->tournees[0]->pivot->priorite);
     }
 
     /** @test */
@@ -115,12 +116,12 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
 
-        $this->assertEquals($beneficiaire3->nom, $this->tournee->getPriorityListing()->first()->nom);
+        $this->assertEquals($beneficiaire1->nom, $this->tournee->getPriorityListing()->first()->nom);
     }
 
     /** @test */
@@ -150,24 +151,25 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
 
         $beneficiaire5 = create(Beneficiaire::class);
         $this->tournee->addBeneficiaire($beneficiaire5->id);
 
-        $this->assertEquals(5, $beneficiaire5->fresh()->tournee_priorite);
+        $this->assertEquals(4, $beneficiaire5->tournees[0]->pivot->priorite);
     }
 
     /** @test */
-    function quand_on_ajoute_un_beneficiaire_il_est_ajouté_du_lundi_au_vendredi_par_defaut()
+    function quand_on_ajoute_un_beneficiaire_il_est_ajouté_pour_les_jours_de_la_tournee_par_defaut()
     {
         $beneficiaire1 = create(Beneficiaire::class, ['nom' => 'Tremblay']);
+        $this->tournee->addDays([1,3,4]);
         $this->tournee->addBeneficiaire($beneficiaire1->id, 1);
 
-        $this->assertCount(5, $beneficiaire1->days);
+        $this->assertCount(3, $beneficiaire1->days);
     }
 
     /** @test */
@@ -178,15 +180,19 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id );
+        $this->tournee = $this->tournee->fresh();
+        $this->tournee->addBeneficiaire($beneficiaire2->id );
+        $this->tournee = $this->tournee->fresh();
+        $this->tournee->addBeneficiaire($beneficiaire3->id );
+        $this->tournee = $this->tournee->fresh();
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
+        $this->tournee = $this->tournee->fresh();
 
         $this->tournee->moveUp($beneficiaire2->id);
 
-        $this->assertEquals(1, $beneficiaire2->fresh()->tournee_priorite);
-        $this->assertEquals(2, $beneficiaire3->fresh()->tournee_priorite);
+        $this->assertEquals(0, $beneficiaire2->fresh()->tournees[0]->pivot->priorite);
+        $this->assertEquals(1, $beneficiaire1->fresh()->tournees[0]->pivot->priorite);
     }
 
     /** @test */
@@ -197,15 +203,15 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
 
         $this->tournee->moveDown($beneficiaire2->id);
 
-        $this->assertEquals(3, $beneficiaire2->fresh()->tournee_priorite);
-        $this->assertEquals(2, $beneficiaire4->fresh()->tournee_priorite);
+        $this->assertEquals(2, $beneficiaire2->fresh()->tournees[0]->pivot->priorite);
+        $this->assertEquals(1, $beneficiaire3->fresh()->tournees[0]->pivot->priorite);
     }
 
     /** @test */
@@ -216,14 +222,14 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
 
         $this->tournee->moveUp($beneficiaire3->id);
 
-        $this->assertEquals(1, $beneficiaire3->fresh()->tournee_priorite);
+        $this->assertEquals(1, $beneficiaire3->fresh()->tournees[0]->pivot->priorite);
     }
 
     /** @test */
@@ -234,14 +240,14 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 4);
-        $this->tournee->addBeneficiaire($beneficiaire2->id, 2);
-        $this->tournee->addBeneficiaire($beneficiaire3->id, 1);
-        $this->tournee->addBeneficiaire($beneficiaire4->id, 3);
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
+        $this->tournee->addBeneficiaire($beneficiaire4->id);
 
         $this->tournee->moveDown($beneficiaire1->id);
 
-        $this->assertEquals(4, $beneficiaire1->fresh()->tournee_priorite);
+        $this->assertEquals(3, $beneficiaire4->fresh()->tournees[0]->pivot->priorite);
     }
 
     /** @test */
@@ -296,8 +302,20 @@ class PopoteTest extends TestCase
         $this->tournee->removeBeneficiaire($beneficiaire2->id);
 
         $this->assertCount(2, $this->tournee->fresh()->beneficiaires);
-        $this->assertEquals(2, $this->tournee->beneficiaires_count);
-        $this->assertEquals(1, $beneficiaire->fresh()->tournee_priorite);
-        $this->assertEquals(2, $beneficiaire3->fresh()->tournee_priorite);
+        $this->assertEquals(0, $beneficiaire->fresh()->tournees[0]->pivot->priorite);
+        $this->assertEquals(1, $beneficiaire3->fresh()->tournees[0]->pivot->priorite);
+    }
+
+    /** @test */
+    function un_beneficiaire_peut_appartenir_a_plusieurs_tournees()
+    {
+        $beneficiaire = create(Beneficiaire::class);
+
+        $tournee2 = create(Tournee::class);
+
+        $this->tournee->addBeneficiaire($beneficiaire->id);
+        $tournee2->addBeneficiaire($beneficiaire->id);
+
+        $this->assertCount(2, $beneficiaire->tournees);
     }
 }

@@ -27,17 +27,8 @@ class AddClientRequest extends FormRequest
         return [
             'beneficiaire_id' => [
                 'required',
-                //Rule::exists('beneficiaires', 'id')->where(function ($query) {
-                //    $query->whereNull('tournee_id');
-                //}),
             ],
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'beneficiaire_id.exists' => 'Le bénéficiaire est déjà client d\'une tournée.',
-        ];
-    }
 }

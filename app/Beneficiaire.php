@@ -40,6 +40,11 @@ class Beneficiaire extends FilterableModel
             ->withPivot('service_request_status_id');
     }
 
+    public function tournees()
+    {
+        return $this->belongsToMany(Tournee::class)->withPivot('priorite', 'payee', 'note');
+    }
+
     public function autonomies()
     {
         return $this->belongsToMany(Autonomie::class);

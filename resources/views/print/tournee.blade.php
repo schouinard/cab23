@@ -25,18 +25,18 @@
         <tbody>
         @foreach($clients as $client)
             <tr>
-                <td>{{$client->tournee_priorite}}</td>
+                <td>{{$client->pivot->priorite}}</td>
                 <td>{{$client->displayNom}} ({{$client->anniversaire}})<br>{{$client->adress->adresse}}</td>
                 @foreach($tournee->days as $day)
                     <td class="text-center" valign="center">
                         @if(! $client->isPopoteDay($day->id))
                             <i class="fa fa-times" style="font-size:3em; color:#999" aria-hidden="true"></i>
-                        @elseif($client->tournee_payee)
+                        @elseif($client->pivot->payee)
                             <div class="text-center vcenter">PAYÉ</div>
                         @endif
                     </td>
                 @endforeach
-                <td style="font-size:8pt;">{{$client->tournee_note}}</td>
+                <td style="font-size:8pt;">{{$client->pivot->note}}</td>
             </tr>
         @endforeach
         </tbody>
