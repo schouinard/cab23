@@ -19,6 +19,7 @@ class TourneeFixSeeder extends Seeder
             {
                 $tournee->addBeneficiaire($beneficiaire->id, $beneficiaire->tournee_priorite, $beneficiaire->tournee_payee, $beneficiaire->tournee_note);
             }
+            $tournee->reorderPriorities();
         }
     }
 }
