@@ -18,7 +18,7 @@
             @foreach($tournee->days as $day)
                 <th width="8%">{{substr($day->nom, 0,3)}}</th>
             @endforeach
-            <th>Commentaires</th>
+            <th colspan="{{6 - $tournee->days->count()}}">Commentaires</th>
         </tr>
         </thead>
 
@@ -36,7 +36,9 @@
                         @endif
                     </td>
                 @endforeach
-                <td style="font-size:8pt;">{{$client->pivot->note}}</td>
+                <td
+                        colspan="{{6 - $tournee->days->count()}}"
+                        style="font-size:8pt;">{{$client->pivot->note}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -46,14 +48,14 @@
             @foreach($tournee->days as $day)
                 <td></td>
             @endforeach
-            <td></td>
+            <td colspan="{{6 - $tournee->days->count()}}"></td>
         </tr>
         <tr>
             <td colspan="2"><span class="text-sm text-bold">Recueilli ($)</span></td>
             @foreach($tournee->days as $day)
                 <td></td>
             @endforeach
-            <td></td>
+            <td colspan="{{6 - $tournee->days->count()}}"></td>
         </tr>
         </tfoot>
     </table>

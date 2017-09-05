@@ -41,14 +41,11 @@ class Tournee extends FilterableModel
     {
         $beneficiaire = Beneficiaire::find($id);
 
-        if($priorite == null)
-        {
+        if ($priorite == null) {
             $priorite = $this->fresh()->beneficiaires->count();
         }
 
         $this->beneficiaires()->attach($id, ['priorite' => $priorite, 'payee' => $paye, 'note' => $note]);
-
-        $beneficiaire->addDays($this->days);
     }
 
     public function getAlphabeticalListing()
@@ -63,14 +60,13 @@ class Tournee extends FilterableModel
 
     public function path()
     {
-        return '/tournees/'.$this->id;
+        return '/tournees/' . $this->id;
     }
 
     public function moveUp($id)
     {
         $beneficiaire = $this->beneficiaires->where('pivot.beneficiaire_id', $id)->first();
-        if($beneficiaire->pivot->priorite > 0)
-        {
+        if ($beneficiaire->pivot->priorite > 0) {
             $beneficiaireToMoveDown = $this->beneficiaires
                 ->where('pivot.priorite', $beneficiaire->pivot->priorite - 1)
                 ->first();
@@ -82,8 +78,7 @@ class Tournee extends FilterableModel
     public function moveDown($id)
     {
         $beneficiaire = $this->beneficiaires->where('pivot.beneficiaire_id', $id)->first();
-        if($beneficiaire->pivot->priorite < $this->beneficiaires->count())
-        {
+        if ($beneficiaire->pivot->priorite < $this->beneficiaires->count()) {
             $beneficiaireToMoveUp = $this->beneficiaires
                 ->where('pivot.priorite', $beneficiaire->pivot->priorite + 1)
                 ->first();
@@ -94,27 +89,15 @@ class Tournee extends FilterableModel
 
     public function removeBeneficiaire($id)
     {
-
         $this->beneficiaires()->detach($id);
         $this->reorderPriorities();
-        /* $beneficiaire = $this->beneficiaires->where('id', $id)->first();
-        if ($beneficiaire) {
-            $beneficiairesToMoveUp = $this->beneficiaires->where('tournee_priorite', '>',
-                $beneficiaire->tournee_priorite);
-            foreach ($beneficiairesToMoveUp as $client) {
-                $client->tournee_priorite--;
-                $client->save();
-            }
-            $beneficiaire->update(['tournee_id' => null, 'tournee_priorite' => null]);
-        } */
     }
 
     public function reorderPriorities()
     {
         $beneficiaires = $this->getPriorityListing();
 
-        for($x = 0; $x < count($beneficiaires); $x++)
-        {
+        for ($x = 0; $x < count($beneficiaires); $x++) {
             $beneficiaires[$x]->tournees()->updateExistingPivot($this->id, ['priorite' => $x]);
         }
     }

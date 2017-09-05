@@ -21,11 +21,12 @@ class Beneficiaire extends FilterableModel
         'facturation',
         'people',
         'days',
+        'tournees',
     ];
 
     public function path()
     {
-        return '/beneficiaires/'.$this->id;
+        return '/beneficiaires/' . $this->id;
     }
 
     public function services()
@@ -92,7 +93,7 @@ class Beneficiaire extends FilterableModel
 
     public function isPopoteDay($day_id)
     {
-        return $this->days->contains('id', $day_id);
+        return !$this->days->contains('id', $day_id);
     }
 
     public function syncDays($ids)
@@ -114,14 +115,14 @@ class Beneficiaire extends FilterableModel
     {
         $nom = "{$this->prenom} {$this->nom}";
 
-        return $this->trashed() ? $nom." (INACTIF)" : $nom;
+        return $this->trashed() ? $nom . " (INACTIF)" : $nom;
     }
 
     public function getDisplayNomAttribute()
     {
         $nom = "{$this->nom}, {$this->prenom}";
 
-        return $this->trashed() ? $nom." (INACTIF)" : $nom;
+        return $this->trashed() ? $nom . " (INACTIF)" : $nom;
     }
 
     public function getNaissanceAttribute($value)
@@ -190,7 +191,7 @@ class Beneficiaire extends FilterableModel
 
     public function addPeople($people = [])
     {
-        if (! is_null($people)) {
+        if (!is_null($people)) {
             foreach ($people as $person) {
                 $adress = Adress::create($person['adress']);
                 $person = new Person(array_except($person, ['adress']));
@@ -221,5 +222,16 @@ class Beneficiaire extends FilterableModel
     public function updateFacturation($adress)
     {
         $this->facturation()->update($adress);
+    }
+
+    public function updateTournees($tournees)
+    {
+        foreach ($tournees as $tournee) {
+            $payee = false;
+            if (array_key_exists('payee', $tournee)) {
+                $payee = true;
+            }
+            $this->tournees()->updateExistingPivot($tournee['id'], ['payee' => $payee, 'note' => $tournee['note']]);
+        }
     }
 }

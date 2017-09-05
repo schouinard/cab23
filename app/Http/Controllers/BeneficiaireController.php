@@ -96,7 +96,7 @@ class BeneficiaireController extends Controller
 
         $beneficiaire->handleRelationsOnUpdate($request->toArray());
 
-        return back()
+        return redirect($beneficiaire->path())
             ->with('flash', 'Bénéficiaire modifié avec succès.');
     }
 

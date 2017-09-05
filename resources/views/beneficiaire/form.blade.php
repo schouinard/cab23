@@ -81,7 +81,7 @@
                 @if(isset($readonly))
                     <div class="readonly">
                         @if(isset($beneficiaire))
-                            {{$beneficiaire->remarque}}
+                            {!! $beneficiaire->remarque !!}
                         @endif
                     </div>
                 @else
@@ -111,29 +111,9 @@
             @include('beneficiaire.partials.requests')
         </div>
         <div class="tab-pane row" id="popote">
-            <div class="form-group col-md-6">
-                <fieldset disabled>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('tournee_id', null, true) }} Non abonné
-                        </label>
-                    </div>
-                    @foreach(\App\Tournee::orderBy('nom')->get() as $tournee)
-                        <div class="radio">
-                            <label>
-                                {{ Form::radio('tournee_id', $tournee->id) }} {{ $tournee->nom }}
-                            </label>
-                        </div>
-                    @endforeach
-
-                </fieldset>
-                <div class="checkbox">
-                    {{ Form::hidden('tournee_payee', 0) }}
-                    <label>{{ Form::checkbox('tournee_payee', true, null, $attributes) }} A payé sa tournée</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <fieldset @isset($readonly) disabled @endisset>
+                    <legend>Jours où le bénéficiaire <strong>ne veut pas</strong> de repas</legend>
                     @foreach($days as $day)
                         <div class="checkbox">
                             <label>
@@ -143,19 +123,28 @@
                     @endforeach
                 </fieldset>
             </div>
-            <!--- tournee_note form input ---->
-            <div class="form-group col-md-12 {{ $errors->first('tournee_note', 'has-error') }}">
-                {{ Form::label('tournee_note', 'Notes / Restrictions alimentaires:') }}
-                @if(isset($readonly))
-                    <div class="readonly">
-                        @if(isset($beneficiaire))
-                            {{$beneficiaire->tournee_note}}
+            @isset($beneficiaire)
+                <h3 class="col-md-12">Tournées</h3>
+                @foreach($beneficiaire->tournees as $tournee)
+                    <input type="hidden" name="tournees[{{$tournee->id}}][id]" value="{{$tournee->id}}"/>
+                    <h4 class="col-md-12"><a href="{{$tournee->path()}}">{{$tournee->nom}}</a></h4>
+                    <fieldset class="col-md-12" @isset($readonly) disabled @endisset>
+                        <div class="checkbox">
+                            <label>{{ Form::checkbox('tournees['. $tournee->id .'][payee]', true, $tournee->pivot->payee) }}
+                                A payé sa tournée</label>
+                        </div>
+                        {{ Form::label('tournees['. $tournee->id .'][note]', 'Note:') }}
+                        @if(isset($readonly))
+                            <div class="readonly">
+                                {!! $tournee->pivot->note  !!}
+                            </div>
+                        @else
+                            {!!  Form::textarea('tournees['. $tournee->id .'][note]', $tournee->pivot->note, ['class' => 'form-control textarea', 'row' => '20']) !!}
                         @endif
-                    </div>
-                @else
-                    {!!  Form::textarea('tournee_note', null, ['class' => 'form-control textarea', 'row' => '20']) !!}
-                @endif
-            </div>
+                    </fieldset>
+                    <hr>
+                @endforeach
+            @endisset
         </div>
         <div class="tab-pane" id="facturation">
             <h3>Adresse de facturation</h3>

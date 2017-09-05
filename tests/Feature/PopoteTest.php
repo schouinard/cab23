@@ -65,7 +65,7 @@ class PopoteTest extends TestCase
     {
         $beneficiaire = create(Beneficiaire::class);
 
-        $this->tournee->addBeneficiaire($beneficiaire->id, null,true);
+        $this->tournee->addBeneficiaire($beneficiaire->id, null, true);
 
         $this->assertEquals(1, $this->tournee->beneficiaires[0]->pivot->payee);
     }
@@ -77,7 +77,7 @@ class PopoteTest extends TestCase
 
         $note = 'Allergique aux poissons.';
 
-        $this->tournee->addBeneficiaire($beneficiaire->id, null,false, $note);
+        $this->tournee->addBeneficiaire($beneficiaire->id, null, false, $note);
 
         $this->assertEquals($note, $this->tournee->beneficiaires[0]->pivot->note);
     }
@@ -163,16 +163,6 @@ class PopoteTest extends TestCase
     }
 
     /** @test */
-    function quand_on_ajoute_un_beneficiaire_il_est_ajouté_pour_les_jours_de_la_tournee_par_defaut()
-    {
-        $beneficiaire1 = create(Beneficiaire::class, ['nom' => 'Tremblay']);
-        $this->tournee->addDays([1,3,4]);
-        $this->tournee->addBeneficiaire($beneficiaire1->id, 1);
-
-        $this->assertCount(3, $beneficiaire1->days);
-    }
-
-    /** @test */
     function on_peut_augmenter_la_priorite_dun_beneficiaire()
     {
         $beneficiaire1 = create(Beneficiaire::class, ['nom' => 'Tremblay']);
@@ -180,11 +170,11 @@ class PopoteTest extends TestCase
         $beneficiaire3 = create(Beneficiaire::class, ['nom' => 'Gilbert']);
         $beneficiaire4 = create(Beneficiaire::class, ['nom' => 'Chouinard']);
 
-        $this->tournee->addBeneficiaire($beneficiaire1->id );
+        $this->tournee->addBeneficiaire($beneficiaire1->id);
         $this->tournee = $this->tournee->fresh();
-        $this->tournee->addBeneficiaire($beneficiaire2->id );
+        $this->tournee->addBeneficiaire($beneficiaire2->id);
         $this->tournee = $this->tournee->fresh();
-        $this->tournee->addBeneficiaire($beneficiaire3->id );
+        $this->tournee->addBeneficiaire($beneficiaire3->id);
         $this->tournee = $this->tournee->fresh();
         $this->tournee->addBeneficiaire($beneficiaire4->id);
         $this->tournee = $this->tournee->fresh();
@@ -284,8 +274,8 @@ class PopoteTest extends TestCase
 
         $beneficiaire->addDays([1, 2]);
 
-        $this->assertTrue($beneficiaire->isPopoteDay(1));
-        $this->assertFalse($beneficiaire->isPopoteDay(5));
+        $this->assertFalse($beneficiaire->isPopoteDay(1));
+        $this->assertTrue($beneficiaire->isPopoteDay(5));
     }
 
     /** @test */
